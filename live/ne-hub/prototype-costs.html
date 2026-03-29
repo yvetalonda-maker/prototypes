@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ne.Hub — Prototype Costs</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .costs-content {
+      padding: 28px 40px;
+      max-width: 900px;
+    }
+
+    .costs-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--surface-700);
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+
+    .costs-subtitle {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: #64748b;
+      margin: 0 0 32px;
+      line-height: 1.5;
+    }
+
+    /* Breakdown chart */
+    .cost-bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .cost-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cost-bar-label {
+      width: 260px;
+      flex-shrink: 0;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: #30394a;
+      text-align: right;
+    }
+
+    .cost-bar-track {
+      flex: 1;
+      height: 28px;
+      background: var(--surface-100, #f1f5f9);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cost-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 12px;
+      color: #ffffff;
+      white-space: nowrap;
+      min-width: 40px;
+    }
+
+    .cost-bar-fill--setup { background: var(--color-primary); }
+    .cost-bar-fill--showcase { background: var(--primary-400, #2a9daf); }
+    .cost-bar-fill--printers { background: #f59e0b; }
+    .cost-bar-fill--dashboard { background: #8b5cf6; }
+    .cost-bar-fill--customers { background: #ec4899; }
+    .cost-bar-fill--interactivity { background: #10b981; }
+    .cost-bar-fill--extension { background: #ef4444; }
+
+    .cost-bar-pct {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: #64748b;
+      width: 45px;
+      flex-shrink: 0;
+    }
+
+    .cost-bar-time {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: #30394a;
+      font-weight: 500;
+      width: 70px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .cost-bar-time small {
+      font-weight: 400;
+      color: #94a3b8;
+      font-size: 11px;
+    }
+
+    /* Insight card */
+    .insight-card {
+      background: #f0fcff;
+      border: 1px solid #a5f3fc;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+
+    .insight-card h3 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--color-primary);
+      margin: 0 0 8px;
+      text-transform: uppercase;
+    }
+
+    .insight-card p {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: #30394a;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Table */
+    .costs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-body);
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+
+    .costs-table thead th {
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 500;
+      font-size: 12px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--surface-200);
+    }
+
+    .costs-table tbody td {
+      padding: 12px 12px;
+      color: #30394a;
+      border-bottom: 1px solid var(--surface-100);
+      vertical-align: top;
+    }
+
+    .costs-table tbody tr:last-child td {
+      border-bottom: 2px solid var(--surface-200);
+    }
+
+    .costs-table .col-phase {
+      font-weight: 500;
+    }
+
+    .costs-table .col-desc {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .costs-table .col-pct {
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .costs-table .col-type {
+      white-space: nowrap;
+    }
+
+    .type-badge {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .type-badge--once {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .type-badge--recurring {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    /* Projection */
+    .projection-section {
+      margin-bottom: 32px;
+    }
+
+    .projection-section h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--surface-700);
+      text-transform: uppercase;
+      margin: 0 0 16px;
+    }
+
+    .projection-cards {
+      display: flex;
+      gap: 16px;
+    }
+
+    .proj-card {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid var(--surface-200);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .proj-card-label {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .proj-card-value {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 32px;
+      color: #30394a;
+      line-height: 1;
+    }
+
+    .proj-card-note {
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    /* Note */
+    .costs-note {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.5;
+      border-top: 1px solid var(--surface-100);
+      padding-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="logo-safeq">SAFEQ</span> <span class="logo-cloud">Cloud</span><sup>®</sup>
+    </div>
+    <div class="header-spacer"></div>
+    <div class="header-account">
+      <div class="account-info">
+        <span class="account-name">User Name</span>
+        <span class="account-role">Account</span>
+      </div>
+      <i class="fa-solid fa-chevron-down account-chevron"></i>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <div class="app-body">
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <nav class="sidebar-nav">
+        <a class="sidebar-link" href="index.html">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="sidebar-link" href="customers.html">
+          <i class="fa-solid fa-users"></i>
+          <span>Customers</span>
+        </a>
+        <a class="sidebar-link">
+          <i class="fa-solid fa-calculator"></i>
+          <span>Business Tools</span>
+        </a>
+        <a class="sidebar-link">
+          <i class="fa-solid fa-gauge"></i>
+          <span>Cloud status</span>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="sidebar-link active" href="prototype-costs.html">
+          <i class="fa-solid fa-coins"></i>
+          <span>Prototype costs</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-content costs-content">
+
+      <h1 class="costs-title">Prototype Costs</h1>
+      <p class="costs-subtitle">
+        Rozklad nákladů na vytvoření tohoto prototypu pomocí Claude Code + Figma MCP.
+        Čísla jsou relativní odhad poměru práce v rámci jedné session.
+      </p>
+
+      <!-- Bar chart -->
+      <div class="cost-bar-chart">
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Setup projektu & knihovna</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--setup" style="width: 35%">35%</div>
+          </div>
+          <div class="cost-bar-pct">~35%</div>
+          <div class="cost-bar-time">~45 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Component showcase</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--showcase" style="width: 5%"></div>
+          </div>
+          <div class="cost-bar-pct">~5%</div>
+          <div class="cost-bar-time">~5 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Printers mock</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--printers" style="width: 8%"></div>
+          </div>
+          <div class="cost-bar-pct">~8%</div>
+          <div class="cost-bar-time">~10 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Dashboard (z Figmy)</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--dashboard" style="width: 10%"></div>
+          </div>
+          <div class="cost-bar-pct">~10%</div>
+          <div class="cost-bar-time">~12 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Customers page (z Figmy)</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--customers" style="width: 12%"></div>
+          </div>
+          <div class="cost-bar-pct">~12%</div>
+          <div class="cost-bar-time">~15 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Interaktivita (hover, sort, search)</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--interactivity" style="width: 10%"></div>
+          </div>
+          <div class="cost-bar-pct">~10%</div>
+          <div class="cost-bar-time">~10 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Rozšíření (data, filtry, side panel)</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill cost-bar-fill--extension" style="width: 20%"></div>
+          </div>
+          <div class="cost-bar-pct">~20%</div>
+          <div class="cost-bar-time">~20 min</div>
+        </div>
+      </div>
+
+      <!-- Key insight -->
+      <div class="insight-card">
+        <h3><i class="fa-solid fa-lightbulb"></i> Amortizace setupu</h3>
+        <p>
+          Setup projektu (CLAUDE.md, design tokeny, komponentová knihovna, fonty) tvořil <strong>~35% celkové práce</strong>,
+          ale je jednorázový. Od teď každá nová stránka z Figmy stojí jen <strong>10–15%</strong> toho, co stál celý dnešek.
+          Čím víc stránek vznikne, tím víc se počáteční investice vyplatí.
+        </p>
+      </div>
+
+      <!-- Detailed table -->
+      <table class="costs-table">
+        <thead>
+          <tr>
+            <th>Fáze</th>
+            <th>Co obsahuje</th>
+            <th>Zadání</th>
+            <th>Doba</th>
+            <th>Podíl</th>
+            <th>Typ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-phase">Setup & knihovna</td>
+            <td class="col-desc">CLAUDE.md, base.css (tokeny, fonty), components.css (20+ komponent), utilities.css, template.html, design-system.md</td>
+            <td class="col-desc">Popis vize projektu, odkaz na Figma kit, volba technologií. Diskuse o struktuře.</td>
+            <td class="col-pct">~45 min</td>
+            <td class="col-pct">~35%</td>
+            <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Component showcase</td>
+            <td class="col-desc">Testovací stránka se všemi komponentami pro vizuální kontrolu</td>
+            <td class="col-desc">Automaticky jako kontrola kvality knihovny</td>
+            <td class="col-pct">~5 min</td>
+            <td class="col-pct">~5%</td>
+            <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Printers mock</td>
+            <td class="col-desc">Stránka s menubar, breadcrumbs, tabulkou tiskáren, 3 dialogy, filtrování, vyhledávání</td>
+            <td class="col-desc">Textový popis: "menu, breadcrumbs, tabulka tiskáren, editace, mazání, přidávání, instalace terminálů, search, filtr"</td>
+            <td class="col-pct">~10 min</td>
+            <td class="col-pct">~8%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Dashboard</td>
+            <td class="col-desc">Konverze z Figma framu: layout, sidebar, stat karty, usage stats, help sekce</td>
+            <td class="col-desc">Figma link na frame + "rozjeď jako text tento frame"</td>
+            <td class="col-pct">~12 min</td>
+            <td class="col-pct">~10%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Customers page</td>
+            <td class="col-desc">Konverze z Figmy: toggle, stat karty, filtry, seskupená tabulka, SLA badges, status tečky</td>
+            <td class="col-desc">Figma link + "dodělej stránku customers"</td>
+            <td class="col-pct">~15 min</td>
+            <td class="col-pct">~12%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Interaktivita</td>
+            <td class="col-desc">CSS hovery, table sorting, search, group collapse, dropdown menus</td>
+            <td class="col-desc">"Řada věcí není interaktivních &mdash; projdi prototyp a co pochopíš, tak rozjeď"</td>
+            <td class="col-pct">~10 min</td>
+            <td class="col-pct">~10%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Rozšíření</td>
+            <td class="col-desc">Víc datových řádků, propojení filtrů, side panel z Figmy s dynamickými daty</td>
+            <td class="col-desc">Popis chování filtrů, "přidej dost zákazníků", Figma link na side panel</td>
+            <td class="col-pct">~20 min</td>
+            <td class="col-pct">~20%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Total time -->
+      <div class="insight-card" style="background: #ffffff; border-color: var(--surface-200);">
+        <h3 style="color: #30394a;"><i class="fa-solid fa-clock"></i> Celkový čas session</h3>
+        <p>
+          <strong>~2 hodiny</strong> od prvního zadání po kompletní prototyp se 3 stránkami, interaktivitou a side panelem.
+          Z toho zadávání a rozhodování na straně uživatele cca <strong>15–20 minut</strong>,
+          zbytek je generování kódu a Figma MCP volání.
+          Čas zahrnuje i diskusi o struktuře projektu na začátku.
+        </p>
+      </div>
+
+      <!-- Projections -->
+      <div class="projection-section">
+        <h2>Co to znamená do budoucna</h2>
+        <div class="projection-cards">
+          <div class="proj-card">
+            <div class="proj-card-label">Nová stránka z Figmy</div>
+            <div class="proj-card-value">~15 min</div>
+            <div class="proj-card-note">Figma link + jedno zadání. Layout, komponenty, data. Bez interaktivity.</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-card-label">Stránka + interaktivita</div>
+            <div class="proj-card-value">~25 min</div>
+            <div class="proj-card-note">Stránka z Figmy + hovery, sorting, filtrování, dialogy, panely.</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-card-label">Quick mock (bez Figmy)</div>
+            <div class="proj-card-value">~10 min</div>
+            <div class="proj-card-note">Stránka z textového popisu. Využívá hotovou knihovnu komponent.</div>
+          </div>
+          <div class="proj-card">
+            <div class="proj-card-label">Celý flow (3–5 stránek)</div>
+            <div class="proj-card-value">~1 hod</div>
+            <div class="proj-card-note">Kompletní prototyp s navigací, daty a interaktivitou. Cca polovina dnešní session.</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="costs-note">
+        Pozn.: Čísla jsou relativní odhady na základě objemu generovaného kódu a počtu Figma MCP volání.
+        Skutečná spotřeba tokenů závisí na složitosti designu, počtu iterací a množství konverzace.
+        Claude Code nezpřístupňuje přesné metriky spotřeby do konverzace — pro skutečné údaje zkontroluj billing dashboard.
+      </p>
+
+    </main>
+  </div>
+
+</body>
+</html>

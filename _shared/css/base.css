@@ -1,0 +1,324 @@
+/* ==========================================================================
+   PrimeOne Design System — Base
+   Extracted from PrimeOne Library 4.0.0
+   ========================================================================== */
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Font Faces */
+@font-face {
+  font-family: 'Y Soft';
+  src: url('../fonts/YSoft Regular 1.4.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Y Soft';
+  src: url('../fonts/YSoft Bold 1.4.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lab Grotesque';
+  src: url('../fonts/LabGrotesque-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lab Grotesque';
+  src: url('../fonts/LabGrotesque-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lab Grotesque';
+  src: url('../fonts/LabGrotesque-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Lab Grotesque';
+  src: url('../fonts/LabGrotesque-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* ==========================================================================
+   Design Tokens — CSS Custom Properties
+   ========================================================================== */
+
+:root {
+  /* ---- Base ---- */
+  --font-heading: 'Y Soft', sans-serif;
+  --font-body: 'Lab Grotesque', sans-serif;
+  --base-unit: 14px;
+
+  /* ---- Primary (Teal/Blue) ---- */
+  --primary-50: #e6f4f7;
+  --primary-100: #cdeaf0;
+  --primary-200: #9fd5df;
+  --primary-300: #6fbfcc;
+  --primary-400: #3fa8b8;
+  --primary-500: #1a7282;
+  --primary-600: #155e6b;
+  --primary-700: #104a54;
+  --primary-800: #0b353d;
+  --primary-900: #072227;
+  --primary-950: #041417;
+
+  /* ---- Success (Green) ---- */
+  --green-50: #e6f7f1;
+  --green-100: #ccefe3;
+  --green-200: #99dfc8;
+  --green-300: #66cfac;
+  --green-400: #33bf91;
+  --green-500: #00b677;
+  --green-600: #009764;
+  --green-700: #007851;
+  --green-800: #00593d;
+  --green-900: #003a2a;
+  --green-950: #00201a;
+
+  /* ---- Info (Sky) ---- */
+  --sky-50: #eef6fa;
+  --sky-100: #dcecf5;
+  --sky-200: #b9d9eb;
+  --sky-300: #96c6e1;
+  --sky-400: #73b3d7;
+  --sky-500: #4a9fc4;
+  --sky-600: #3e86a5;
+  --sky-700: #326d86;
+  --sky-800: #265467;
+  --sky-900: #1a3b48;
+  --sky-950: #0f242c;
+
+  /* ---- Warning (Orange) ---- */
+  --orange-50: #fff7f2;
+  --orange-100: #ffe0cc;
+  --orange-200: #ffc299;
+  --orange-300: #ffa366;
+  --orange-400: #ff8533;
+  --orange-500: #ff6600;
+  --orange-600: #d45500;
+  --orange-700: #aa4400;
+  --orange-800: #803300;
+  --orange-900: #552200;
+  --orange-950: #331400;
+
+  /* ---- Danger (Red) ---- */
+  --red-50: #fdecec;
+  --red-100: #fad9d9;
+  --red-200: #f5b3b3;
+  --red-300: #ef8d8d;
+  --red-400: #ea6767;
+  --red-500: #e84645;
+  --red-600: #c53b3a;
+  --red-700: #a2302f;
+  --red-800: #7f2624;
+  --red-900: #5c1b1a;
+  --red-950: #3a1110;
+
+  /* ---- Help (Purple) ---- */
+  --purple-50: #f3effa;
+  --purple-100: #e7dff5;
+  --purple-200: #cfbfea;
+  --purple-300: #b79fdf;
+  --purple-400: #9f7fd4;
+  --purple-500: #8b5fbf;
+  --purple-600: #744fa0;
+  --purple-700: #5d3f81;
+  --purple-800: #462f62;
+  --purple-900: #2f2043;
+  --purple-950: #1d142a;
+
+  /* ---- Surface / Neutral (Slate — Light mode) ---- */
+  --surface-0: #ffffff;
+  --surface-50: #f8fafc;
+  --surface-100: #f1f5f9;
+  --surface-200: #e2e8f0;
+  --surface-300: #cbd5e1;
+  --surface-400: #94a3b8;
+  --surface-500: #64748b;
+  --surface-600: #475569;
+  --surface-700: #30394a;
+  --surface-800: #1e293b;
+  --surface-900: #0f172a;
+  --surface-950: #020617;
+
+  /* ---- Semantic Colors ---- */
+  --color-primary: var(--primary-500);
+  --color-primary-contrast: #ffffff;
+  --color-primary-hover: var(--primary-600);
+  --color-primary-active: var(--primary-700);
+
+  --color-success: var(--green-500);
+  --color-info: var(--sky-500);
+  --color-warning: var(--orange-500);
+  --color-danger: var(--red-500);
+  --color-help: var(--purple-500);
+
+  --color-text: var(--surface-700);
+  --color-text-muted: var(--surface-500);
+  --color-text-hover: var(--surface-800);
+
+  --color-bg: var(--surface-0);
+  --color-bg-hover: var(--surface-100);
+  --color-border: var(--surface-200);
+  --color-border-hover: var(--surface-400);
+
+  /* ---- Form Field ---- */
+  --field-bg: var(--surface-0);
+  --field-color: var(--surface-700);
+  --field-border: var(--surface-300);
+  --field-border-hover: var(--surface-400);
+  --field-border-focus: var(--color-primary);
+  --field-border-invalid: var(--red-400);
+  --field-placeholder: var(--surface-500);
+  --field-disabled-bg: var(--surface-200);
+  --field-disabled-color: var(--surface-500);
+  --field-icon-color: var(--surface-400);
+
+  /* ---- Highlight ---- */
+  --highlight-bg: var(--primary-50);
+  --highlight-color: var(--primary-700);
+
+  /* ---- Overlay ---- */
+  --overlay-bg: var(--surface-0);
+  --overlay-border: var(--surface-200);
+  --mask-bg: rgba(0, 0, 0, 0.40);
+
+  /* ---- Spacing (base 14px) ---- */
+  --space-0: 0;
+  --space-1: 1.75px;    /* 0.125 */
+  --space-2: 3.5px;     /* 0.25 */
+  --space-3: 5.25px;    /* 0.375 */
+  --space-4: 7px;       /* 0.5 */
+  --space-5: 8.75px;    /* 0.625 */
+  --space-6: 10.5px;    /* 0.75 */
+  --space-7: 12.25px;   /* 0.875 */
+  --space-8: 14px;      /* 1 — base */
+  --space-9: 15.75px;   /* 1.125 */
+  --space-10: 17.5px;   /* 1.25 */
+  --space-11: 21px;     /* 1.5 */
+  --space-12: 24.5px;   /* 1.75 */
+  --space-13: 28px;     /* 2 */
+  --space-14: 35px;     /* 2.5 */
+  --space-15: 42px;     /* 3 */
+  --space-16: 56px;     /* 4 */
+
+  /* ---- Border Radius ---- */
+  --radius-none: 0;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* ---- Shadows ---- */
+  --shadow-field: 0px 1px 2px 0px rgba(18, 18, 23, 0.05);
+  --shadow-card: 0px 1px 2px -1px rgba(0, 0, 0, 0.10), 0px 1px 3px 0px rgba(0, 0, 0, 0.10);
+  --shadow-overlay: 0px 2px 4px -2px rgba(0, 0, 0, 0.10), 0px 4px 6px -1px rgba(0, 0, 0, 0.10);
+  --shadow-raised: 0px 1px 5px 0px rgba(0, 0, 0, 0.12), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.20);
+  --shadow-dialog: 0px 8px 10px -6px rgba(0, 0, 0, 0.10), 0px 20px 25px -5px rgba(0, 0, 0, 0.10);
+  --shadow-toast: 0px 4px 8px 0px rgba(2, 5, 10, 0.04);
+
+  /* ---- Transitions ---- */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+
+  /* ---- Focus Ring ---- */
+  --focus-ring-width: 1px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-primary);
+
+  /* ---- Disabled ---- */
+  --disabled-opacity: 0.6;
+
+  /* ---- Typography Scale ---- */
+  --text-xs: 10.5px;
+  --text-sm: 12.25px;
+  --text-base: 14px;
+  --text-lg: 15.75px;
+  --text-xl: 17.5px;
+  --text-2xl: 21px;
+  --text-3xl: 28px;
+  --text-4xl: 35px;
+
+  /* ---- Icon ---- */
+  --icon-size: 14px;
+}
+
+/* ==========================================================================
+   Base Typography
+   ========================================================================== */
+
+html {
+  font-size: var(--base-unit);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--surface-900);
+}
+
+h1 { font-size: var(--text-4xl); }
+h2 { font-size: var(--text-3xl); }
+h3 { font-size: var(--text-2xl); }
+h4 { font-size: var(--text-xl); }
+h5 { font-size: var(--text-lg); }
+h6 { font-size: var(--text-base); }
+
+p {
+  margin-bottom: var(--space-8);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+small {
+  font-size: var(--text-sm);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

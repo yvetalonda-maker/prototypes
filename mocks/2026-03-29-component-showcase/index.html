@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Showcase — PrimeOne Design System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="showcase">
+
+    <header class="showcase-header">
+      <h1>PrimeOne Design System</h1>
+      <p class="text-muted">Component showcase — Y Soft + Lab Grotesque + Font Awesome + PrimeOne tokens</p>
+    </header>
+
+    <!-- Typography -->
+    <section class="section">
+      <h2>Typography</h2>
+      <div class="demo-box">
+        <h1>H1 — Y Soft Bold (35px)</h1>
+        <h2>H2 — Y Soft Bold (28px)</h2>
+        <h3>H3 — Y Soft Bold (21px)</h3>
+        <h4>H4 — Y Soft Bold (17.5px)</h4>
+        <p>Body text — Lab Grotesque Regular (14px). Toto je ukázkový odstavec pro ověření čitelnosti a řádkování.</p>
+        <p><small>Small text — Lab Grotesque (12.25px)</small></p>
+        <p class="text-muted">Muted text for secondary information</p>
+      </div>
+    </section>
+
+    <!-- Colors -->
+    <section class="section">
+      <h2>Colors</h2>
+      <div class="color-grid">
+        <div class="color-swatch" style="background: var(--primary-500)"><span>Primary 500</span></div>
+        <div class="color-swatch" style="background: var(--green-500)"><span>Success 500</span></div>
+        <div class="color-swatch" style="background: var(--sky-500)"><span>Info 500</span></div>
+        <div class="color-swatch" style="background: var(--orange-500)"><span>Warning 500</span></div>
+        <div class="color-swatch" style="background: var(--red-500)"><span>Danger 500</span></div>
+        <div class="color-swatch" style="background: var(--purple-500)"><span>Help 500</span></div>
+      </div>
+      <div class="color-grid mt-8">
+        <div class="color-swatch" style="background: var(--surface-50)"><span class="dark-text">Surface 50</span></div>
+        <div class="color-swatch" style="background: var(--surface-100)"><span class="dark-text">Surface 100</span></div>
+        <div class="color-swatch" style="background: var(--surface-200)"><span class="dark-text">Surface 200</span></div>
+        <div class="color-swatch" style="background: var(--surface-400)"><span>Surface 400</span></div>
+        <div class="color-swatch" style="background: var(--surface-600)"><span>Surface 600</span></div>
+        <div class="color-swatch" style="background: var(--surface-900)"><span>Surface 900</span></div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section class="section">
+      <h2>Buttons</h2>
+      <h4>Severity</h4>
+      <div class="demo-row">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-success">Success</button>
+        <button class="btn btn-info">Info</button>
+        <button class="btn btn-warn">Warning</button>
+        <button class="btn btn-danger">Danger</button>
+        <button class="btn btn-help">Help</button>
+        <button class="btn btn-contrast">Contrast</button>
+      </div>
+
+      <h4>Outlined</h4>
+      <div class="demo-row">
+        <button class="btn btn-outlined btn-primary">Primary</button>
+        <button class="btn btn-outlined btn-secondary">Secondary</button>
+        <button class="btn btn-outlined btn-success">Success</button>
+        <button class="btn btn-outlined btn-danger">Danger</button>
+      </div>
+
+      <h4>Text (Ghost)</h4>
+      <div class="demo-row">
+        <button class="btn btn-text btn-primary">Primary</button>
+        <button class="btn btn-text btn-secondary">Secondary</button>
+        <button class="btn btn-text btn-danger">Danger</button>
+      </div>
+
+      <h4>Sizes</h4>
+      <div class="demo-row items-center">
+        <button class="btn btn-primary btn-sm">Small</button>
+        <button class="btn btn-primary">Normal</button>
+        <button class="btn btn-primary btn-lg">Large</button>
+      </div>
+
+      <h4>Variants</h4>
+      <div class="demo-row items-center">
+        <button class="btn btn-primary btn-rounded">Rounded</button>
+        <button class="btn btn-primary btn-raised">Raised</button>
+        <button class="btn btn-primary btn-icon"><i class="fa-solid fa-plus"></i></button>
+        <button class="btn btn-primary btn-icon btn-rounded"><i class="fa-solid fa-heart"></i></button>
+        <button class="btn btn-link">Link Button</button>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+
+      <h4>With Icons</h4>
+      <div class="demo-row">
+        <button class="btn btn-primary"><i class="fa-solid fa-check"></i> Save</button>
+        <button class="btn btn-outlined btn-danger"><i class="fa-solid fa-trash"></i> Delete</button>
+        <button class="btn btn-secondary"><i class="fa-solid fa-download"></i> Export</button>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section class="section">
+      <h2>Form Elements</h2>
+      <div class="demo-grid">
+        <div class="form-group">
+          <label class="form-label">Text Input</label>
+          <input class="input" placeholder="Enter text...">
+          <span class="form-helper">Helper text goes here</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Input with Icon</label>
+          <div class="input-icon-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input class="input" placeholder="Search...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Select</label>
+          <select class="select">
+            <option>Choose an option</option>
+            <option>Option A</option>
+            <option>Option B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Invalid Input</label>
+          <input class="input invalid" value="Bad value">
+          <span class="form-error">This field is required</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Small Input</label>
+          <input class="input input-sm" placeholder="Small size">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Large Input</label>
+          <input class="input input-lg" placeholder="Large size">
+        </div>
+      </div>
+
+      <div class="demo-grid mt-11">
+        <div class="form-group">
+          <label class="form-label">Textarea</label>
+          <textarea class="textarea" placeholder="Write something..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Disabled</label>
+          <input class="input" value="Cannot edit" disabled>
+        </div>
+      </div>
+
+      <h4>Checkbox, Radio & Toggle</h4>
+      <div class="demo-row items-center">
+        <label class="checkbox-wrapper"><input type="checkbox" checked> <span>Checked</span></label>
+        <label class="checkbox-wrapper"><input type="checkbox"> <span>Unchecked</span></label>
+        <label class="radio-wrapper"><input type="radio" name="demo" checked> <span>Option A</span></label>
+        <label class="radio-wrapper"><input type="radio" name="demo"> <span>Option B</span></label>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <section class="section">
+      <h2>Cards</h2>
+      <div class="demo-grid">
+        <div class="card">
+          <div class="card-header"><h4>Simple Card</h4></div>
+          <div class="card-body">
+            <p>Card content with some text. Cards use border-radius-xl (12px) and a subtle shadow.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h4>Card with Footer</h4>
+            <button class="btn btn-text btn-secondary btn-icon btn-sm"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+          </div>
+          <div class="card-subheader">Subtitle text</div>
+          <div class="card-body">
+            <p>This card has header actions, a subheader, and a footer with buttons.</p>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-text btn-secondary">Cancel</button>
+            <button class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table -->
+    <section class="section">
+      <h2>Data Table</h2>
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jana Novakova</td>
+              <td>jana@example.com</td>
+              <td>Admin</td>
+              <td><span class="tag tag-success">Active</span></td>
+              <td>
+                <button class="btn btn-text btn-primary btn-sm btn-icon"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-text btn-danger btn-sm btn-icon"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Petr Svoboda</td>
+              <td>petr@example.com</td>
+              <td>User</td>
+              <td><span class="tag tag-info">Pending</span></td>
+              <td>
+                <button class="btn btn-text btn-primary btn-sm btn-icon"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-text btn-danger btn-sm btn-icon"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Marie Kralova</td>
+              <td>marie@example.com</td>
+              <td>Editor</td>
+              <td><span class="tag tag-danger">Disabled</span></td>
+              <td>
+                <button class="btn btn-text btn-primary btn-sm btn-icon"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn btn-text btn-danger btn-sm btn-icon"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tags & Badges -->
+    <section class="section">
+      <h2>Tags & Badges</h2>
+      <div class="demo-row items-center">
+        <span class="tag">Default</span>
+        <span class="tag tag-primary">Primary</span>
+        <span class="tag tag-success">Success</span>
+        <span class="tag tag-info">Info</span>
+        <span class="tag tag-warn">Warning</span>
+        <span class="tag tag-danger">Danger</span>
+        <span class="tag tag-success tag-rounded">Rounded</span>
+      </div>
+      <div class="demo-row items-center mt-8">
+        <span class="badge">5</span>
+        <span class="badge badge-success">12</span>
+        <span class="badge badge-danger">!</span>
+        <span class="badge badge-info">99+</span>
+        <span class="badge badge-dot"></span>
+        <span class="badge badge-dot badge-success"></span>
+        <span class="badge badge-dot badge-danger"></span>
+      </div>
+    </section>
+
+    <!-- Navigation -->
+    <section class="section">
+      <h2>Navigation</h2>
+      <h4>Menubar</h4>
+      <nav class="menubar">
+        <div class="menubar-start">
+          <a class="menubar-item active"><i class="fa-solid fa-house"></i> Dashboard</a>
+          <a class="menubar-item"><i class="fa-solid fa-users"></i> Users</a>
+          <a class="menubar-item"><i class="fa-solid fa-print"></i> Devices</a>
+          <a class="menubar-item"><i class="fa-solid fa-gear"></i> Settings</a>
+        </div>
+        <div class="menubar-end">
+          <span data-tooltip="Notifications" class="cursor-pointer"><i class="fa-solid fa-bell" style="color: var(--surface-400)"></i></span>
+          <div class="avatar">YA</div>
+        </div>
+      </nav>
+
+      <h4 class="mt-11">Breadcrumb</h4>
+      <nav class="breadcrumb">
+        <a href="#">Home</a>
+        <span class="breadcrumb-separator"><i class="fa-solid fa-chevron-right" style="font-size: 10px"></i></span>
+        <a href="#">Settings</a>
+        <span class="breadcrumb-separator"><i class="fa-solid fa-chevron-right" style="font-size: 10px"></i></span>
+        <span class="breadcrumb-current">Users</span>
+      </nav>
+
+      <h4 class="mt-11">Tabs</h4>
+      <div class="tabs">
+        <button class="tab active"><i class="fa-solid fa-circle-info"></i> General</button>
+        <button class="tab"><i class="fa-solid fa-shield-halved"></i> Security</button>
+        <button class="tab"><i class="fa-solid fa-bell"></i> Notifications</button>
+      </div>
+    </section>
+
+    <!-- Messages -->
+    <section class="section">
+      <h2>Messages</h2>
+      <div class="d-flex flex-col gap-4">
+        <div class="message message-success"><i class="fa-solid fa-circle-check"></i> Operation completed successfully.</div>
+        <div class="message message-info"><i class="fa-solid fa-circle-info"></i> This is an informational message.</div>
+        <div class="message message-warn"><i class="fa-solid fa-triangle-exclamation"></i> Please review before continuing.</div>
+        <div class="message message-error"><i class="fa-solid fa-circle-xmark"></i> An error occurred during processing.</div>
+      </div>
+    </section>
+
+    <!-- Other -->
+    <section class="section">
+      <h2>Other Components</h2>
+
+      <h4>Avatars</h4>
+      <div class="demo-row items-center">
+        <div class="avatar avatar-sm">S</div>
+        <div class="avatar">YA</div>
+        <div class="avatar avatar-lg">LG</div>
+      </div>
+
+      <h4>Progress Bar</h4>
+      <div style="max-width: 400px">
+        <div class="progressbar"><div class="progressbar-fill" style="width: 65%"></div></div>
+      </div>
+
+      <h4>Chips</h4>
+      <div class="demo-row items-center">
+        <span class="chip">React <button class="chip-remove"><i class="fa-solid fa-xmark"></i></button></span>
+        <span class="chip">Vue <button class="chip-remove"><i class="fa-solid fa-xmark"></i></button></span>
+        <span class="chip">Angular <button class="chip-remove"><i class="fa-solid fa-xmark"></i></button></span>
+      </div>
+
+      <h4>Skeleton Loading</h4>
+      <div style="max-width: 300px">
+        <div class="skeleton skeleton-text" style="width: 80%"></div>
+        <div class="skeleton skeleton-text" style="width: 100%"></div>
+        <div class="skeleton skeleton-text" style="width: 60%"></div>
+      </div>
+
+      <h4>Empty State</h4>
+      <div class="empty-state" style="padding: var(--space-11)">
+        <i class="fa-solid fa-inbox empty-state-icon"></i>
+        <h3>No results found</h3>
+        <p>Try adjusting your search or filters to find what you're looking for.</p>
+        <button class="btn btn-primary mt-8"><i class="fa-solid fa-rotate-left"></i> Reset filters</button>
+      </div>
+    </section>
+
+    <!-- Dialog demo -->
+    <section class="section">
+      <h2>Dialog</h2>
+      <button class="btn btn-primary" onclick="document.getElementById('demo-dialog').style.display='flex'">
+        <i class="fa-solid fa-up-right-from-square"></i> Open Dialog
+      </button>
+    </section>
+
+  </div>
+
+  <!-- Dialog (hidden by default) -->
+  <div class="dialog-mask" id="demo-dialog" style="display: none" onclick="if(event.target===this)this.style.display='none'">
+    <div class="dialog">
+      <div class="dialog-header">
+        <h3>Confirm Action</h3>
+        <button class="dialog-close" onclick="document.getElementById('demo-dialog').style.display='none'">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="dialog-body">
+        <p>Are you sure you want to proceed? This action cannot be undone.</p>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-text btn-secondary" onclick="document.getElementById('demo-dialog').style.display='none'">Cancel</button>
+        <button class="btn btn-primary" onclick="document.getElementById('demo-dialog').style.display='none'">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast demo (visible) -->
+  <div class="toast-container">
+    <div class="toast toast-success">
+      <i class="fa-solid fa-circle-check toast-icon"></i>
+      <div class="toast-content">
+        <div class="toast-summary">Design system loaded</div>
+        <div class="toast-detail">All components are ready to use.</div>
+      </div>
+      <button class="toast-close" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
+
+</body>
+</html>

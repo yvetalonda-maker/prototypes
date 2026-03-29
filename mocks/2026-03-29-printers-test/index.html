@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Printers — Test Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Menubar -->
+  <nav class="menubar app-menubar">
+    <div class="menubar-start">
+      <span class="app-logo font-heading font-bold">SAFEQ <span class="text-muted font-normal">Cloud</span></span>
+      <a class="menubar-item"><i class="fa-solid fa-gauge"></i> Dashboard</a>
+      <a class="menubar-item active"><i class="fa-solid fa-print"></i> Printers</a>
+      <a class="menubar-item"><i class="fa-solid fa-users"></i> Users</a>
+      <a class="menubar-item"><i class="fa-solid fa-file-lines"></i> Reports</a>
+      <a class="menubar-item"><i class="fa-solid fa-gear"></i> Settings</a>
+    </div>
+    <div class="menubar-end">
+      <button class="btn btn-text btn-secondary btn-icon" data-tooltip="Notifications">
+        <i class="fa-solid fa-bell"></i>
+      </button>
+      <button class="btn btn-text btn-secondary btn-icon" data-tooltip="Help">
+        <i class="fa-solid fa-circle-question"></i>
+      </button>
+      <div class="avatar">YA</div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main class="page-content">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="#">Home</a>
+      <span class="breadcrumb-separator"><i class="fa-solid fa-chevron-right"></i></span>
+      <a href="#">Devices</a>
+      <span class="breadcrumb-separator"><i class="fa-solid fa-chevron-right"></i></span>
+      <span class="breadcrumb-current">Printers</span>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div>
+        <h1>Printers</h1>
+        <p class="text-muted">Manage printers and terminal installations across your organization.</p>
+      </div>
+      <div class="page-header-actions">
+        <button class="btn btn-outlined btn-primary" onclick="showDialog('install-dialog')">
+          <i class="fa-solid fa-terminal"></i> Install Terminals
+        </button>
+        <button class="btn btn-primary" onclick="showDialog('add-dialog')">
+          <i class="fa-solid fa-plus"></i> Add Printer
+        </button>
+      </div>
+    </div>
+
+    <!-- Toolbar: Search + Filter -->
+    <div class="toolbar">
+      <div class="toolbar-start">
+        <div class="input-icon-wrapper search-input">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input class="input" placeholder="Search printers..." id="searchInput" oninput="filterTable()">
+        </div>
+        <div class="filter-group">
+          <label class="text-sm text-muted">Status:</label>
+          <select class="select filter-select" id="statusFilter" onchange="filterTable()">
+            <option value="">All</option>
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+            <option value="error">Error</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+      </div>
+      <div class="toolbar-end">
+        <span class="text-sm text-muted" id="resultCount">Showing 8 printers</span>
+      </div>
+    </div>
+
+    <!-- Printers Table -->
+    <div class="table-wrapper">
+      <table class="table" id="printersTable">
+        <thead>
+          <tr>
+            <th class="sortable">Name <i class="fa-solid fa-sort" style="font-size: 10px; margin-left: 4px; color: var(--surface-400)"></i></th>
+            <th>IP Address</th>
+            <th>Model</th>
+            <th>Location</th>
+            <th>Terminal</th>
+            <th>Status</th>
+            <th class="th-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="online">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Floor2-East</td>
+            <td class="text-muted">192.168.1.101</td>
+            <td>Konica Minolta C360i</td>
+            <td>Building A, 2nd Floor</td>
+            <td><span class="tag tag-success tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px"></i> Installed</span></td>
+            <td><span class="tag tag-success">Online</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Floor2-East')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="online">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Floor3-West</td>
+            <td class="text-muted">192.168.1.102</td>
+            <td>Konica Minolta C250i</td>
+            <td>Building A, 3rd Floor</td>
+            <td><span class="tag tag-success tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px"></i> Installed</span></td>
+            <td><span class="tag tag-success">Online</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Floor3-West')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="offline">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Lobby</td>
+            <td class="text-muted">192.168.1.103</td>
+            <td>Konica Minolta C300i</td>
+            <td>Building A, Lobby</td>
+            <td><span class="tag tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px; color: var(--surface-400)"></i> Not installed</span></td>
+            <td><span class="tag">Offline</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Lobby')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="online">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Floor1-Central</td>
+            <td class="text-muted">192.168.1.104</td>
+            <td>Konica Minolta C360i</td>
+            <td>Building B, 1st Floor</td>
+            <td><span class="tag tag-success tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px"></i> Installed</span></td>
+            <td><span class="tag tag-success">Online</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Floor1-Central')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="error">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Floor4-North</td>
+            <td class="text-muted">192.168.1.105</td>
+            <td>Konica Minolta C250i</td>
+            <td>Building B, 4th Floor</td>
+            <td><span class="tag tag-success tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px"></i> Installed</span></td>
+            <td><span class="tag tag-danger"><i class="fa-solid fa-circle-exclamation" style="font-size: 10px"></i> Error</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Floor4-North')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="maintenance">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Floor2-West</td>
+            <td class="text-muted">192.168.1.106</td>
+            <td>Konica Minolta C300i</td>
+            <td>Building A, 2nd Floor</td>
+            <td><span class="tag tag-success tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px"></i> Installed</span></td>
+            <td><span class="tag tag-warn"><i class="fa-solid fa-wrench" style="font-size: 10px"></i> Maintenance</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Floor2-West')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="online">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Conference</td>
+            <td class="text-muted">192.168.1.107</td>
+            <td>Konica Minolta C360i</td>
+            <td>Building A, Conference Room</td>
+            <td><span class="tag tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px; color: var(--surface-400)"></i> Not installed</span></td>
+            <td><span class="tag tag-success">Online</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Conference')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+          <tr data-status="offline">
+            <td class="printer-name"><i class="fa-solid fa-print" style="color: var(--surface-400); margin-right: 6px"></i> MFP-Warehouse</td>
+            <td class="text-muted">192.168.2.201</td>
+            <td>Konica Minolta C250i</td>
+            <td>Warehouse, Shipping Area</td>
+            <td><span class="tag tag-rounded"><i class="fa-solid fa-circle" style="font-size: 6px; color: var(--surface-400)"></i> Not installed</span></td>
+            <td><span class="tag">Offline</span></td>
+            <td class="td-actions">
+              <button class="btn btn-text btn-primary btn-sm btn-icon" data-tooltip="Edit"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn btn-text btn-danger btn-sm btn-icon" data-tooltip="Delete" onclick="showDeleteConfirm('MFP-Warehouse')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table footer -->
+    <div class="table-footer">
+      <span class="text-sm text-muted">1–8 of 8 printers</span>
+    </div>
+
+  </main>
+
+  <!-- Add Printer Dialog -->
+  <div class="dialog-mask" id="add-dialog" style="display: none" onclick="if(event.target===this)hideDialog('add-dialog')">
+    <div class="dialog" style="max-width: 520px">
+      <div class="dialog-header">
+        <h3>Add Printer</h3>
+        <button class="dialog-close" onclick="hideDialog('add-dialog')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="dialog-body">
+        <div class="d-flex flex-col gap-11">
+          <div class="form-group">
+            <label class="form-label">Printer Name</label>
+            <input class="input" placeholder="e.g. MFP-Floor3-East">
+          </div>
+          <div class="d-grid" style="grid-template-columns: 1fr 1fr; gap: var(--space-11)">
+            <div class="form-group">
+              <label class="form-label">IP Address</label>
+              <input class="input" placeholder="192.168.1.xxx">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Model</label>
+              <select class="select">
+                <option>Select model...</option>
+                <option>Konica Minolta C250i</option>
+                <option>Konica Minolta C300i</option>
+                <option>Konica Minolta C360i</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location</label>
+            <input class="input" placeholder="e.g. Building A, 2nd Floor">
+          </div>
+          <label class="checkbox-wrapper">
+            <input type="checkbox"> <span>Install terminal application after adding</span>
+          </label>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-text btn-secondary" onclick="hideDialog('add-dialog')">Cancel</button>
+        <button class="btn btn-primary" onclick="hideDialog('add-dialog')"><i class="fa-solid fa-plus"></i> Add Printer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Install Terminals Dialog -->
+  <div class="dialog-mask" id="install-dialog" style="display: none" onclick="if(event.target===this)hideDialog('install-dialog')">
+    <div class="dialog" style="max-width: 480px">
+      <div class="dialog-header">
+        <h3>Install Terminals</h3>
+        <button class="dialog-close" onclick="hideDialog('install-dialog')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="dialog-body">
+        <div class="message message-info mb-8">
+          <i class="fa-solid fa-circle-info"></i> Terminal app will be installed on all printers without an active terminal.
+        </div>
+        <p>The following printers will receive the terminal installation:</p>
+        <ul class="install-list">
+          <li><i class="fa-solid fa-print text-muted"></i> MFP-Lobby <span class="tag">Offline</span></li>
+          <li><i class="fa-solid fa-print text-muted"></i> MFP-Conference <span class="tag tag-success">Online</span></li>
+          <li><i class="fa-solid fa-print text-muted"></i> MFP-Warehouse <span class="tag">Offline</span></li>
+        </ul>
+        <div class="message message-warn mt-8">
+          <i class="fa-solid fa-triangle-exclamation"></i> Offline printers will be queued and installed when they come online.
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-text btn-secondary" onclick="hideDialog('install-dialog')">Cancel</button>
+        <button class="btn btn-primary" onclick="hideDialog('install-dialog')"><i class="fa-solid fa-terminal"></i> Install on 3 printers</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Dialog -->
+  <div class="dialog-mask" id="delete-dialog" style="display: none" onclick="if(event.target===this)hideDialog('delete-dialog')">
+    <div class="dialog" style="max-width: 420px">
+      <div class="dialog-header">
+        <h3>Delete Printer</h3>
+        <button class="dialog-close" onclick="hideDialog('delete-dialog')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="dialog-body dialog-confirm">
+        <i class="fa-solid fa-triangle-exclamation dialog-icon text-warning"></i>
+        <div>
+          <p>Are you sure you want to delete <strong id="delete-printer-name"></strong>?</p>
+          <p class="text-sm text-muted mt-4">This will also remove the terminal installation. This action cannot be undone.</p>
+        </div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn btn-text btn-secondary" onclick="hideDialog('delete-dialog')">Cancel</button>
+        <button class="btn btn-danger" onclick="hideDialog('delete-dialog')"><i class="fa-solid fa-trash"></i> Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

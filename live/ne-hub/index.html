@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ne.Hub — Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="logo-safeq">SAFEQ</span> <span class="logo-cloud">Cloud</span><sup>®</sup>
+    </div>
+    <div class="header-spacer"></div>
+    <div class="header-account">
+      <div class="account-info">
+        <span class="account-name">User Name</span>
+        <span class="account-role">Account</span>
+      </div>
+      <i class="fa-solid fa-chevron-down account-chevron"></i>
+    </div>
+  </header>
+
+  <!-- Body: Sidebar + Content -->
+  <div class="app-body">
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <nav class="sidebar-nav">
+        <a class="sidebar-link active" href="index.html">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="sidebar-link" href="customers.html">
+          <i class="fa-solid fa-users"></i>
+          <span>Customers</span>
+        </a>
+        <a class="sidebar-link">
+          <i class="fa-solid fa-calculator"></i>
+          <span>Business Tools</span>
+        </a>
+        <a class="sidebar-link">
+          <i class="fa-solid fa-gauge"></i>
+          <span>Cloud status</span>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="sidebar-link" href="prototype-costs.html">
+          <i class="fa-solid fa-coins"></i>
+          <span>Prototype costs</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-content">
+
+      <!-- Customers to Review -->
+      <section class="content-section">
+        <div class="section-header">
+          <h2>Customers to Review</h2>
+          <a href="customers.html" class="btn btn-primary">View all customers</a>
+        </div>
+
+        <div class="stats-colored">
+          <a href="customers.html?filter=trials-convert" class="stat-card stat-card--cyan">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Trials ending soon</span>
+              <i class="fa-solid fa-circle-info stat-card-info"></i>
+            </div>
+            <span class="tag tag-primary">SAFEQ Cloud</span>
+            <div class="stat-card-value stat-card-value--cyan">101</div>
+          </a>
+
+          <a href="customers.html?filter=close-renewal" class="stat-card stat-card--cyan">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Renewals coming up</span>
+              <i class="fa-solid fa-circle-info stat-card-info"></i>
+            </div>
+            <span class="tag tag-primary">SAFEQ Cloud</span>
+            <div class="stat-card-value stat-card-value--cyan">81</div>
+          </a>
+
+          <a href="customers.html?filter=trials-risk" class="stat-card stat-card--orange">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Migration opportunity</span>
+              <i class="fa-solid fa-circle-info stat-card-info"></i>
+            </div>
+            <span class="tag tag-warn">SAFEQ 6</span>
+            <div class="stat-card-value stat-card-value--cyan">4 658</div>
+          </a>
+
+          <a href="customers.html?filter=need-attention" class="stat-card stat-card--orange">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Renewals coming up</span>
+              <i class="fa-solid fa-circle-info stat-card-info"></i>
+            </div>
+            <span class="tag tag-warn">SAFEQ 6</span>
+            <div class="stat-card-value stat-card-value--cyan">4 658</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Overall Usage -->
+      <section class="content-section">
+        <h2>Overall Usage</h2>
+
+        <div class="usage-card">
+          <div class="usage-stat">
+            <span class="usage-stat-label">Customers total</span>
+            <span class="usage-stat-value">22 648</span>
+            <div class="usage-stat-trend trend-down">
+              <i class="fa-solid fa-arrow-trend-down"></i>
+              <span>-25</span>
+            </div>
+          </div>
+          <div class="usage-divider"></div>
+          <div class="usage-stat">
+            <span class="usage-stat-label">Users total</span>
+            <span class="usage-stat-value">115 390</span>
+            <div class="usage-stat-trend trend-up">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+              <span>250</span>
+            </div>
+          </div>
+          <div class="usage-divider"></div>
+          <div class="usage-stat">
+            <span class="usage-stat-label">Devices total</span>
+            <span class="usage-stat-value">80 492</span>
+            <div class="usage-stat-trend trend-up">
+              <i class="fa-solid fa-arrow-trend-up"></i>
+              <span>1250</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Help & Resources -->
+      <section class="content-section">
+        <h2>Help & Resources</h2>
+
+        <div class="resources-card">
+          <div class="resources-col">
+            <h5 class="resources-heading">Learn</h5>
+            <ul class="resources-list">
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Video tutorials</a></li>
+              <li><a href="#">Bud-Y AI documentation</a></li>
+              <li><a href="#">LEARN platform</a></li>
+            </ul>
+          </div>
+          <div class="resources-col">
+            <h5 class="resources-heading">Tools</h5>
+            <ul class="resources-list">
+              <li><a href="#">Cloud Tool Stack</a></li>
+              <li><a href="#">Trust center</a></li>
+            </ul>
+          </div>
+          <div class="resources-col">
+            <h5 class="resources-heading">Legacy</h5>
+            <ul class="resources-list">
+              <li><a href="#">Partner Portal</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>

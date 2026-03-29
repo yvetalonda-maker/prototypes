@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ne.Hub — Customers</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="customers.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="logo-safeq">SAFEQ</span> <span class="logo-cloud">Cloud</span><sup>®</sup>
+    </div>
+    <div class="header-spacer"></div>
+    <div class="header-account">
+      <div class="account-info">
+        <span class="account-name">User Name</span>
+        <span class="account-role">Account</span>
+      </div>
+      <i class="fa-solid fa-chevron-down account-chevron"></i>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <div class="app-body">
+
+    <!-- Sidebar -->
+    <aside class="app-sidebar">
+      <nav class="sidebar-nav">
+        <a class="sidebar-link" href="index.html">
+          <i class="fa-solid fa-house"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="sidebar-link active">
+          <i class="fa-solid fa-users"></i>
+          <span>Customers</span>
+        </a>
+        <a class="sidebar-link">
+          <i class="fa-solid fa-calculator"></i>
+          <span>Business Tools</span>
+        </a>
+        <a class="sidebar-link">
+          <i class="fa-solid fa-gauge"></i>
+          <span>Cloud status</span>
+        </a>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="sidebar-link" href="prototype-costs.html">
+          <i class="fa-solid fa-coins"></i>
+          <span>Prototype costs</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-content customers-content">
+
+      <!-- Page Title + Toggle -->
+      <div class="customers-title-row">
+        <h1 class="customers-title">Customers</h1>
+        <div class="toggle-group">
+          <button class="toggle-btn active">SAFEQ cloud</button>
+          <button class="toggle-btn">SAFEQ 6</button>
+        </div>
+      </div>
+
+      <!-- Stat Cards (filters) -->
+      <div class="customer-stats">
+        <div class="cstat-card" data-filter-cat="trials-convert">
+          <div class="cstat-header">
+            <span class="cstat-label">Trials likely to convert</span>
+            <i class="fa-solid fa-circle-info cstat-info"></i>
+          </div>
+          <div class="cstat-bottom">
+            <span class="cstat-number">106</span>
+            <span class="cstat-detail">1 000/0 <i class="fa-solid fa-print"></i></span>
+          </div>
+        </div>
+
+        <div class="cstat-card" data-filter-cat="close-renewal">
+          <div class="cstat-header">
+            <span class="cstat-label">Close to renewal</span>
+            <i class="fa-solid fa-circle-info cstat-info"></i>
+          </div>
+          <div class="cstat-bottom">
+            <span class="cstat-number">46</span>
+            <span class="cstat-detail">1 000/2 000 <i class="fa-solid fa-print"></i></span>
+          </div>
+        </div>
+
+        <div class="cstat-card" data-filter-cat="trials-risk">
+          <div class="cstat-header">
+            <span class="cstat-label">Trials at risk</span>
+            <i class="fa-solid fa-circle-info cstat-info"></i>
+          </div>
+          <div class="cstat-bottom">
+            <span class="cstat-number">233</span>
+            <span class="cstat-detail">1 000/2 000 <i class="fa-solid fa-print"></i></span>
+          </div>
+        </div>
+
+        <div class="cstat-card" data-filter-cat="need-attention">
+          <div class="cstat-header">
+            <span class="cstat-label">Customers need attention</span>
+            <i class="fa-solid fa-circle-info cstat-info"></i>
+          </div>
+          <div class="cstat-bottom">
+            <span class="cstat-number">206</span>
+            <span class="cstat-detail">1 000/2 000 <i class="fa-solid fa-print"></i></span>
+          </div>
+        </div>
+
+        <button class="cstat-arrow"><i class="fa-solid fa-circle-chevron-right"></i></button>
+      </div>
+
+      <!-- Filters -->
+      <div class="customers-filters">
+        <div class="filter-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Search Customer, MA, Partner..." id="customerSearch">
+        </div>
+        <div class="filter-dropdown" data-filter="region">
+          <div class="filter-dropdown-label">Region</div>
+          <div class="filter-dropdown-value">All regions</div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown-menu">
+            <div class="filter-dropdown-option selected" data-value="">All regions</div>
+            <div class="filter-dropdown-option" data-value="apac">APAC</div>
+            <div class="filter-dropdown-option" data-value="emea">EMEA</div>
+            <div class="filter-dropdown-option" data-value="americas">Americas</div>
+          </div>
+        </div>
+        <div class="filter-dropdown" data-filter="expiration">
+          <div class="filter-dropdown-label">Expiration</div>
+          <div class="filter-dropdown-value">All</div>
+          <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown-menu">
+            <div class="filter-dropdown-option selected" data-value="">All</div>
+            <div class="filter-dropdown-option" data-value="expired">Expired</div>
+            <div class="filter-dropdown-option" data-value="30days">Next 30 days</div>
+            <div class="filter-dropdown-option" data-value="90days">Next 90 days</div>
+          </div>
+        </div>
+        <button class="filter-show-all">SHOW ALL FILTERS</button>
+      </div>
+
+      <!-- Table -->
+      <div class="customers-table-wrap">
+        <table class="customers-table">
+          <thead>
+            <tr>
+              <th class="col-customer">Customer <i class="fa-solid fa-caret-down"></i></th>
+              <th class="col-sla">SLA</th>
+              <th class="col-created">Created</th>
+              <th class="col-expires">Expires</th>
+              <th class="col-licenses">Licenses</th>
+              <th class="col-status">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Group 1: trials-convert -->
+            <tr class="row-group-header">
+              <td colspan="6">The Community & Public Sector Union</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-convert close-renewal" data-customer="The Community & Public Sector Union" data-sla="Legacy" data-expires="a year ago" data-licenses="19" data-build="6.0.111" data-cves="173/199" data-printers="312" data-users="1,204" data-pages="84,291">
+              <td class="col-customer sub-row">MA1500554 • Konica Minolta Business Solutions Australia Pty Limited</td>
+              <td class="col-sla"><span class="sla-badge sla-legacy">Legacy</span></td>
+              <td class="col-created">2 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">a year ago</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 90%"></div></div>
+              </td>
+              <td class="col-licenses">19</td>
+              <td class="col-status">
+                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+            <tr class="row-sub" data-category="trials-convert" data-customer="The Community & Public Sector Union" data-sla="Breeze Trial" data-expires="in 3 months" data-licenses="19" data-build="6.2.045" data-cves="12/199" data-printers="189" data-users="856" data-pages="52,104">
+              <td class="col-customer sub-row">MA1500556 • Konica Minolta Business Solutions Australia Pty Limited</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze-trial">Breeze Trial</span></td>
+              <td class="col-created">a year ago</td>
+              <td class="col-expires">
+                <span class="expires-text">in 3 months</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--orange" style="width: 42%"></div></div>
+              </td>
+              <td class="col-licenses">19</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 2: trials-risk -->
+            <tr class="row-group-header">
+              <td colspan="6">WHITESTAR</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-risk need-attention" data-customer="WHITESTAR" data-sla="Breeze" data-expires="3 years ago" data-licenses="17" data-build="5.8.034" data-cves="187/199" data-printers="94" data-users="412" data-pages="18,902">
+              <td class="col-customer sub-row">MA15004738 • ZEDLINK - SERVIÇOS INFORMATICOS UNIPESSOAL LDA</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze">Breeze</span></td>
+              <td class="col-created">a year ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">3 years ago</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 90%"></div></div>
+              </td>
+              <td class="col-licenses">17</td>
+              <td class="col-status">
+                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 3: close-renewal -->
+            <tr class="row-group-header">
+              <td colspan="6">Conseil Départemental de l'Herault</td>
+            </tr>
+            <tr class="row-sub" data-category="close-renewal need-attention" data-customer="Conseil Départemental de l'Herault" data-sla="Starter" data-expires="in a month" data-licenses="520" data-build="6.1.082" data-cves="45/199" data-printers="4,735" data-users="36,428" data-pages="5,849,104">
+              <td class="col-customer sub-row">MA13439378 • NEWSOFT IT SAS</td>
+              <td class="col-sla"><span class="sla-badge sla-starter">Starter</span></td>
+              <td class="col-created">2 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">in a month</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 68%"></div></div>
+              </td>
+              <td class="col-licenses">520</td>
+              <td class="col-status">
+                <span class="status-dot status-red" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 4: need-attention -->
+            <tr class="row-group-header">
+              <td colspan="6">ECOLE DE LA CONSTRUCTION</td>
+            </tr>
+            <tr class="row-sub" data-category="need-attention" data-customer="ECOLE DE LA CONSTRUCTION" data-sla="NFR" data-expires="2 years ago" data-licenses="18" data-build="6.0.089" data-cves="156/199" data-printers="22" data-users="189" data-pages="12,401">
+              <td class="col-customer sub-row">MA13028336 • Konica Minolta Business Solutions France SAS</td>
+              <td class="col-sla"><span class="sla-badge sla-nfr">NFR</span></td>
+              <td class="col-created">2 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">2 years ago</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 90%"></div></div>
+              </td>
+              <td class="col-licenses">18</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+            <tr class="row-sub" data-category="need-attention" data-customer="ECOLE DE LA CONSTRUCTION" data-sla="Starter" data-expires="2 years ago" data-licenses="18" data-build="6.0.089" data-cves="156/199" data-printers="18" data-users="142" data-pages="8,205">
+              <td class="col-customer sub-row">MA13028381 • Konica Minolta Business Solutions France SAS</td>
+              <td class="col-sla"><span class="sla-badge sla-starter">Starter</span></td>
+              <td class="col-created">2 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">2 years ago</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 90%"></div></div>
+              </td>
+              <td class="col-licenses">18</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 5: trials-convert -->
+            <tr class="row-group-header">
+              <td colspan="6">Acme Corporation</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-convert" data-customer="Acme Corporation" data-sla="Breeze Trial" data-expires="in 2 months" data-licenses="45" data-build="6.2.101" data-cves="8/199" data-printers="1,240" data-users="5,891" data-pages="892,104">
+              <td class="col-customer sub-row">MA17129284 • Acme Office Solutions GmbH</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze-trial">Breeze Trial</span></td>
+              <td class="col-created">3 months ago</td>
+              <td class="col-expires">
+                <span class="expires-text">in 2 months</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--orange" style="width: 55%"></div></div>
+              </td>
+              <td class="col-licenses">45</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 6: close-renewal -->
+            <tr class="row-group-header">
+              <td colspan="6">Bayerische Motoren Werke AG</td>
+            </tr>
+            <tr class="row-sub" data-category="close-renewal" data-customer="Bayerische Motoren Werke AG" data-sla="Breeze" data-expires="in 3 weeks" data-licenses="1200" data-build="6.2.090" data-cves="22/199" data-printers="8,420" data-users="52,100" data-pages="12,400,000">
+              <td class="col-customer sub-row">MA16891002 • Konica Minolta Business Solutions Deutschland GmbH</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze">Breeze</span></td>
+              <td class="col-created">3 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">in 3 weeks</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 85%"></div></div>
+              </td>
+              <td class="col-licenses">1200</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 7: trials-risk -->
+            <tr class="row-group-header">
+              <td colspan="6">Universität Wien</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-risk" data-customer="Universität Wien" data-sla="Breeze Trial" data-expires="in 5 days" data-licenses="80" data-build="6.2.045" data-cves="34/199" data-printers="620" data-users="14,200" data-pages="1,204,500">
+              <td class="col-customer sub-row">MA16220891 • Konica Minolta Business Solutions Austria GmbH</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze-trial">Breeze Trial</span></td>
+              <td class="col-created">5 months ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">in 5 days</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 95%"></div></div>
+              </td>
+              <td class="col-licenses">80</td>
+              <td class="col-status">
+                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-red" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 8: trials-convert -->
+            <tr class="row-group-header">
+              <td colspan="6">Mairie de Lyon</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-convert" data-customer="Mairie de Lyon" data-sla="Breeze Trial" data-expires="in 6 weeks" data-licenses="250" data-build="6.2.101" data-cves="5/199" data-printers="2,100" data-users="18,500" data-pages="3,200,000">
+              <td class="col-customer sub-row">MA14892010 • Konica Minolta Business Solutions France SAS</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze-trial">Breeze Trial</span></td>
+              <td class="col-created">4 months ago</td>
+              <td class="col-expires">
+                <span class="expires-text">in 6 weeks</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--orange" style="width: 60%"></div></div>
+              </td>
+              <td class="col-licenses">250</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 9: trials-risk, need-attention -->
+            <tr class="row-group-header">
+              <td colspan="6">Governo do Estado de São Paulo</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-risk need-attention" data-customer="Governo do Estado de São Paulo" data-sla="Starter" data-expires="in 2 days" data-licenses="340" data-build="5.9.072" data-cves="145/199" data-printers="3,800" data-users="28,000" data-pages="7,100,000">
+              <td class="col-customer sub-row">MA18001245 • Konica Minolta Business Solutions do Brasil Ltda</td>
+              <td class="col-sla"><span class="sla-badge sla-starter">Starter</span></td>
+              <td class="col-created">6 months ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">in 2 days</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 98%"></div></div>
+              </td>
+              <td class="col-licenses">340</td>
+              <td class="col-status">
+                <span class="status-dot status-red" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-yellow" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 10: close-renewal -->
+            <tr class="row-group-header">
+              <td colspan="6">Rijkswaterstaat</td>
+            </tr>
+            <tr class="row-sub" data-category="close-renewal" data-customer="Rijkswaterstaat" data-sla="Breeze" data-expires="in 2 months" data-licenses="680" data-build="6.2.090" data-cves="18/199" data-printers="5,200" data-users="42,000" data-pages="9,800,000">
+              <td class="col-customer sub-row">MA15590812 • Konica Minolta Business Solutions Nederland B.V.</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze">Breeze</span></td>
+              <td class="col-created">2 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text">in 2 months</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--orange" style="width: 50%"></div></div>
+              </td>
+              <td class="col-licenses">680</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 11: trials-convert -->
+            <tr class="row-group-header">
+              <td colspan="6">NHS Foundation Trust</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-convert" data-customer="NHS Foundation Trust" data-sla="Breeze Trial" data-expires="in 4 months" data-licenses="150" data-build="6.2.101" data-cves="3/199" data-printers="980" data-users="8,200" data-pages="1,540,000">
+              <td class="col-customer sub-row">MA17340091 • Konica Minolta Business Solutions (UK) Ltd</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze-trial">Breeze Trial</span></td>
+              <td class="col-created">2 months ago</td>
+              <td class="col-expires">
+                <span class="expires-text">in 4 months</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--green" style="width: 25%"></div></div>
+              </td>
+              <td class="col-licenses">150</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 12: need-attention -->
+            <tr class="row-group-header">
+              <td colspan="6">Technische Universität München</td>
+            </tr>
+            <tr class="row-sub" data-category="need-attention" data-customer="Technische Universität München" data-sla="NFR" data-expires="6 months ago" data-licenses="35" data-build="5.7.020" data-cves="192/199" data-printers="280" data-users="2,100" data-pages="420,000">
+              <td class="col-customer sub-row">MA14501892 • Konica Minolta Business Solutions Deutschland GmbH</td>
+              <td class="col-sla"><span class="sla-badge sla-nfr">NFR</span></td>
+              <td class="col-created">3 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">6 months ago</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 90%"></div></div>
+              </td>
+              <td class="col-licenses">35</td>
+              <td class="col-status">
+                <span class="status-dot status-red" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 13: trials-risk -->
+            <tr class="row-group-header">
+              <td colspan="6">Scandinavian Airlines System</td>
+            </tr>
+            <tr class="row-sub" data-category="trials-risk" data-customer="Scandinavian Airlines System" data-sla="Breeze Trial" data-expires="in 8 days" data-licenses="90" data-build="6.2.045" data-cves="28/199" data-printers="750" data-users="6,800" data-pages="980,000">
+              <td class="col-customer sub-row">MA16780345 • Konica Minolta Business Solutions Sweden AB</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze-trial">Breeze Trial</span></td>
+              <td class="col-created">5 months ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">in 8 days</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 92%"></div></div>
+              </td>
+              <td class="col-licenses">90</td>
+              <td class="col-status">
+                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-yellow" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-red" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+            <!-- Group 14: close-renewal -->
+            <tr class="row-group-header">
+              <td colspan="6">Nestlé S.A.</td>
+            </tr>
+            <tr class="row-sub" data-category="close-renewal" data-customer="Nestlé S.A." data-sla="Breeze" data-expires="in 6 weeks" data-licenses="2400" data-build="6.2.101" data-cves="7/199" data-printers="12,800" data-users="98,000" data-pages="24,500,000">
+              <td class="col-customer sub-row">MA15120078 • Konica Minolta Business Solutions Schweiz AG</td>
+              <td class="col-sla"><span class="sla-badge sla-breeze">Breeze</span></td>
+              <td class="col-created">4 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text">in 6 weeks</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--orange" style="width: 60%"></div></div>
+              </td>
+              <td class="col-licenses">2400</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+            <tr class="row-sub" data-category="close-renewal need-attention" data-customer="Nestlé S.A." data-sla="Legacy" data-expires="in 2 weeks" data-licenses="800" data-build="5.9.072" data-cves="134/199" data-printers="4,200" data-users="31,000" data-pages="8,100,000">
+              <td class="col-customer sub-row">MA15120092 • Konica Minolta Business Solutions Schweiz AG</td>
+              <td class="col-sla"><span class="sla-badge sla-legacy">Legacy</span></td>
+              <td class="col-created">5 years ago</td>
+              <td class="col-expires">
+                <span class="expires-text expires-danger">in 2 weeks</span>
+                <div class="expires-bar"><div class="expires-fill expires-fill--red" style="width: 88%"></div></div>
+              </td>
+              <td class="col-licenses">800</td>
+              <td class="col-status">
+                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="status-dot status-yellow" title="Users"><i class="fa-solid fa-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Side Panel (customer detail) -->
+  <div class="side-panel-overlay" id="sidePanelOverlay"></div>
+  <aside class="side-panel" id="sidePanel">
+    <!-- CTA Banner -->
+    <div class="sp-banner">
+      <div class="sp-banner-text">
+        <div class="sp-banner-title">Move this customer to cloud</div>
+        <div class="sp-banner-desc">Nice marketing way of telling the partner to move this customer to cloud and what's in it for them</div>
+      </div>
+      <button class="sp-close" id="spClose"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <!-- Header -->
+    <div class="sp-header">
+      <div class="sp-customer-name" id="spName">Acme corporation</div>
+      <div class="sp-header-row">
+        <div class="sp-meta">
+          <span class="sp-ma" id="spMa">MA17129284</span>
+          <span class="tag tag-warn" id="spProduct">SAFEQ 6</span>
+        </div>
+        <div class="sp-actions">
+          <button class="btn btn-primary btn-sm">Move to cloud</button>
+          <button class="btn btn-secondary btn-sm">Manage license</button>
+          <button class="btn btn-secondary btn-sm btn-icon"><i class="fa-solid fa-ellipsis"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="sp-tabs">
+      <button class="sp-tab active">Overview</button>
+      <button class="sp-tab">Telemetry</button>
+      <button class="sp-tab">License</button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="sp-body">
+      <!-- Info Cards -->
+      <div class="sp-info-row">
+        <div class="sp-info-card">
+          <div class="sp-info-cols">
+            <div>
+              <div class="sp-info-label">SLA</div>
+              <div class="sp-info-badge" id="spSla"><span class="sla-badge sla-starter">Starter</span></div>
+            </div>
+            <div>
+              <div class="sp-info-label">expires</div>
+              <div class="sp-info-value" id="spExpires">09/09/2032</div>
+            </div>
+          </div>
+        </div>
+        <div class="sp-info-card">
+          <div class="sp-info-label">Devices/Licenses</div>
+          <div class="sp-info-big" id="spLicenses">18/19</div>
+        </div>
+        <div class="sp-info-card">
+          <div class="sp-info-label">Status</div>
+          <div class="sp-info-status" id="spStatusDots">
+            <span class="status-dot status-green"><i class="fa-solid fa-stopwatch"></i></span>
+            <span class="status-dot status-red"><i class="fa-solid fa-shield-halved"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Section -->
+      <div class="sp-section">
+        <div class="sp-section-title">Security</div>
+        <div class="sp-security-card">
+          <div class="sp-security-stats">
+            <div class="sp-security-stat">
+              <div class="sp-info-label">Build</div>
+              <div class="sp-security-value" id="spBuild">6.0.111</div>
+              <div class="sp-security-sub">3 months old</div>
+            </div>
+            <div class="sp-security-stat">
+              <div class="sp-info-label">CVES</div>
+              <div class="sp-security-value" id="spCves">173/199</div>
+            </div>
+          </div>
+          <div class="sp-security-alert" id="spSecurityAlert">
+            <span class="tag tag-danger">Outdated version with high security risk</span>
+            <p>The customer needs a security patch. <strong>Update to the latest version</strong> to protect their system.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Telemetry Section -->
+      <div class="sp-section">
+        <div class="sp-section-header">
+          <span class="sp-section-title">Telemetry</span>
+          <span class="tag tag-info"><i class="fa-solid fa-clock"></i> Last updated 16 May 2026, 03:30</span>
+          <button class="btn btn-secondary btn-sm" style="margin-left: auto;">SEE MORE</button>
+        </div>
+        <div class="sp-telemetry-card">
+          <div class="sp-telemetry-stat">
+            <div class="sp-info-label">Printers</div>
+            <div class="sp-security-value" id="spPrinters">4,735</div>
+          </div>
+          <div class="sp-telemetry-stat">
+            <div class="sp-info-label">Users</div>
+            <div class="sp-security-value" id="spUsers">36,428</div>
+          </div>
+          <div class="sp-telemetry-stat">
+            <div class="sp-info-label">Print pages</div>
+            <div class="sp-security-value" id="spPages">5,849,104</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    // ===== Toggle buttons =====
+    document.querySelectorAll('.toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // ===== Stat card filtering =====
+    let activeFilter = null;
+
+    function applyFilters() {
+      const query = document.getElementById('customerSearch').value.toLowerCase();
+      const groups = [];
+      let currentGroup = null;
+
+      document.querySelectorAll('.customers-table tbody tr').forEach(row => {
+        if (row.classList.contains('row-group-header')) {
+          currentGroup = { header: row, subs: [] };
+          groups.push(currentGroup);
+        } else if (row.classList.contains('row-sub') && currentGroup) {
+          currentGroup.subs.push(row);
+        }
+      });
+
+      groups.forEach(group => {
+        let anyVisible = false;
+        group.subs.forEach(sub => {
+          const matchesSearch = !query || sub.textContent.toLowerCase().includes(query);
+          const matchesFilter = !activeFilter || (sub.dataset.category || '').includes(activeFilter);
+          const visible = matchesSearch && matchesFilter;
+          sub.style.display = visible ? '' : 'none';
+          if (visible) anyVisible = true;
+        });
+        group.header.style.display = anyVisible ? '' : 'none';
+      });
+    }
+
+    // Stat cards as filters
+    document.querySelectorAll('.cstat-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const wasSelected = card.classList.contains('selected');
+        document.querySelectorAll('.cstat-card').forEach(c => c.classList.remove('selected'));
+        if (wasSelected) {
+          activeFilter = null;
+        } else {
+          card.classList.add('selected');
+          activeFilter = card.dataset.filterCat;
+        }
+        applyFilters();
+      });
+    });
+
+    // Search filtering
+    document.getElementById('customerSearch').addEventListener('input', applyFilters);
+
+    // URL param filter (from dashboard)
+    const urlFilter = new URLSearchParams(window.location.search).get('filter');
+    if (urlFilter) {
+      const matchCard = document.querySelector(`.cstat-card[data-filter-cat="${urlFilter}"]`);
+      if (matchCard) {
+        matchCard.classList.add('selected');
+        activeFilter = urlFilter;
+        applyFilters();
+      }
+    }
+
+    // ===== Group collapse/expand =====
+    document.querySelectorAll('.row-group-header').forEach(header => {
+      header.addEventListener('click', () => {
+        header.classList.toggle('collapsed');
+        let next = header.nextElementSibling;
+        while (next && next.classList.contains('row-sub')) {
+          next.style.display = header.classList.contains('collapsed') ? 'none' : '';
+          next = next.nextElementSibling;
+        }
+      });
+    });
+
+    // ===== Table sorting =====
+    const table = document.querySelector('.customers-table');
+    const headers = table.querySelectorAll('thead th');
+    const colIndexMap = { 0: 'customer', 2: 'created', 3: 'expires', 4: 'licenses' };
+
+    headers.forEach((th, index) => {
+      if (!(index in colIndexMap)) return;
+      th.addEventListener('click', () => {
+        const isAsc = th.classList.contains('sort-asc');
+        headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+        th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+        const dir = isAsc ? -1 : 1;
+
+        const groups = [];
+        let currentGroup = null;
+        table.querySelectorAll('tbody tr').forEach(row => {
+          if (row.classList.contains('row-group-header')) {
+            currentGroup = { header: row, subs: [] };
+            groups.push(currentGroup);
+          } else if (row.classList.contains('row-sub') && currentGroup) {
+            currentGroup.subs.push(row);
+          }
+        });
+
+        groups.sort((a, b) => {
+          const aVal = a.subs[0]?.children[index]?.textContent.trim() || '';
+          const bVal = b.subs[0]?.children[index]?.textContent.trim() || '';
+          if (index === 4) return (parseInt(aVal) - parseInt(bVal)) * dir;
+          return aVal.localeCompare(bVal) * dir;
+        });
+
+        const tbody = table.querySelector('tbody');
+        groups.forEach(group => {
+          tbody.appendChild(group.header);
+          group.subs.forEach(sub => tbody.appendChild(sub));
+        });
+      });
+    });
+
+    // ===== Dropdown menus =====
+    document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+      const valueEl = dropdown.querySelector('.filter-dropdown-value');
+      const options = dropdown.querySelectorAll('.filter-dropdown-option');
+
+      dropdown.addEventListener('click', (e) => {
+        if (e.target.classList.contains('filter-dropdown-option')) return;
+        document.querySelectorAll('.filter-dropdown').forEach(d => {
+          if (d !== dropdown) d.classList.remove('open');
+        });
+        dropdown.classList.toggle('open');
+      });
+
+      options.forEach(option => {
+        option.addEventListener('click', () => {
+          options.forEach(o => o.classList.remove('selected'));
+          option.classList.add('selected');
+          valueEl.textContent = option.textContent;
+          dropdown.classList.remove('open');
+        });
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.filter-dropdown')) {
+        document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('open'));
+      }
+    });
+
+    // ===== Side Panel =====
+    const sidePanel = document.getElementById('sidePanel');
+    const overlay = document.getElementById('sidePanelOverlay');
+
+    function openSidePanel(row) {
+      const d = row.dataset;
+      document.getElementById('spName').textContent = d.customer || 'Customer';
+      document.getElementById('spMa').textContent = row.querySelector('.col-customer').textContent.split('•')[0].trim();
+
+      // SLA badge
+      const slaEl = row.querySelector('.sla-badge');
+      if (slaEl) {
+        document.getElementById('spSla').innerHTML = slaEl.outerHTML;
+      }
+
+      document.getElementById('spExpires').textContent = d.expires || '—';
+      document.getElementById('spLicenses').textContent = d.licenses ? d.licenses + '/' + (parseInt(d.licenses.replace(/,/g,'')) + 1) : '—';
+      document.getElementById('spBuild').textContent = d.build || '—';
+      document.getElementById('spCves').textContent = d.cves || '—';
+      document.getElementById('spPrinters').textContent = d.printers || '—';
+      document.getElementById('spUsers').textContent = d.users || '—';
+      document.getElementById('spPages').textContent = d.pages || '—';
+
+      // Status dots
+      const statusDots = row.querySelectorAll('.status-dot');
+      const spStatus = document.getElementById('spStatusDots');
+      spStatus.innerHTML = '';
+      statusDots.forEach(dot => {
+        const clone = dot.cloneNode(true);
+        spStatus.appendChild(clone);
+      });
+
+      // Security alert visibility
+      const cves = d.cves || '';
+      const cveCount = parseInt(cves.split('/')[0]);
+      const alertEl = document.getElementById('spSecurityAlert');
+      alertEl.style.display = cveCount > 100 ? '' : 'none';
+
+      sidePanel.classList.add('open');
+      overlay.classList.add('open');
+    }
+
+    function closeSidePanel() {
+      sidePanel.classList.remove('open');
+      overlay.classList.remove('open');
+    }
+
+    // Row click → open panel
+    document.querySelectorAll('.row-sub').forEach(row => {
+      row.addEventListener('click', () => openSidePanel(row));
+    });
+
+    document.getElementById('spClose').addEventListener('click', closeSidePanel);
+    overlay.addEventListener('click', closeSidePanel);
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidePanel();
+    });
+
+    // Side panel tabs
+    document.querySelectorAll('.sp-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.sp-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

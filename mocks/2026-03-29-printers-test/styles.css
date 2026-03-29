@@ -1,0 +1,151 @@
+/* App layout */
+.app-menubar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  border-radius: 0;
+  padding: var(--space-4) var(--space-13);
+  background: var(--surface-0);
+}
+
+.app-logo {
+  font-size: var(--text-lg);
+  margin-right: var(--space-11);
+  color: var(--surface-900);
+}
+
+.page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-11) var(--space-13);
+}
+
+/* Page header */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-13);
+}
+
+.page-header h1 {
+  margin-bottom: var(--space-2);
+}
+
+.page-header-actions {
+  display: flex;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-8);
+  gap: var(--space-8);
+}
+
+.toolbar-start {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.toolbar-end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.search-input {
+  width: 280px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.filter-select {
+  width: 160px;
+}
+
+/* Table tweaks */
+.th-actions,
+.td-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.printer-name {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.table tbody tr.hidden {
+  display: none;
+}
+
+/* Table footer */
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Install list */
+.install-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-8) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.install-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface-50);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+}
+
+.install-list li .tag {
+  margin-left: auto;
+}
+
+/* Breadcrumb spacing */
+.breadcrumb .breadcrumb-separator i {
+  font-size: 9px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-start {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
