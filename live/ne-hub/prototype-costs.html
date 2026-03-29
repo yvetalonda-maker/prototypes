@@ -320,81 +320,83 @@
       <h1 class="costs-title">Prototype Costs</h1>
       <p class="costs-subtitle">
         Rozklad nákladů na vytvoření tohoto prototypu pomocí Claude Code + Figma MCP.
-        Čísla jsou relativní odhad poměru práce v rámci jedné session.
+        Procenta vyjadřují odhadovaný podíl z <strong>týdenního limitu</strong> Claude Code (Opus).
+        Celkem spotřebováno <strong>~44 %</strong> týdenního limitu.
+        <br><em>⚠️ Wild guess — Claude Code nezpřístupňuje přesné metriky do konverzace. Odhad vychází z pozorování uživatelky (začátek ~25 % used → konec ~69 % used).</em>
       </p>
 
-      <!-- Bar chart -->
+      <!-- Bar chart — values = % of weekly Claude Code limit (wild guess) -->
       <div class="cost-bar-chart">
         <div class="cost-bar-row">
           <div class="cost-bar-label">Setup projektu & knihovna</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--setup" style="width: 35%">35%</div>
+            <div class="cost-bar-fill cost-bar-fill--setup" style="width: 29.5%">~13 %</div>
           </div>
-          <div class="cost-bar-pct">~35%</div>
+          <div class="cost-bar-pct">~13 %</div>
           <div class="cost-bar-time">~45 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Component showcase</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--showcase" style="width: 5%"></div>
+            <div class="cost-bar-fill cost-bar-fill--showcase" style="width: 4.5%"></div>
           </div>
-          <div class="cost-bar-pct">~5%</div>
+          <div class="cost-bar-pct">~2 %</div>
           <div class="cost-bar-time">~5 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Printers mock</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--printers" style="width: 8%"></div>
+            <div class="cost-bar-fill cost-bar-fill--printers" style="width: 6.8%"></div>
           </div>
-          <div class="cost-bar-pct">~8%</div>
+          <div class="cost-bar-pct">~3 %</div>
           <div class="cost-bar-time">~10 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Dashboard (z Figmy)</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--dashboard" style="width: 10%"></div>
+            <div class="cost-bar-fill cost-bar-fill--dashboard" style="width: 9.1%"></div>
           </div>
-          <div class="cost-bar-pct">~10%</div>
+          <div class="cost-bar-pct">~4 %</div>
           <div class="cost-bar-time">~12 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Customers page (z Figmy)</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--customers" style="width: 12%"></div>
+            <div class="cost-bar-fill cost-bar-fill--customers" style="width: 11.4%"></div>
           </div>
-          <div class="cost-bar-pct">~12%</div>
+          <div class="cost-bar-pct">~5 %</div>
           <div class="cost-bar-time">~15 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Interaktivita (hover, sort, search)</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--interactivity" style="width: 10%"></div>
+            <div class="cost-bar-fill cost-bar-fill--interactivity" style="width: 9.1%"></div>
           </div>
-          <div class="cost-bar-pct">~10%</div>
+          <div class="cost-bar-pct">~4 %</div>
           <div class="cost-bar-time">~10 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Rozšíření (data, filtry, side panel)</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill cost-bar-fill--extension" style="width: 20%"></div>
+            <div class="cost-bar-fill cost-bar-fill--extension" style="width: 18.2%"></div>
           </div>
-          <div class="cost-bar-pct">~20%</div>
+          <div class="cost-bar-pct">~8 %</div>
           <div class="cost-bar-time">~20 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Opravy UX + logika filtrů</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill" style="width: 10%; background: #6366f1;"></div>
+            <div class="cost-bar-fill" style="width: 9.1%; background: #6366f1;"></div>
           </div>
-          <div class="cost-bar-pct">~10%</div>
+          <div class="cost-bar-pct">~4 %</div>
           <div class="cost-bar-time">~15 min</div>
         </div>
         <div class="cost-bar-row">
           <div class="cost-bar-label">Migrace ikon + GitHub Pages</div>
           <div class="cost-bar-track">
-            <div class="cost-bar-fill" style="width: 6%; background: #a855f7;"></div>
+            <div class="cost-bar-fill" style="width: 4.5%; background: #a855f7;"></div>
           </div>
-          <div class="cost-bar-pct">~6%</div>
+          <div class="cost-bar-pct">~2 %</div>
           <div class="cost-bar-time">~10 min</div>
         </div>
       </div>
@@ -403,8 +405,8 @@
       <div class="insight-card">
         <h3><i class="pi pi-lightbulb"></i> Amortizace setupu</h3>
         <p>
-          Setup projektu (CLAUDE.md, design tokeny, komponentová knihovna, fonty) tvořil <strong>~35% celkové práce</strong>,
-          ale je jednorázový. Od teď každá nová stránka z Figmy stojí jen <strong>10–15%</strong> toho, co stál celý dnešek.
+          Setup projektu (CLAUDE.md, design tokeny, komponentová knihovna, fonty) stál <strong>~13 % týdenního limitu</strong>,
+          ale je jednorázový. Každá další stránka z Figmy stojí jen <strong>~4–5 %</strong> limitu.
           Čím víc stránek vznikne, tím víc se počáteční investice vyplatí.
         </p>
       </div>
@@ -417,7 +419,7 @@
             <th>Co obsahuje</th>
             <th>Zadání</th>
             <th>Doba</th>
-            <th>Podíl</th>
+            <th>% limitu</th>
             <th>Typ</th>
           </tr>
         </thead>
@@ -427,7 +429,7 @@
             <td class="col-desc">CLAUDE.md, base.css (tokeny, fonty), components.css (20+ komponent), utilities.css, template.html, design-system.md</td>
             <td class="col-desc">Popis vize projektu, odkaz na Figma kit, volba technologií. Diskuse o struktuře.</td>
             <td class="col-pct">~45 min</td>
-            <td class="col-pct">~35%</td>
+            <td class="col-pct">~13 %</td>
             <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
           </tr>
           <tr>
@@ -435,7 +437,7 @@
             <td class="col-desc">Testovací stránka se všemi komponentami pro vizuální kontrolu</td>
             <td class="col-desc">Automaticky jako kontrola kvality knihovny</td>
             <td class="col-pct">~5 min</td>
-            <td class="col-pct">~5%</td>
+            <td class="col-pct">~2 %</td>
             <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
           </tr>
           <tr>
@@ -443,7 +445,7 @@
             <td class="col-desc">Stránka s menubar, breadcrumbs, tabulkou tiskáren, 3 dialogy, filtrování, vyhledávání</td>
             <td class="col-desc">Textový popis: "menu, breadcrumbs, tabulka tiskáren, editace, mazání, přidávání, instalace terminálů, search, filtr"</td>
             <td class="col-pct">~10 min</td>
-            <td class="col-pct">~8%</td>
+            <td class="col-pct">~3 %</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
           <tr>
@@ -451,7 +453,7 @@
             <td class="col-desc">Konverze z Figma framu: layout, sidebar, stat karty, usage stats, help sekce</td>
             <td class="col-desc">Figma link na frame + "rozjeď jako text tento frame"</td>
             <td class="col-pct">~12 min</td>
-            <td class="col-pct">~10%</td>
+            <td class="col-pct">~4 %</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
           <tr>
@@ -459,7 +461,7 @@
             <td class="col-desc">Konverze z Figmy: toggle, stat karty, filtry, seskupená tabulka, SLA badges, status tečky</td>
             <td class="col-desc">Figma link + "dodělej stránku customers"</td>
             <td class="col-pct">~15 min</td>
-            <td class="col-pct">~12%</td>
+            <td class="col-pct">~5 %</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
           <tr>
@@ -467,7 +469,7 @@
             <td class="col-desc">CSS hovery, table sorting, search, group collapse, dropdown menus</td>
             <td class="col-desc">"Řada věcí není interaktivních &mdash; projdi prototyp a co pochopíš, tak rozjeď"</td>
             <td class="col-pct">~10 min</td>
-            <td class="col-pct">~10%</td>
+            <td class="col-pct">~4 %</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
           <tr>
@@ -475,39 +477,23 @@
             <td class="col-desc">Víc datových řádků, propojení filtrů, side panel z Figmy s dynamickými daty</td>
             <td class="col-desc">Popis chování filtrů, "přidej dost zákazníků", Figma link na side panel</td>
             <td class="col-pct">~20 min</td>
-            <td class="col-pct">~20%</td>
+            <td class="col-pct">~8 %</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
           <tr>
-            <td class="col-phase">Opravy UX</td>
-            <td class="col-desc">Sidebar hover barva, btn hover, SLA badge hover off, logo černé, Y Soft bez kurzívy, group header podbarvení, sorting všech sloupců</td>
-            <td class="col-desc">"Bílá na hover v menu", "SLA bez hoveru", "logo černé", "nikdy kurzíva u YSoft"</td>
-            <td class="col-pct">~5 min</td>
-            <td class="col-pct">~3%</td>
+            <td class="col-phase">Opravy UX + logika filtrů</td>
+            <td class="col-desc">Sidebar hover, btn hover, SLA badge hover off, logo černé, Y Soft bez kurzívy, group headers, sorting, toggle Cloud/6, stat card kategorie</td>
+            <td class="col-desc">"Bílá na hover v menu", "breeze je cloud", "trials at risk = oranžová/červená ve statusu"</td>
+            <td class="col-pct">~15 min</td>
+            <td class="col-pct">~4 %</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
           <tr>
-            <td class="col-phase">Logika filtrů</td>
-            <td class="col-desc">Toggle Cloud/SAFEQ 6 filtruje tabulku podle SLA typu. Stat karty dynamicky počítají kategorie z dat (trial+zelená → convert, trial+problém → risk, atd.)</td>
-            <td class="col-desc">Popis logiky: "breeze je cloud, starter je 6, trials at risk = oranžová/červená ve statusu..."</td>
+            <td class="col-phase">Migrace ikon + GitHub Pages</td>
+            <td class="col-desc">Přechod z FA na PrimeIcons, vytvoření repa, nastavení Pages, fix .nojekyll</td>
+            <td class="col-desc">"Pro ne.Hub vždy ikony z PrimeVue kitu" + "dej mi link"</td>
             <td class="col-pct">~10 min</td>
-            <td class="col-pct">~7%</td>
-            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
-          </tr>
-          <tr>
-            <td class="col-phase">Migrace ikon</td>
-            <td class="col-desc">Přechod z Font Awesome na PrimeIcons (PrimeVue kit) ve všech ne.Hub stránkách</td>
-            <td class="col-desc">"Pro ne.Hub vždy ikony z PrimeVue kitu"</td>
-            <td class="col-pct">~5 min</td>
-            <td class="col-pct">~3%</td>
-            <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
-          </tr>
-          <tr>
-            <td class="col-phase">GitHub Pages</td>
-            <td class="col-desc">Vytvoření repa, nastavení Pages, fix .nojekyll pro _shared složku</td>
-            <td class="col-desc">"Vytvoř repo, dej mi link"</td>
-            <td class="col-pct">~5 min</td>
-            <td class="col-pct">~3%</td>
+            <td class="col-pct">~2 %</td>
             <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
           </tr>
         </tbody>
@@ -519,9 +505,9 @@
         <p>
           <strong>~2,5 hodiny</strong> od prvního zadání po kompletní prototyp se 3 stránkami, interaktivitou, side panelem,
           dynamickými filtry, migrací ikon a publikací na GitHub Pages.
+          Spotřebováno <strong>~44 % týdenního limitu</strong> Claude Code (Opus).
           Z toho zadávání a rozhodování na straně uživatele cca <strong>20–25 minut</strong>,
           zbytek je generování kódu a Figma MCP volání.
-          Čas zahrnuje i diskusi o struktuře projektu na začátku a iterace na UX detailech.
         </p>
       </div>
 
@@ -531,31 +517,32 @@
         <div class="projection-cards">
           <div class="proj-card">
             <div class="proj-card-label">Nová stránka z Figmy</div>
-            <div class="proj-card-value">~15 min</div>
-            <div class="proj-card-note">Figma link + jedno zadání. Layout, komponenty, data. Bez interaktivity.</div>
+            <div class="proj-card-value">~4 %</div>
+            <div class="proj-card-note">~15 min. Figma link + jedno zadání. Layout, komponenty, data.</div>
           </div>
           <div class="proj-card">
             <div class="proj-card-label">Stránka + interaktivita</div>
-            <div class="proj-card-value">~25 min</div>
-            <div class="proj-card-note">Stránka z Figmy + hovery, sorting, filtrování, dialogy, panely.</div>
+            <div class="proj-card-value">~7 %</div>
+            <div class="proj-card-note">~25 min. Stránka z Figmy + hovery, sorting, filtrování, panely.</div>
           </div>
           <div class="proj-card">
             <div class="proj-card-label">Quick mock (bez Figmy)</div>
-            <div class="proj-card-value">~10 min</div>
-            <div class="proj-card-note">Stránka z textového popisu. Využívá hotovou knihovnu komponent.</div>
+            <div class="proj-card-value">~3 %</div>
+            <div class="proj-card-note">~10 min. Stránka z textového popisu. Hotová knihovna komponent.</div>
           </div>
           <div class="proj-card">
             <div class="proj-card-label">Celý flow (3–5 stránek)</div>
-            <div class="proj-card-value">~1 hod</div>
-            <div class="proj-card-note">Kompletní prototyp s navigací, daty a interaktivitou. Cca polovina dnešní session.</div>
+            <div class="proj-card-value">~20 %</div>
+            <div class="proj-card-note">~1 hod. Kompletní prototyp s navigací, daty a interaktivitou.</div>
           </div>
         </div>
       </div>
 
       <p class="costs-note">
-        Pozn.: Čísla jsou relativní odhady na základě objemu generovaného kódu a počtu Figma MCP volání.
-        Skutečná spotřeba tokenů závisí na složitosti designu, počtu iterací a množství konverzace.
-        Claude Code nezpřístupňuje přesné metriky spotřeby do konverzace — pro skutečné údaje zkontroluj billing dashboard.
+        ⚠️ <strong>Wild guess.</strong> Claude Code nezpřístupňuje přesné metriky spotřeby do konverzace.
+        Odhad vychází z pozorování: na začátku session bylo týdenní usage ~25 %, na konci ~69 % → rozdíl ~44 %
+        rozpočítaný proporčně. Skutečná spotřeba závisí na složitosti designu, počtu iterací, délce konverzace
+        a interním token ratingu modelu. Pro přesné údaje viz billing dashboard.
       </p>
 
     </main>
