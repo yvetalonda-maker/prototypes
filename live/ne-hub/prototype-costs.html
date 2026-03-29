@@ -381,6 +381,22 @@
           <div class="cost-bar-pct">~20%</div>
           <div class="cost-bar-time">~20 min</div>
         </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Opravy UX + logika filtrů</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill" style="width: 10%; background: #6366f1;"></div>
+          </div>
+          <div class="cost-bar-pct">~10%</div>
+          <div class="cost-bar-time">~15 min</div>
+        </div>
+        <div class="cost-bar-row">
+          <div class="cost-bar-label">Migrace ikon + GitHub Pages</div>
+          <div class="cost-bar-track">
+            <div class="cost-bar-fill" style="width: 6%; background: #a855f7;"></div>
+          </div>
+          <div class="cost-bar-pct">~6%</div>
+          <div class="cost-bar-time">~10 min</div>
+        </div>
       </div>
 
       <!-- Key insight -->
@@ -462,6 +478,38 @@
             <td class="col-pct">~20%</td>
             <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
           </tr>
+          <tr>
+            <td class="col-phase">Opravy UX</td>
+            <td class="col-desc">Sidebar hover barva, btn hover, SLA badge hover off, logo černé, Y Soft bez kurzívy, group header podbarvení, sorting všech sloupců</td>
+            <td class="col-desc">"Bílá na hover v menu", "SLA bez hoveru", "logo černé", "nikdy kurzíva u YSoft"</td>
+            <td class="col-pct">~5 min</td>
+            <td class="col-pct">~3%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Logika filtrů</td>
+            <td class="col-desc">Toggle Cloud/SAFEQ 6 filtruje tabulku podle SLA typu. Stat karty dynamicky počítají kategorie z dat (trial+zelená → convert, trial+problém → risk, atd.)</td>
+            <td class="col-desc">Popis logiky: "breeze je cloud, starter je 6, trials at risk = oranžová/červená ve statusu..."</td>
+            <td class="col-pct">~10 min</td>
+            <td class="col-pct">~7%</td>
+            <td class="col-type"><span class="type-badge type-badge--recurring">Opakované</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">Migrace ikon</td>
+            <td class="col-desc">Přechod z Font Awesome na PrimeIcons (PrimeVue kit) ve všech ne.Hub stránkách</td>
+            <td class="col-desc">"Pro ne.Hub vždy ikony z PrimeVue kitu"</td>
+            <td class="col-pct">~5 min</td>
+            <td class="col-pct">~3%</td>
+            <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
+          </tr>
+          <tr>
+            <td class="col-phase">GitHub Pages</td>
+            <td class="col-desc">Vytvoření repa, nastavení Pages, fix .nojekyll pro _shared složku</td>
+            <td class="col-desc">"Vytvoř repo, dej mi link"</td>
+            <td class="col-pct">~5 min</td>
+            <td class="col-pct">~3%</td>
+            <td class="col-type"><span class="type-badge type-badge--once">Jednorázové</span></td>
+          </tr>
         </tbody>
       </table>
 
@@ -469,10 +517,11 @@
       <div class="insight-card" style="background: #ffffff; border-color: var(--surface-200);">
         <h3 style="color: #30394a;"><i class="pi pi-clock"></i> Celkový čas session</h3>
         <p>
-          <strong>~2 hodiny</strong> od prvního zadání po kompletní prototyp se 3 stránkami, interaktivitou a side panelem.
-          Z toho zadávání a rozhodování na straně uživatele cca <strong>15–20 minut</strong>,
+          <strong>~2,5 hodiny</strong> od prvního zadání po kompletní prototyp se 3 stránkami, interaktivitou, side panelem,
+          dynamickými filtry, migrací ikon a publikací na GitHub Pages.
+          Z toho zadávání a rozhodování na straně uživatele cca <strong>20–25 minut</strong>,
           zbytek je generování kódu a Figma MCP volání.
-          Čas zahrnuje i diskusi o struktuře projektu na začátku.
+          Čas zahrnuje i diskusi o struktuře projektu na začátku a iterace na UX detailech.
         </p>
       </div>
 
