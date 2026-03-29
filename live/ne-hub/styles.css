@@ -36,20 +36,19 @@ body {
 }
 
 .logo-safeq {
-  color: var(--color-primary);
+  color: #000000;
   font-weight: 700;
-  font-style: italic;
 }
 
 .logo-cloud {
-  color: var(--orange-500);
+  color: #000000;
   font-weight: 700;
   margin-left: 2px;
 }
 
 .header-logo sup {
   font-size: 9px;
-  color: var(--orange-500);
+  color: #000000;
   margin-left: 1px;
 }
 
@@ -163,6 +162,7 @@ body {
 
 .sidebar-link:hover {
   background-color: var(--surface-800);
+  color: #ffffff;
 }
 
 .sidebar-link.active {
@@ -228,6 +228,12 @@ body {
 a.stat-card {
   text-decoration: none;
   color: inherit;
+}
+
+a.btn-primary,
+a.btn-primary:hover,
+a.btn-primary:visited {
+  color: #ffffff;
 }
 
 .stat-card--cyan {

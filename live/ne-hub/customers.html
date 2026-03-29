@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ne.Hub — Customers</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
   <link rel="stylesheet" href="../../_shared/css/base.css">
   <link rel="stylesheet" href="../../_shared/css/components.css">
   <link rel="stylesheet" href="../../_shared/css/utilities.css">
@@ -24,7 +24,7 @@
         <span class="account-name">User Name</span>
         <span class="account-role">Account</span>
       </div>
-      <i class="fa-solid fa-chevron-down account-chevron"></i>
+      <i class="pi pi-chevron-down account-chevron"></i>
     </div>
   </header>
 
@@ -35,25 +35,25 @@
     <aside class="app-sidebar">
       <nav class="sidebar-nav">
         <a class="sidebar-link" href="index.html">
-          <i class="fa-solid fa-house"></i>
+          <i class="pi pi-home"></i>
           <span>Dashboard</span>
         </a>
         <a class="sidebar-link active">
-          <i class="fa-solid fa-users"></i>
+          <i class="pi pi-users"></i>
           <span>Customers</span>
         </a>
         <a class="sidebar-link">
-          <i class="fa-solid fa-calculator"></i>
+          <i class="pi pi-calculator"></i>
           <span>Business Tools</span>
         </a>
         <a class="sidebar-link">
-          <i class="fa-solid fa-gauge"></i>
+          <i class="pi pi-gauge"></i>
           <span>Cloud status</span>
         </a>
       </nav>
       <div class="sidebar-bottom">
         <a class="sidebar-link" href="prototype-costs.html">
-          <i class="fa-solid fa-coins"></i>
+          <i class="pi pi-money-bill"></i>
           <span>Prototype costs</span>
         </a>
       </div>
@@ -76,60 +76,60 @@
         <div class="cstat-card" data-filter-cat="trials-convert">
           <div class="cstat-header">
             <span class="cstat-label">Trials likely to convert</span>
-            <i class="fa-solid fa-circle-info cstat-info"></i>
+            <i class="pi pi-info-circle cstat-info"></i>
           </div>
           <div class="cstat-bottom">
             <span class="cstat-number">106</span>
-            <span class="cstat-detail">1 000/0 <i class="fa-solid fa-print"></i></span>
+            <span class="cstat-detail">1 000/0 <i class="pi pi-print"></i></span>
           </div>
         </div>
 
         <div class="cstat-card" data-filter-cat="close-renewal">
           <div class="cstat-header">
             <span class="cstat-label">Close to renewal</span>
-            <i class="fa-solid fa-circle-info cstat-info"></i>
+            <i class="pi pi-info-circle cstat-info"></i>
           </div>
           <div class="cstat-bottom">
             <span class="cstat-number">46</span>
-            <span class="cstat-detail">1 000/2 000 <i class="fa-solid fa-print"></i></span>
+            <span class="cstat-detail">1 000/2 000 <i class="pi pi-print"></i></span>
           </div>
         </div>
 
         <div class="cstat-card" data-filter-cat="trials-risk">
           <div class="cstat-header">
             <span class="cstat-label">Trials at risk</span>
-            <i class="fa-solid fa-circle-info cstat-info"></i>
+            <i class="pi pi-info-circle cstat-info"></i>
           </div>
           <div class="cstat-bottom">
             <span class="cstat-number">233</span>
-            <span class="cstat-detail">1 000/2 000 <i class="fa-solid fa-print"></i></span>
+            <span class="cstat-detail">1 000/2 000 <i class="pi pi-print"></i></span>
           </div>
         </div>
 
         <div class="cstat-card" data-filter-cat="need-attention">
           <div class="cstat-header">
             <span class="cstat-label">Customers need attention</span>
-            <i class="fa-solid fa-circle-info cstat-info"></i>
+            <i class="pi pi-info-circle cstat-info"></i>
           </div>
           <div class="cstat-bottom">
             <span class="cstat-number">206</span>
-            <span class="cstat-detail">1 000/2 000 <i class="fa-solid fa-print"></i></span>
+            <span class="cstat-detail">1 000/2 000 <i class="pi pi-print"></i></span>
           </div>
         </div>
 
-        <button class="cstat-arrow"><i class="fa-solid fa-circle-chevron-right"></i></button>
+        <button class="cstat-arrow"><i class="pi pi-chevron-circle-right"></i></button>
       </div>
 
       <!-- Filters -->
       <div class="customers-filters">
         <div class="filter-search">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i class="pi pi-search"></i>
           <input type="text" placeholder="Search Customer, MA, Partner..." id="customerSearch">
         </div>
         <div class="filter-dropdown" data-filter="region">
           <div class="filter-dropdown-label">Region</div>
           <div class="filter-dropdown-value">All regions</div>
-          <i class="fa-solid fa-chevron-down"></i>
+          <i class="pi pi-chevron-down"></i>
           <div class="filter-dropdown-menu">
             <div class="filter-dropdown-option selected" data-value="">All regions</div>
             <div class="filter-dropdown-option" data-value="apac">APAC</div>
@@ -140,7 +140,7 @@
         <div class="filter-dropdown" data-filter="expiration">
           <div class="filter-dropdown-label">Expiration</div>
           <div class="filter-dropdown-value">All</div>
-          <i class="fa-solid fa-chevron-down"></i>
+          <i class="pi pi-chevron-down"></i>
           <div class="filter-dropdown-menu">
             <div class="filter-dropdown-option selected" data-value="">All</div>
             <div class="filter-dropdown-option" data-value="expired">Expired</div>
@@ -156,12 +156,12 @@
         <table class="customers-table">
           <thead>
             <tr>
-              <th class="col-customer">Customer <i class="fa-solid fa-caret-down"></i></th>
-              <th class="col-sla">SLA</th>
-              <th class="col-created">Created</th>
-              <th class="col-expires">Expires</th>
-              <th class="col-licenses">Licenses</th>
-              <th class="col-status">Status</th>
+              <th class="col-customer">Customer <i class="pi pi-caret-down"></i></th>
+              <th class="col-sla">SLA <i class="pi pi-caret-down"></i></th>
+              <th class="col-created">Created <i class="pi pi-caret-down"></i></th>
+              <th class="col-expires">Expires <i class="pi pi-caret-down"></i></th>
+              <th class="col-licenses">Licenses <i class="pi pi-caret-down"></i></th>
+              <th class="col-status">Status <i class="pi pi-caret-down"></i></th>
             </tr>
           </thead>
           <tbody>
@@ -179,11 +179,11 @@
               </td>
               <td class="col-licenses">19</td>
               <td class="col-status">
-                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-yellow" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
             <tr class="row-sub" data-category="trials-convert" data-customer="The Community & Public Sector Union" data-sla="Breeze Trial" data-expires="in 3 months" data-licenses="19" data-build="6.2.045" data-cves="12/199" data-printers="189" data-users="856" data-pages="52,104">
@@ -196,11 +196,11 @@
               </td>
               <td class="col-licenses">19</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -218,11 +218,11 @@
               </td>
               <td class="col-licenses">17</td>
               <td class="col-status">
-                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-yellow" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -240,11 +240,11 @@
               </td>
               <td class="col-licenses">520</td>
               <td class="col-status">
-                <span class="status-dot status-red" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-red" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -262,11 +262,11 @@
               </td>
               <td class="col-licenses">18</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
             <tr class="row-sub" data-category="need-attention" data-customer="ECOLE DE LA CONSTRUCTION" data-sla="Starter" data-expires="2 years ago" data-licenses="18" data-build="6.0.089" data-cves="156/199" data-printers="18" data-users="142" data-pages="8,205">
@@ -279,11 +279,11 @@
               </td>
               <td class="col-licenses">18</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -301,11 +301,11 @@
               </td>
               <td class="col-licenses">45</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -323,11 +323,11 @@
               </td>
               <td class="col-licenses">1200</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -345,11 +345,11 @@
               </td>
               <td class="col-licenses">80</td>
               <td class="col-status">
-                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-red" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-yellow" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-red" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -367,11 +367,11 @@
               </td>
               <td class="col-licenses">250</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -389,11 +389,11 @@
               </td>
               <td class="col-licenses">340</td>
               <td class="col-status">
-                <span class="status-dot status-red" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-yellow" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-red" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-yellow" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -411,11 +411,11 @@
               </td>
               <td class="col-licenses">680</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -433,11 +433,11 @@
               </td>
               <td class="col-licenses">150</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -455,11 +455,11 @@
               </td>
               <td class="col-licenses">35</td>
               <td class="col-status">
-                <span class="status-dot status-red" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-red" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-red" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-red" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-red" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-red" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -477,11 +477,11 @@
               </td>
               <td class="col-licenses">90</td>
               <td class="col-status">
-                <span class="status-dot status-yellow" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-yellow" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-red" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-yellow" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-yellow" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-red" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -499,11 +499,11 @@
               </td>
               <td class="col-licenses">2400</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-green" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-green" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-green" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-green" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-green" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-green" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
             <tr class="row-sub" data-category="close-renewal need-attention" data-customer="Nestlé S.A." data-sla="Legacy" data-expires="in 2 weeks" data-licenses="800" data-build="5.9.072" data-cves="134/199" data-printers="4,200" data-users="31,000" data-pages="8,100,000">
@@ -516,11 +516,11 @@
               </td>
               <td class="col-licenses">800</td>
               <td class="col-status">
-                <span class="status-dot status-green" title="Telemetry"><i class="fa-solid fa-chart-line"></i></span>
-                <span class="status-dot status-yellow" title="Users"><i class="fa-solid fa-user"></i></span>
-                <span class="status-dot status-green" title="Print activity"><i class="fa-solid fa-print"></i></span>
-                <span class="status-dot status-red" title="Security"><i class="fa-solid fa-shield-halved"></i></span>
-                <span class="status-dot status-yellow" title="License"><i class="fa-solid fa-key"></i></span>
+                <span class="status-dot status-green" title="Telemetry"><i class="pi pi-chart-line"></i></span>
+                <span class="status-dot status-yellow" title="Users"><i class="pi pi-user"></i></span>
+                <span class="status-dot status-green" title="Print activity"><i class="pi pi-print"></i></span>
+                <span class="status-dot status-red" title="Security"><i class="pi pi-shield"></i></span>
+                <span class="status-dot status-yellow" title="License"><i class="pi pi-key"></i></span>
               </td>
             </tr>
 
@@ -540,7 +540,7 @@
         <div class="sp-banner-title">Move this customer to cloud</div>
         <div class="sp-banner-desc">Nice marketing way of telling the partner to move this customer to cloud and what's in it for them</div>
       </div>
-      <button class="sp-close" id="spClose"><i class="fa-solid fa-xmark"></i></button>
+      <button class="sp-close" id="spClose"><i class="pi pi-times"></i></button>
     </div>
 
     <!-- Header -->
@@ -554,7 +554,7 @@
         <div class="sp-actions">
           <button class="btn btn-primary btn-sm">Move to cloud</button>
           <button class="btn btn-secondary btn-sm">Manage license</button>
-          <button class="btn btn-secondary btn-sm btn-icon"><i class="fa-solid fa-ellipsis"></i></button>
+          <button class="btn btn-secondary btn-sm btn-icon"><i class="pi pi-ellipsis-h"></i></button>
         </div>
       </div>
     </div>
@@ -589,8 +589,8 @@
         <div class="sp-info-card">
           <div class="sp-info-label">Status</div>
           <div class="sp-info-status" id="spStatusDots">
-            <span class="status-dot status-green"><i class="fa-solid fa-stopwatch"></i></span>
-            <span class="status-dot status-red"><i class="fa-solid fa-shield-halved"></i></span>
+            <span class="status-dot status-green"><i class="pi pi-stopwatch"></i></span>
+            <span class="status-dot status-red"><i class="pi pi-shield"></i></span>
           </div>
         </div>
       </div>
@@ -621,7 +621,7 @@
       <div class="sp-section">
         <div class="sp-section-header">
           <span class="sp-section-title">Telemetry</span>
-          <span class="tag tag-info"><i class="fa-solid fa-clock"></i> Last updated 16 May 2026, 03:30</span>
+          <span class="tag tag-info"><i class="pi pi-clock"></i> Last updated 16 May 2026, 03:30</span>
           <button class="btn btn-secondary btn-sm" style="margin-left: auto;">SEE MORE</button>
         </div>
         <div class="sp-telemetry-card">
@@ -643,11 +643,60 @@
   </aside>
 
   <script>
-    // ===== Toggle buttons =====
+    // ===== Product & Category classification =====
+    const CLOUD_SLAS = ['breeze', 'breeze trial', 'pro', 'pro trial'];
+
+    function getProduct(row) {
+      const sla = (row.dataset.sla || '').toLowerCase();
+      return CLOUD_SLAS.includes(sla) ? 'cloud' : 'safeq6';
+    }
+
+    function isTrial(row) {
+      const sla = (row.dataset.sla || '').toLowerCase();
+      return sla.includes('trial');
+    }
+
+    function hasAllGreenStatus(row) {
+      const dots = row.querySelectorAll('.status-dot');
+      return [...dots].every(d => d.classList.contains('status-green'));
+    }
+
+    function hasNonGreenStatus(row) {
+      const dots = row.querySelectorAll('.status-dot');
+      return [...dots].some(d => d.classList.contains('status-yellow') || d.classList.contains('status-red'));
+    }
+
+    function isExpiringSoon(row) {
+      const text = (row.querySelector('.expires-text') || {}).textContent || '';
+      // "in X days/weeks/month" but not "X ago"
+      if (!text.startsWith('in ')) return false;
+      if (text.includes('year')) return false;
+      // anything "in N months" where N > 3 is not "soon"
+      const monthMatch = text.match(/in (\d+) months?/);
+      if (monthMatch && parseInt(monthMatch[1]) > 3) return false;
+      return true;
+    }
+
+    function matchesCategory(row, category) {
+      const trial = isTrial(row);
+      switch (category) {
+        case 'trials-convert': return trial && hasAllGreenStatus(row);
+        case 'trials-risk': return trial && hasNonGreenStatus(row);
+        case 'close-renewal': return !trial && isExpiringSoon(row);
+        case 'need-attention': return !trial && hasNonGreenStatus(row);
+        default: return true;
+      }
+    }
+
+    // ===== Toggle (SAFEQ Cloud / SAFEQ 6) =====
+    let activeProduct = 'cloud'; // default
+
     document.querySelectorAll('.toggle-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        activeProduct = btn.textContent.trim().toLowerCase().includes('cloud') ? 'cloud' : 'safeq6';
+        applyFilters();
       });
     });
 
@@ -672,12 +721,35 @@
         let anyVisible = false;
         group.subs.forEach(sub => {
           const matchesSearch = !query || sub.textContent.toLowerCase().includes(query);
-          const matchesFilter = !activeFilter || (sub.dataset.category || '').includes(activeFilter);
-          const visible = matchesSearch && matchesFilter;
+          const matchesProduct = getProduct(sub) === activeProduct;
+          const matchesCat = !activeFilter || matchesCategory(sub, activeFilter);
+          const visible = matchesSearch && matchesProduct && matchesCat;
           sub.style.display = visible ? '' : 'none';
           if (visible) anyVisible = true;
         });
         group.header.style.display = anyVisible ? '' : 'none';
+      });
+
+      updateCounts();
+    }
+
+    // Update stat card counts based on current product
+    function updateCounts() {
+      const rows = document.querySelectorAll('.row-sub');
+      const counts = { 'trials-convert': 0, 'close-renewal': 0, 'trials-risk': 0, 'need-attention': 0 };
+
+      rows.forEach(row => {
+        if (getProduct(row) !== activeProduct) return;
+        for (const cat of Object.keys(counts)) {
+          if (matchesCategory(row, cat)) counts[cat]++;
+        }
+      });
+
+      document.querySelectorAll('.cstat-card').forEach(card => {
+        const cat = card.dataset.filterCat;
+        if (cat && counts[cat] !== undefined) {
+          card.querySelector('.cstat-number').textContent = counts[cat];
+        }
       });
     }
 
@@ -706,9 +778,11 @@
       if (matchCard) {
         matchCard.classList.add('selected');
         activeFilter = urlFilter;
-        applyFilters();
       }
     }
+
+    // Initial filter apply
+    applyFilters();
 
     // ===== Group collapse/expand =====
     document.querySelectorAll('.row-group-header').forEach(header => {
@@ -725,10 +799,17 @@
     // ===== Table sorting =====
     const table = document.querySelector('.customers-table');
     const headers = table.querySelectorAll('thead th');
-    const colIndexMap = { 0: 'customer', 2: 'created', 3: 'expires', 4: 'licenses' };
+    function getSortValue(row, index) {
+      if (index === 4) return parseInt(row.children[index]?.textContent.trim()) || 0;
+      if (index === 5) {
+        // Sort by number of non-green dots (more problems = higher)
+        const dots = row.querySelectorAll('.status-dot');
+        return [...dots].filter(d => !d.classList.contains('status-green')).length;
+      }
+      return row.children[index]?.textContent.trim() || '';
+    }
 
     headers.forEach((th, index) => {
-      if (!(index in colIndexMap)) return;
       th.addEventListener('click', () => {
         const isAsc = th.classList.contains('sort-asc');
         headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
@@ -747,10 +828,10 @@
         });
 
         groups.sort((a, b) => {
-          const aVal = a.subs[0]?.children[index]?.textContent.trim() || '';
-          const bVal = b.subs[0]?.children[index]?.textContent.trim() || '';
-          if (index === 4) return (parseInt(aVal) - parseInt(bVal)) * dir;
-          return aVal.localeCompare(bVal) * dir;
+          const aVal = getSortValue(a.subs[0], index);
+          const bVal = getSortValue(b.subs[0], index);
+          if (typeof aVal === 'number') return (aVal - bVal) * dir;
+          return String(aVal).localeCompare(String(bVal)) * dir;
         });
 
         const tbody = table.querySelector('tbody');
@@ -796,8 +877,19 @@
 
     function openSidePanel(row) {
       const d = row.dataset;
+      const product = getProduct(row);
       document.getElementById('spName').textContent = d.customer || 'Customer';
       document.getElementById('spMa').textContent = row.querySelector('.col-customer').textContent.split('•')[0].trim();
+
+      // Product tag
+      const productTag = document.getElementById('spProduct');
+      if (product === 'cloud') {
+        productTag.className = 'tag tag-primary';
+        productTag.textContent = 'SAFEQ Cloud';
+      } else {
+        productTag.className = 'tag tag-warn';
+        productTag.textContent = 'SAFEQ 6';
+      }
 
       // SLA badge
       const slaEl = row.querySelector('.sla-badge');
@@ -817,16 +909,15 @@
       const statusDots = row.querySelectorAll('.status-dot');
       const spStatus = document.getElementById('spStatusDots');
       spStatus.innerHTML = '';
-      statusDots.forEach(dot => {
-        const clone = dot.cloneNode(true);
-        spStatus.appendChild(clone);
-      });
+      statusDots.forEach(dot => spStatus.appendChild(dot.cloneNode(true)));
 
-      // Security alert visibility
+      // Security alert
       const cves = d.cves || '';
       const cveCount = parseInt(cves.split('/')[0]);
-      const alertEl = document.getElementById('spSecurityAlert');
-      alertEl.style.display = cveCount > 100 ? '' : 'none';
+      document.getElementById('spSecurityAlert').style.display = cveCount > 100 ? '' : 'none';
+
+      // Banner visibility — only show for SAFEQ 6 accounts
+      document.querySelector('.sp-banner').style.display = product === 'safeq6' ? '' : 'none';
 
       sidePanel.classList.add('open');
       overlay.classList.add('open');
@@ -837,20 +928,14 @@
       overlay.classList.remove('open');
     }
 
-    // Row click → open panel
     document.querySelectorAll('.row-sub').forEach(row => {
       row.addEventListener('click', () => openSidePanel(row));
     });
 
     document.getElementById('spClose').addEventListener('click', closeSidePanel);
     overlay.addEventListener('click', closeSidePanel);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidePanel(); });
 
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeSidePanel();
-    });
-
-    // Side panel tabs
     document.querySelectorAll('.sp-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.sp-tab').forEach(t => t.classList.remove('active'));

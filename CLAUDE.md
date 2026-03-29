@@ -40,7 +40,12 @@ Tento projekt slouží k rychlému vytváření interaktivních HTML/CSS/JS prot
 ### Vždy
 - Použij CSS custom properties z `base.css` — nikdy hardcodované barvy/spacing
 - Headings = Y Soft (`var(--font-heading)`), body/UI = Lab Grotesque (`var(--font-body)`)
-- Ikony = Font Awesome 6 Free (`<i class="fa-solid fa-name"></i>`), pokud uživatelka neřekne jinak
+- Y Soft font se NIKDY nepoužívá kurzívou (`font-style: italic` je zakázaný pro `--font-heading`)
+- Ikony — záleží na projektu:
+  - **SAFEQ Cloud admin web** = Font Awesome 6 Free (`<i class="fa-solid fa-name"></i>`)
+  - **ne.Hub** = PrimeIcons z PrimeVue kitu (`<i class="pi pi-name"></i>`)
+  - **terminal app** = dle zadání, default FA
+  - **mocks** = FA, pokud není řečeno jinak
 - Komponenty = CSS třídy z `components.css` (`.btn`, `.btn-primary`, `.input`, `.card`, `.table` atd.)
 - Interaktivita = vanilla JS (přepínání tříd, zobrazování/skrývání elementů)
 
