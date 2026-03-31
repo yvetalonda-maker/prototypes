@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan Workflow Builder</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-label">Customer</span>
+      <span class="brand-tenant">THT</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="#"><i class="fa-solid fa-house"></i> Overview</a>
+      <a class="nav-item" href="#"><i class="fa-solid fa-users"></i> Users</a>
+      <a class="nav-item" href="#"><i class="fa-solid fa-print"></i> Printers</a>
+      <a class="nav-item active" href="#"><img src="scanner-icon.png" class="nav-icon-custom" alt=""> Scanning</a>
+      <a class="nav-item" href="#"><i class="fa-solid fa-desktop"></i> PC Client</a>
+      <a class="nav-item has-children" href="#"><i class="fa-solid fa-chart-bar"></i> Reports <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+      <a class="nav-item" href="#"><i class="fa-solid fa-download"></i> Installation files</a>
+      <a class="nav-item has-children" href="#"><i class="fa-solid fa-shield-halved"></i> Security <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+      <a class="nav-item has-children" href="#"><i class="fa-solid fa-gear"></i> Settings <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+      <a class="nav-item has-children" href="#"><i class="fa-solid fa-user"></i> Personal <i class="fa-solid fa-chevron-down nav-chevron"></i></a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <main class="app-main">
+
+    <!-- General header -->
+    <div class="workflow-header">
+      <div class="workflow-header-top">
+        <h1 class="page-title">Pipeline</h1>
+        <label class="toggle">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="workflow-active-label">Active</span>
+      </div>
+      <div class="workflow-general">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input class="input" placeholder="Workflow name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="textarea" rows="2" placeholder="Describe this workflow for end users"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         CAPTURE
+         ============================================================ -->
+    <section class="pipeline-phase" data-phase="capture">
+      <div class="phase-header">
+        <span class="phase-label">How the document is captured</span>
+        <div class="phase-line"></div>
+      </div>
+
+      <!-- Capture / Scan Settings -->
+      <div class="step-card" data-step="capture-scan">
+        <div class="step-card-header" onclick="toggleStep(this)">
+          <i class="fa-solid fa-chevron-down step-toggle"></i>
+          <span class="drag-handle" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+          <i class="ti ti-scan step-icon"></i>
+          <div class="step-info">
+            <span class="step-name">Scan Settings</span>
+            <span class="step-desc">Resolution, color, sides, and merging options</span>
+          </div>
+        </div>
+        <div class="step-card-body">
+          <div class="step-config">
+            <div class="config-row">
+              <span class="config-label">Scan resolution</span>
+              <div class="config-right">
+                <select class="select config-control">
+                  <option selected>Normal</option>
+                  <option>Fine</option>
+                  <option>Super Fine</option>
+                </select>
+                <label class="checkbox-inline"><input type="checkbox"> Can be modified by the user on the terminal</label>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-label">Sides</span>
+              <div class="config-right">
+                <select class="select config-control">
+                  <option selected>Simplex</option>
+                  <option>Duplex</option>
+                </select>
+                <label class="checkbox-inline"><input type="checkbox"> Can be modified by the user on the terminal</label>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-label">Color</span>
+              <div class="config-right">
+                <select class="select config-control">
+                  <option selected>Auto</option>
+                  <option>Color</option>
+                  <option>Grayscale</option>
+                  <option>Black &amp; White</option>
+                </select>
+                <label class="checkbox-inline"><input type="checkbox"> Can be modified by the user on the terminal</label>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-label">Merging originals</span>
+              <div class="config-right">
+                <select class="select config-control">
+                  <option selected>Disabled</option>
+                  <option>Enabled</option>
+                </select>
+                <label class="checkbox-inline"><input type="checkbox"> Can be modified by the user on the terminal</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-step-wrapper">
+        <button class="add-step-btn" onclick="toggleDropdown(this)">
+          <i class="fa-solid fa-plus add-step-icon"></i> Add step
+        </button>
+        <div class="step-dropdown">
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'capture')">
+            <i class="ti ti-user-question dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">User Prompts</span>
+              <span class="dropdown-item-desc">Ask the user for input before scanning starts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROCESS
+         ============================================================ -->
+    <section class="pipeline-phase" data-phase="process">
+      <div class="phase-header">
+        <span class="phase-label">How the document is processed</span>
+        <div class="phase-line"></div>
+      </div>
+
+      <!-- Data Extraction (OCR) -->
+      <div class="step-card expanded" data-step="process-ocr">
+        <div class="step-card-header" onclick="toggleStep(this)">
+          <i class="fa-solid fa-chevron-up step-toggle"></i>
+          <span class="drag-handle" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+          <i class="ti ti-text-recognition step-icon"></i>
+          <div class="step-info">
+            <span class="step-name">Data Extraction (OCR)</span>
+          </div>
+          <button class="btn-remove-step" onclick="event.stopPropagation(); removeStep(this)" title="Remove step">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="step-card-body" style="display: block;">
+          <div class="step-config">
+            <div class="config-row">
+              <span class="config-label">Language</span>
+              <div class="chip-group">
+                <span class="chip">English <button class="chip-remove"><i class="fa-solid fa-xmark"></i></button></span>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-label">Detect page orientation</span>
+              <label class="toggle">
+                <input type="checkbox" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="config-row">
+              <span class="config-label">Change default OCR profile</span>
+              <label class="toggle">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-step-wrapper">
+        <button class="add-step-btn" onclick="toggleDropdown(this)">
+          <i class="fa-solid fa-plus add-step-icon"></i> Add step
+        </button>
+        <div class="step-dropdown">
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-text-recognition dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Data Extraction (OCR)</span>
+              <span class="dropdown-item-desc">Extract text from scanned pages using optical character recognition</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-barcode dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Barcode Recognition</span>
+              <span class="dropdown-item-desc">Detect and read barcodes and QR codes in scanned documents</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-cut dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Document Separation</span>
+              <span class="dropdown-item-desc">Split a batch scan into individual documents based on separator pages or barcodes</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-highlight dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Highlighted Text Redaction</span>
+              <span class="dropdown-item-desc">Detect highlighted text and redact it from the output document</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-file-x dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Remove Blank Pages</span>
+              <span class="dropdown-item-desc">Automatically detect and discard empty pages</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-layout-columns dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Split Dual Pages</span>
+              <span class="dropdown-item-desc">Divide double-page spreads into separate single pages</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'process')">
+            <i class="ti ti-sparkles dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Despeckle</span>
+              <span class="dropdown-item-desc">Remove noise and specks to improve scanned image quality</span>
+            </div>
+          </div>
+          <div class="dropdown-item disabled" onclick="return false">
+            <i class="ti ti-brain dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">AI Data Extraction <span class="coming-soon-badge">Coming soon</span></span>
+              <span class="dropdown-item-desc">Use AI to extract structured data from complex documents</span>
+            </div>
+          </div>
+          <div class="dropdown-item disabled" onclick="return false">
+            <i class="ti ti-vector-triangle dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">Zonal Data Extraction <span class="coming-soon-badge">Coming soon</span></span>
+              <span class="dropdown-item-desc">Extract data from predefined zones on a page template</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DELIVERY
+         ============================================================ -->
+    <section class="pipeline-phase" data-phase="delivery">
+      <div class="phase-header">
+        <span class="phase-label">How and where the document is delivered</span>
+        <div class="phase-line"></div>
+      </div>
+
+      <!-- Destination / Connector -->
+      <div class="step-card" data-step="delivery-connector">
+        <div class="step-card-header" onclick="toggleStep(this)">
+          <i class="fa-solid fa-chevron-down step-toggle"></i>
+          <span class="drag-handle" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+          <i class="ti ti-plug-connected step-icon"></i>
+          <div class="step-info">
+            <span class="step-name">Destination</span>
+            <span class="step-desc">Where the scanned document is sent</span>
+          </div>
+        </div>
+        <div class="step-card-body">
+          <div class="step-config">
+            <div class="config-row">
+              <span class="config-label">Connector</span>
+              <select class="select config-control">
+                <option selected>Select connector</option>
+                <option>SMTP</option>
+                <option>OneDrive</option>
+                <option>Network folder</option>
+                <option>FTP</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Document Output -->
+      <div class="step-card" data-step="delivery-output">
+        <div class="step-card-header" onclick="toggleStep(this)">
+          <i class="fa-solid fa-chevron-down step-toggle"></i>
+          <span class="drag-handle" title="Drag to reorder"><i class="ti ti-grip-vertical"></i></span>
+          <i class="ti ti-file-export step-icon"></i>
+          <div class="step-info">
+            <span class="step-name">Document Output</span>
+            <span class="step-desc">File format, naming, metadata, and encryption</span>
+          </div>
+        </div>
+        <div class="step-card-body">
+          <div class="step-config">
+            <div class="config-row">
+              <span class="config-label">Filename</span>
+              <input class="input config-control" placeholder="e.g. scan_{{date}}_{{time}}">
+            </div>
+            <div class="config-row">
+              <span class="config-label">Output format</span>
+              <div class="config-right">
+                <select class="select config-control">
+                  <option>PDF</option>
+                  <option selected>Searchable PDF</option>
+                  <option>TIFF</option>
+                  <option>JPEG</option>
+                  <option>DOCX</option>
+                  <option>XLSX</option>
+                </select>
+                <label class="checkbox-inline"><input type="checkbox"> Can be modified by the user on the terminal</label>
+              </div>
+            </div>
+            <div class="config-row">
+              <span class="config-label">PDF/A compliance</span>
+              <select class="select config-control">
+                <option selected>None</option>
+                <option>PDF/A-1b</option>
+                <option>PDF/A-2b</option>
+                <option>PDF/A-3b</option>
+              </select>
+            </div>
+
+            <hr class="config-divider">
+
+            <div class="config-row">
+              <span class="config-label">Modify PDF metadata</span>
+              <label class="toggle">
+                <input type="checkbox" checked onchange="toggleConditional(this, 'pdf-metadata')">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="conditional-group" id="pdf-metadata">
+              <div class="config-row">
+                <span class="config-label">Title</span>
+                <input class="input config-control" placeholder="">
+              </div>
+              <div class="config-row">
+                <span class="config-label">Author</span>
+                <input class="input config-control" placeholder="">
+              </div>
+              <div class="config-row">
+                <span class="config-label">Subject</span>
+                <input class="input config-control" placeholder="">
+              </div>
+              <div class="config-row">
+                <span class="config-label">Keywords</span>
+                <input class="input config-control" placeholder="">
+              </div>
+              <div class="config-row">
+                <span class="config-label">Override metadata upon appending or prepending to PDF</span>
+                <label class="toggle">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="config-row">
+              <span class="config-label">MRC compression</span>
+              <label class="toggle">
+                <input type="checkbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <hr class="config-divider">
+
+            <div class="config-row">
+              <span class="config-label">Encrypt PDF</span>
+              <label class="toggle">
+                <input type="checkbox" onchange="toggleConditional(this, 'pdf-encryption')">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="conditional-group hidden" id="pdf-encryption">
+              <div class="config-row">
+                <span class="config-label">Encryption strength</span>
+                <select class="select config-control">
+                  <option selected>High 128 bit encryption</option>
+                  <option>Low 40 bit encryption</option>
+                </select>
+              </div>
+              <div class="config-row">
+                <span class="config-label">Password type</span>
+                <select class="select config-control">
+                  <option selected>Generate password automatically</option>
+                  <option>Set password manually</option>
+                </select>
+              </div>
+              <p class="config-helper">Password will be sent by email</p>
+              <div class="config-row">
+                <span class="config-label">Recipients</span>
+                <input class="input config-control" value="{{userEmail}}">
+              </div>
+              <div class="config-row">
+                <span class="config-label">Subject</span>
+                <input class="input config-control" value="Password for your scanned document">
+              </div>
+              <div class="config-row">
+                <span class="config-label">Body</span>
+                <textarea class="textarea config-control" rows="3">Dear {{userFullName}},
+The password for your scanned document is: {{pdfPassword}}
+You can find your document here: {{fileLocations}}</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="add-step-wrapper">
+        <button class="add-step-btn" onclick="toggleDropdown(this)">
+          <i class="fa-solid fa-plus add-step-icon"></i> Add step
+        </button>
+        <div class="step-dropdown">
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'delivery')">
+            <i class="ti ti-mail-forward dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">SMTP</span>
+              <span class="dropdown-item-desc">Deliver scanned documents via email</span>
+            </div>
+          </div>
+          <div class="dropdown-item" onclick="addStepFromDropdown(this, 'delivery')">
+            <i class="ti ti-brand-onedrive dropdown-item-icon"></i>
+            <div class="dropdown-item-text">
+              <span class="dropdown-item-name">OneDrive</span>
+              <span class="dropdown-item-desc">Save documents directly to Microsoft OneDrive</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+/* ==========================================================================
+   Scan Workflow — Split Branches
+   ========================================================================== */
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--surface-100);
+  font-family: var(--font-body);
+}
+
+/* Future label */
+.future-label {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 999;
+  color: var(--surface-400);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border: 1px solid var(--surface-200);
+  border-radius: 4px;
+  background: var(--surface-0);
+}
+
+/* Hidden utility */
+.hidden { display: none !important; }
+
+/* ==========================================================================
+   Sidebar (same as main prototype)
+   ========================================================================== */
+
+.app-sidebar {
+  width: 230px;
+  min-height: 100vh;
+  background: var(--surface-800);
+  color: var(--surface-300);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sidebar-brand {
+  padding: 16px 20px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  border-bottom: 1px solid var(--surface-700);
+}
+
+.brand-label { font-size: 14px; font-weight: 500; color: var(--surface-0); }
+.brand-tenant { font-size: 12px; color: var(--surface-400); background: var(--surface-700); padding: 2px 6px; border-radius: 4px; }
+
+.sidebar-nav { display: flex; flex-direction: column; padding: 8px 0; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 20px;
+  font-size: 14px; color: var(--surface-300); text-decoration: none;
+  cursor: pointer; transition: background 0.15s, color 0.15s; position: relative;
+}
+.nav-item:hover { background: var(--surface-700); color: var(--surface-0); }
+.nav-item.active { background: var(--surface-700); color: var(--surface-0); font-weight: 500; }
+.nav-item i:first-child { width: 20px; text-align: center; font-size: 14px; }
+.nav-icon-custom { width: 20px; height: 20px; object-fit: contain; opacity: 0.7; }
+.nav-item.active .nav-icon-custom { opacity: 1; }
+.nav-chevron { margin-left: auto; font-size: 10px; opacity: 0.5; }
+
+/* ==========================================================================
+   Main Content
+   ========================================================================== */
+
+.app-main {
+  flex: 1;
+  padding: 32px 40px 64px;
+  max-width: 1100px;
+  margin-left: 230px;
+}
+
+/* Workflow header */
+.workflow-header { margin-bottom: 32px; }
+.workflow-header-top { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.page-title { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: var(--surface-900); margin: 0; }
+.workflow-active-label { font-size: 13px; color: var(--surface-500); }
+.workflow-general { display: flex; flex-direction: column; gap: 12px; }
+.workflow-general .form-group { display: flex; flex-direction: column; gap: 4px; }
+.workflow-general .form-label { font-size: 13px; font-weight: 500; color: var(--surface-600); }
+
+/* ==========================================================================
+   Pipeline Phase (shared, before split)
+   ========================================================================== */
+
+.pipeline-phase { margin-bottom: 8px; }
+.phase-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+.phase-label { font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--surface-500); white-space: nowrap; }
+.phase-line { flex: 1; height: 1px; background: var(--surface-300); }
+
+/* ==========================================================================
+   Step Card
+   ========================================================================== */
+
+.step-card {
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: 8px;
+  transition: box-shadow 0.15s;
+}
+.step-card:hover { box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.step-card + .step-card { margin-top: 6px; }
+
+.step-card-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; cursor: pointer; user-select: none;
+}
+
+.step-toggle { font-size: 11px; color: var(--surface-400); width: 16px; text-align: center; }
+
+.step-icon {
+  font-size: 26px; color: var(--primary-600);
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; background: var(--primary-50); border-radius: 8px;
+}
+
+.step-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.step-name { font-size: 14px; font-weight: 500; color: var(--surface-900); }
+.step-desc { font-size: 13px; color: var(--surface-400); }
+
+.btn-remove-step {
+  background: none; border: none; color: var(--surface-300);
+  cursor: pointer; padding: 4px 6px; border-radius: 4px; font-size: 13px;
+  opacity: 0; transition: color 0.15s, background 0.15s, opacity 0.15s;
+}
+.step-card:hover .btn-remove-step { opacity: 1; }
+.btn-remove-step:hover { color: var(--red-500); background: var(--red-50); }
+
+.step-card-body {
+  display: none; border-top: 1px solid var(--surface-200);
+  padding: 16px 16px 16px 68px;
+}
+.step-card.expanded .step-card-body { display: block; }
+
+.step-config { display: flex; flex-direction: column; gap: 14px; }
+.config-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.config-label { font-size: 14px; color: var(--surface-700); padding-top: 6px; }
+.config-control { width: 260px; flex-shrink: 0; }
+.config-helper { font-size: 12px; color: var(--surface-400); font-weight: 500; }
+
+.chip-group { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-size: 13px; padding: 4px 10px; display: inline-flex; align-items: center; gap: 6px; background: var(--surface-100); border: 1px solid var(--surface-200); border-radius: 4px; color: var(--surface-700); }
+.chip-remove { background: none; border: none; cursor: pointer; color: var(--surface-400); font-size: 11px; padding: 0; }
+
+.step-config .select, .step-config .input { font-size: 13px; padding: 6px 10px; height: 32px; }
+
+/* Add step btn */
+.add-step-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 10px; margin: 8px 0 24px;
+  background: none; border: 1px dashed var(--surface-300); border-radius: 8px;
+  color: var(--primary-500); font-family: var(--font-body); font-size: 14px;
+  font-weight: 500; cursor: pointer; transition: background 0.15s, border-color 0.15s;
+}
+.add-step-btn:hover { background: var(--primary-50); border-color: var(--primary-300); }
+.add-step-icon { font-size: 12px; }
+
+/* Split trigger — subtle link at bottom of delivery */
+.split-trigger-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  margin: 0 0 8px;
+  background: none;
+  border: 1px dashed var(--purple-200);
+  border-radius: 8px;
+  color: var(--purple-400);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.split-trigger-btn:hover {
+  background: var(--purple-50);
+  border-color: var(--purple-300);
+  color: var(--purple-600);
+}
+
+.split-trigger-btn i {
+  font-size: 16px;
+}
+
+/* Remove split button */
+.btn-remove-split {
+  background: none;
+  border: none;
+  color: var(--purple-300);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: color 0.15s;
+}
+
+.btn-remove-split:hover {
+  color: var(--red-500);
+}
+
+/* ==========================================================================
+   SPLIT NODE
+   ========================================================================== */
+
+.split-node {
+  margin-top: 8px;
+}
+
+.split-node-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--purple-50);
+  border: 2px solid var(--purple-200);
+  border-radius: 10px;
+}
+
+.split-node-icon {
+  font-size: 28px;
+  color: var(--purple-500);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 8px;
+  flex-shrink: 0;
+  border: 1px solid var(--purple-200);
+}
+
+.split-node-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.split-node-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--purple-700);
+}
+
+.split-node-desc {
+  font-size: 13px;
+  color: var(--purple-400);
+}
+
+/* ==========================================================================
+   Connector lines
+   ========================================================================== */
+
+.split-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.split-connector-stem {
+  width: 2px;
+  height: 20px;
+  background: var(--purple-200);
+}
+
+/* Hide complex arm connectors — the stem + purple top-border on lanes is enough */
+.split-connector-arms { display: none; }
+
+/* ==========================================================================
+   Branch Lanes
+   ========================================================================== */
+
+.branch-container {
+  display: flex;
+  gap: 16px;
+}
+
+.branch-lane {
+  flex: 1;
+  background: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-top: 3px solid var(--purple-300);
+  border-radius: 0 0 10px 10px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.branch-lane-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--surface-200);
+}
+
+.branch-lane-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--purple-400);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.branch-lane-name {
+  flex: 1;
+  font-size: 13px;
+  height: 28px;
+  padding: 4px 8px;
+  border-color: transparent;
+  background: transparent;
+  font-weight: 500;
+  color: var(--surface-800);
+}
+
+.branch-lane-name:focus {
+  border-color: var(--primary-300);
+  background: white;
+}
+
+.btn-remove-branch {
+  background: none;
+  border: none;
+  color: var(--surface-300);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: color 0.15s;
+}
+
+.btn-remove-branch:hover {
+  color: var(--red-500);
+}
+
+/* Branch phase sub-labels */
+.branch-phase {
+  margin: 12px 0 8px;
+}
+
+.branch-phase-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--surface-400);
+}
+
+/* Smaller step cards inside branches */
+.step-card-sm .step-card-header {
+  padding: 10px 12px;
+  gap: 10px;
+}
+
+.step-icon-sm {
+  font-size: 20px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.step-card-sm .step-name { font-size: 13px; }
+.step-card-sm .step-desc { font-size: 12px; }
+.step-card-sm .step-toggle { font-size: 10px; }
+
+.step-card-sm .step-card-body {
+  padding: 12px 12px 12px 54px;
+}
+
+.step-card-sm .config-label { font-size: 13px; }
+.step-card-sm .config-control { width: 100%; }
+.step-card-sm .config-row { flex-direction: column; gap: 4px; }
+.step-card-sm .config-row .config-label { padding-top: 0; }
+
+.add-step-btn-sm {
+  padding: 8px;
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   Overrides
+   ========================================================================== */
+
+.toggle { flex-shrink: 0; }
