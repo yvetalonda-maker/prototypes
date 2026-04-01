@@ -1,0 +1,462 @@
+/* ==========================================================================
+   Quote Form Prototype — Local Styles
+   ========================================================================== */
+
+/* Landing page */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: var(--space-10);
+  background: var(--surface-50);
+}
+
+.landing h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+}
+
+/* ==========================================================================
+   DIALOG — Fixed size, scrollable content
+   ========================================================================== */
+
+.quote-dialog {
+  width: 1060px;
+  max-width: 95vw;
+  height: 770px;
+  max-height: 92vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+/* Title row — centered, large */
+.dialog-title-row {
+  position: relative;
+  padding: var(--space-11) var(--space-10) var(--space-8);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.dialog-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-3xl);
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.dialog-title-row .dialog-close {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+}
+
+/* Footer — pinned at bottom */
+.quote-dialog .dialog-footer {
+  flex-shrink: 0;
+  padding: var(--space-6) var(--space-10);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   LAYOUT: Two-column, full height between title and footer
+   ========================================================================== */
+
+.dialog-scroll {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+}
+
+#stepForm {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.quote-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Left: Configuration — scrollable */
+.quote-config {
+  padding: 0 var(--space-10) var(--space-8) var(--space-10);
+  overflow-y: auto;
+}
+
+/* Right: Pricing — light bg, full height, flex column */
+.quote-pricing {
+  background: var(--surface-50);
+  border-left: 1px solid var(--color-border);
+  padding: 0 var(--space-8) var(--space-8) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Section headers — same top padding so they align */
+.section-header {
+  padding-top: 0;
+  margin-bottom: var(--space-8);
+}
+
+.section-header h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  text-transform: uppercase;
+  margin: 0 0 var(--space-2);
+}
+
+.section-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   FORM ROWS — Label left, control right
+   ========================================================================== */
+
+.config-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+  padding: var(--space-5) 0;
+  min-height: 33px;
+}
+
+.form-row-label {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 400;
+  color: var(--color-text);
+  padding-top: 6px;
+  line-height: 1.4;
+}
+
+.form-row-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Radio groups */
+.radio-group-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Radio/checkbox label text — use body color, not muted */
+.radio-wrapper span,
+.checkbox-wrapper span {
+  color: var(--color-text);
+}
+
+.radio-helper {
+  padding-left: 26px;
+  margin-top: -2px;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Unified control height: 33px for inputs, selects, segmented buttons
+   ========================================================================== */
+
+.select-button-group {
+  display: flex;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 33px;
+}
+
+.select-btn {
+  padding: 0 var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: none;
+  border-right: 1px solid var(--field-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  line-height: 31px;
+}
+
+.select-btn:last-child {
+  border-right: none;
+}
+
+.select-btn:hover {
+  background: var(--surface-50);
+}
+
+.select-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Contract row */
+.contract-controls {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.contract-period-select {
+  width: 120px;
+}
+
+/* Device inputs */
+.devices-row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.device-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.device-count {
+  width: 65px !important;
+  text-align: center;
+}
+
+/* Reader row */
+.reader-row {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.reader-select {
+  flex: 1;
+}
+
+.reader-description {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin-top: var(--space-2);
+}
+
+/* Toggle with inline input (mobile auth) */
+.toggle-with-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* SHOW/HIDE ADVANCED — aligned with labels (no grid offset) */
+.form-row-advanced {
+  padding: var(--space-5) 0;
+}
+
+.btn-link-advanced {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-transform: uppercase;
+}
+
+.btn-link-advanced:hover {
+  color: var(--color-primary-hover);
+}
+
+.btn-link-advanced .pi {
+  font-size: 10px;
+}
+
+/* ==========================================================================
+   PRICING TABLE — stretches, total pinned at bottom
+   ========================================================================== */
+
+.pricing-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.pricing-table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing-table .col-qty,
+.pricing-table .col-purchase,
+.pricing-table .col-selling {
+  text-align: right;
+}
+
+.pricing-table td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+}
+
+.pricing-table .price-list-row td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.price-list-select {
+  width: 100px;
+  font-size: var(--text-xs) !important;
+  height: 26px !important;
+  padding: var(--space-1) var(--space-3) !important;
+}
+
+.pricing-table .item-code {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  display: block;
+  line-height: 1.4;
+}
+
+.pricing-table .text-right {
+  text-align: right;
+}
+
+.pricing-table .selling-input {
+  width: 60px;
+  text-align: right;
+  font-size: var(--text-sm);
+  display: inline;
+}
+
+/* Pricing total — pinned at bottom of pricing column */
+.pricing-total {
+  flex-shrink: 0;
+  border-top: 1px solid var(--surface-400);
+  padding-top: var(--space-4);
+  margin-top: auto;
+}
+
+.total-labels {
+  display: grid;
+  grid-template-columns: 1fr 60px 100px 100px;
+  gap: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: right;
+  margin-bottom: var(--space-2);
+}
+
+.total-values {
+  display: grid;
+  grid-template-columns: 1fr 60px 100px 100px;
+  gap: var(--space-4);
+  font-weight: 700;
+  font-size: var(--text-base);
+  text-align: right;
+}
+
+.total-label {
+  text-align: left;
+  font-family: var(--font-body);
+}
+
+.total-purchase {
+  color: var(--color-text);
+}
+
+.total-selling {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   SHIPPING
+   ========================================================================== */
+
+#stepShipping {
+  padding: var(--space-10);
+}
+
+.shipping-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  max-width: 600px;
+}
+
+.watermark {
+  margin-top: var(--space-12);
+  text-align: center;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--surface-200);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+/* ==========================================================================
+   RESPONSIVE: under 1024px
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .quote-dialog {
+    width: 900px;
+    max-width: 95vw;
+  }
+
+  .quote-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .quote-config {
+    overflow-y: visible;
+    padding-bottom: var(--space-8);
+  }
+
+  .quote-pricing {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+}

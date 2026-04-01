@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quote Form v2 — from screenshots</title>
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="v2.css">
+</head>
+<body>
+
+  <!-- Landing -->
+  <div class="landing">
+    <h1>Prototype of quote form in PrimeVue UI</h1>
+    <div style="display: flex; gap: var(--space-4);">
+      <button class="btn btn-primary btn-lg" onclick="openDialog()">
+        <i class="pi pi-plus"></i> Create new quote
+      </button>
+      <a href="index.html" class="btn btn-text btn-secondary btn-lg">Back to v1</a>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       DIALOG
+       ================================================================ -->
+  <div class="dialog-mask" id="dialogMask" style="display: none;">
+    <div class="dialog qf-dialog">
+
+      <!-- Title -->
+      <div class="qf-title-bar">
+        <h2 class="qf-title" id="dialogTitle">CREATE QUOTE</h2>
+        <button class="dialog-close" onclick="closeDialog()"><i class="pi pi-times"></i></button>
+      </div>
+
+      <!-- ============ STEP: FORM ============ -->
+      <div class="qf-body" id="stepForm">
+        <div class="qf-columns">
+
+          <!-- LEFT — Configuration -->
+          <div class="qf-left">
+            <div class="qf-section-hdr">
+              <h4>1. CONFIGURATION (Acme Corporation, Germany /MA1234:5/)</h4>
+              <p>Choose the product, contract terms, and options for this quote or order.</p>
+            </div>
+            <div class="qf-left-scroll">
+              <div class="qf-form">
+
+                <!-- Product type -->
+                <div class="qf-row">
+                  <label class="qf-label">Product type</label>
+                  <div class="qf-ctrl">
+                    <label class="radio-wrapper"><input type="radio" name="productType" value="pro" checked onchange="updatePricing()"><span>SAFEQ Cloud Pro</span></label>
+                    <label class="radio-wrapper"><input type="radio" name="productType" value="breeze" onchange="updatePricing()"><span>SAFEQ Cloud Breeze</span></label>
+                  </div>
+                </div>
+
+                <!-- Contract -->
+                <div class="qf-row">
+                  <label class="qf-label">Contract</label>
+                  <div class="qf-ctrl qf-ctrl-row">
+                    <div class="qf-segmented">
+                      <button class="qf-seg active" data-value="subscription" onclick="selectContract(this)">Subscription</button>
+                      <button class="qf-seg" data-value="fixed" onclick="selectContract(this)">Fixed term</button>
+                    </div>
+                    <select class="select" id="contractPeriod" style="width:120px;">
+                      <option>monthly</option>
+                      <option>yearly</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Devices -->
+                <div class="qf-row">
+                  <label class="qf-label">Devices</label>
+                  <div class="qf-ctrl qf-ctrl-row">
+                    <span class="qf-device-label">PRINT</span>
+                    <input type="number" class="input qf-num" id="printCount" value="20" min="0" onchange="updatePricing()">
+                    <span class="qf-device-label" style="margin-left:var(--space-6);">MFP</span>
+                    <input type="number" class="input qf-num" id="mfpCount" value="20" min="0" onchange="updatePricing()">
+                  </div>
+                </div>
+
+                <!-- Authentication — toggle + vendor on same line, stable layout -->
+                <div class="qf-row qf-row-related" id="authRow">
+                  <label class="qf-label">Authentication (Card<br>Readers etc.)</label>
+                  <div class="qf-ctrl">
+                    <div class="qf-auth-line">
+                      <label class="toggle">
+                        <input type="checkbox" id="authToggle" onchange="toggleAuth()">
+                        <span class="toggle-slider"></span>
+                      </label>
+                      <select class="select qf-auth-vendor" id="vendorSelect" style="display:none;">
+                        <option value="konica">Konica Minolta</option>
+                        <option value="ricoh">Ricoh</option>
+                        <option value="xerox">Xerox</option>
+                        <option value="hp">HP</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reader type — 8px gap from auth above -->
+                <div class="qf-row" id="readerRow" style="display:none;">
+                  <label class="qf-label">Reader type</label>
+                  <div class="qf-ctrl">
+                    <div class="qf-reader-controls">
+                      <input type="number" class="input qf-num" id="readerCount" value="20" min="1" style="display:none;" onchange="updatePricing()">
+                      <!-- Custom dropdown with descriptions -->
+                      <div class="qf-custom-dd" style="flex:1;">
+                        <button class="qf-dd-trigger" id="readerTrigger" data-value="ultimate" data-price="10" onclick="toggleReaderDropdown()">
+                          <span class="qf-dd-name">MFX4 Ultimate</span>
+                          <i class="pi pi-chevron-down"></i>
+                        </button>
+                        <div class="qf-dd-panel" id="readerDropdown" style="display:none;">
+                          <div class="qf-dd-option" onclick="selectReader('ultimate')">
+                            <span class="qf-dd-opt-name">MFX4 Ultimate</span>
+                            <span class="qf-dd-opt-tag">universal & future proof</span>
+                          </div>
+                          <div class="qf-dd-option" onclick="selectReader('mobile')">
+                            <span class="qf-dd-opt-name">MFX4 Mobile</span>
+                            <span class="qf-dd-opt-tag">mobile & legic</span>
+                          </div>
+                          <div class="qf-dd-option" onclick="selectReader('reader')">
+                            <span class="qf-dd-opt-name">MFX4 Reader</span>
+                            <span class="qf-dd-opt-tag">HID focused</span>
+                          </div>
+                          <div class="qf-dd-option" onclick="selectReader('lite')">
+                            <span class="qf-dd-opt-name">MFX4 Lite</span>
+                            <span class="qf-dd-opt-tag">affordable</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="qf-helper" id="readerDesc">Most <strong>universal</strong> reader on the market with future proof technology. Supporting majority of technologies incl. mobile, HID and Legic authentication.</p>
+                  </div>
+                </div>
+
+                <!-- SHOW ADVANCED -->
+                <div class="qf-advanced-link" id="showAdvBtn">
+                  <button class="qf-link" onclick="toggleAdvanced()">SHOW ADVANCED <i class="pi pi-chevron-down"></i></button>
+                </div>
+
+                <!-- === ADVANCED === -->
+                <div id="advancedSection" style="display:none;">
+
+                  <!-- Desired start -->
+                  <div class="qf-row">
+                    <label class="qf-label">Desired start</label>
+                    <div class="qf-ctrl qf-ctrl-tight">
+                      <label class="radio-wrapper"><input type="radio" name="startDate" value="order" checked onchange="toggleCustomDate()"><span>Order date</span></label>
+                      <p class="qf-helper" style="padding-left:26px;">Ends in 13. 1. 2028 if order completed today.</p>
+                      <label class="radio-wrapper"><input type="radio" name="startDate" value="custom" onchange="toggleCustomDate()"><span>Custom</span></label>
+                      <div id="customDateField" style="display:none; padding-left:26px;">
+                        <input type="date" class="input" style="width:160px;" value="2039-12-31">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Auto-renewal -->
+                  <div class="qf-row">
+                    <label class="qf-label">Auto-renewal</label>
+                    <div class="qf-ctrl">
+                      <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                  </div>
+
+                  <!-- Mobile authentication — toggle + stepper on same line -->
+                  <div class="qf-row">
+                    <label class="qf-label">Mobile authentication</label>
+                    <div class="qf-ctrl">
+                      <div class="qf-auth-line">
+                        <label class="toggle"><input type="checkbox" id="mobileAuthToggle" onchange="toggleMobileAuth()"><span class="toggle-slider"></span></label>
+                        <div class="qf-stepper" id="mobileAuthStepper" style="display:none;">
+                          <input type="number" class="input qf-stepper-input" id="mobileAuthCount" value="20" min="0" readonly>
+                          <div class="qf-stepper-btns">
+                            <button class="qf-stepper-btn" onclick="stepValue('mobileAuthCount', 5)">+5</button>
+                            <button class="qf-stepper-btn" onclick="stepValue('mobileAuthCount', -5)">-5</button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="qf-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Reserved infrastructure -->
+                  <div class="qf-row">
+                    <label class="qf-label">Reserved infrastructure</label>
+                    <div class="qf-ctrl">
+                      <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+                      <p class="qf-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Direct support -->
+                  <div class="qf-row">
+                    <label class="qf-label">Direct support</label>
+                    <div class="qf-ctrl">
+                      <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+                      <p class="qf-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Upgrade to 24/7 Premium -->
+                  <div class="qf-row">
+                    <label class="qf-label">Upgrade to 24/7 Premium</label>
+                    <div class="qf-ctrl">
+                      <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+                      <p class="qf-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Package of professional services -->
+                  <div class="qf-row">
+                    <label class="qf-label">Package of professional<br>services</label>
+                    <div class="qf-ctrl">
+                      <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+                      <p class="qf-helper">Description explains what it means. Logic needs to be defined.</p>
+                    </div>
+                  </div>
+
+                  <!-- HIDE ADVANCED -->
+                  <div class="qf-advanced-link">
+                    <button class="qf-link" onclick="toggleAdvanced()">HIDE ADVANCED <i class="pi pi-chevron-up"></i></button>
+                  </div>
+
+                </div><!-- /advancedSection -->
+
+              </div><!-- /qf-form -->
+            </div><!-- /qf-left-scroll -->
+          </div><!-- /qf-left -->
+
+          <!-- RIGHT — Pricing -->
+          <div class="qf-right">
+            <div class="qf-section-hdr">
+              <h4>2. PRICING</h4>
+              <p>Select a price list and review cost, margin, and customer price.</p>
+            </div>
+            <div class="qf-pricing-scroll">
+              <table class="qf-table" id="pricingTable">
+                <thead>
+                  <tr>
+                    <th>Price list item</th>
+                    <th class="r">Quantity</th>
+                    <th class="r">Purchase price</th>
+                    <th class="r">Selling price</th>
+                  </tr>
+                  <tr class="qf-pricelist-row">
+                    <td></td>
+                    <td></td>
+                    <td class="r"><select class="select qf-mini-select"><option>Default pricelist</option><option>Custom pricelist</option></select></td>
+                    <td class="r"><select class="select qf-mini-select"><option>Default pricelist</option><option>Custom pricelist</option></select></td>
+                  </tr>
+                </thead>
+                <tbody id="pricingBody"></tbody>
+              </table>
+            </div>
+            <div class="qf-total">
+              <div class="qf-total-header">
+                <span></span>
+                <span class="r">Purchase price</span>
+                <span class="r">Selling price</span>
+              </div>
+              <div class="qf-total-values">
+                <span class="qf-total-label">TOTAL price</span>
+                <span class="r" id="totalPurchase">1200 EUR</span>
+                <span class="r qf-total-bold" id="totalSelling">2800 EUR</span>
+              </div>
+            </div>
+          </div><!-- /qf-right -->
+
+        </div><!-- /qf-columns -->
+      </div><!-- /stepForm -->
+
+      <!-- ============ STEP: SHIPPING ============ -->
+      <div class="qf-body" id="stepShipping" style="display:none;">
+        <div class="qf-section-hdr">
+          <h4>3. SHIPPING DETAILS</h4>
+        </div>
+        <div class="qf-shipping-scroll">
+          <div class="qf-warn">
+            <i class="pi pi-exclamation-triangle"></i>
+            Card readers in order requires shipping address.
+          </div>
+          <div class="qf-ship-grid">
+            <div class="qf-ship-field">
+              <label class="qf-ship-label">First name</label>
+              <input class="input" placeholder="Hint">
+              <span class="qf-ship-helper">Description related to the field</span>
+            </div>
+            <div class="qf-ship-field">
+              <label class="qf-ship-label">Last name</label>
+              <input class="input" placeholder="Hint">
+              <span class="qf-ship-helper">Description related to the field</span>
+            </div>
+            <div class="qf-ship-field">
+              <label class="qf-ship-label">Company name</label>
+              <input class="input" placeholder="Hint">
+              <span class="qf-ship-helper">Description related to the field</span>
+            </div>
+            <div class="qf-ship-field"></div>
+            <div class="qf-ship-field">
+              <label class="qf-ship-label">Adress line1</label>
+              <input class="input" placeholder="Hint">
+              <span class="qf-ship-helper">Description related to the field</span>
+            </div>
+            <div class="qf-ship-field">
+              <label class="qf-ship-label">Adress line2</label>
+              <input class="input" placeholder="Hint">
+              <span class="qf-ship-helper">Description related to the field</span>
+            </div>
+            <div class="qf-ship-field">
+              <label class="qf-ship-label">City/Region</label>
+              <input class="input" placeholder="Hint">
+              <span class="qf-ship-helper">Description related to the field</span>
+            </div>
+            <div class="qf-ship-field"></div>
+          </div>
+          <div class="qf-watermark">NOT FINAL FORM</div>
+        </div>
+      </div><!-- /stepShipping -->
+
+      <!-- Footer -->
+      <div class="dialog-footer qf-footer">
+        <button class="btn btn-text btn-secondary qf-footer-back" id="btnBack" style="display:none;" onclick="handleBack()">
+          <i class="pi pi-arrow-left"></i> BACK
+        </button>
+        <button class="btn btn-outlined btn-primary" id="btnSecondary" onclick="handleSecondary()">CREATE ORDER</button>
+        <button class="btn btn-primary" id="btnPrimary" onclick="handlePrimary()">SAVE QUOTE</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="v2.js"></script>
+</body>
+</html>

@@ -1,0 +1,603 @@
+/* ==========================================================================
+   Quote Form v2 — from screenshots
+   ========================================================================== */
+
+/* Landing */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: var(--space-10);
+  background: var(--surface-50);
+}
+.landing h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-2xl);
+  color: var(--color-text);
+}
+
+/* ==========================================================================
+   DIALOG SHELL — fixed size
+   ========================================================================== */
+
+.qf-dialog {
+  width: 1100px;
+  max-width: 95vw;
+  height: 770px;
+  max-height: 92vh;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Title bar */
+.qf-title-bar {
+  position: relative;
+  text-align: center;
+  padding: var(--space-12) var(--space-14) var(--space-8);
+  flex-shrink: 0;
+}
+
+.qf-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-4xl);
+  text-transform: uppercase;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.qf-title-bar .dialog-close {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+}
+
+/* Body */
+.qf-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+}
+
+/* Footer */
+.qf-footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-6) var(--space-12);
+}
+
+.qf-footer-back {
+  margin-right: auto;
+}
+
+/* ==========================================================================
+   TWO-COLUMN LAYOUT
+   ========================================================================== */
+
+.qf-columns {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Left — sticky header + scrollable form */
+.qf-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-right: 24px;
+}
+
+.qf-left > .qf-section-hdr {
+  flex-shrink: 0;
+  padding: 16px var(--space-12) var(--space-6) var(--space-12);
+}
+
+.qf-left-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-12) var(--space-10) var(--space-12);
+}
+
+/* Right — sticky header + scrollable table + sticky total */
+.qf-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-50);
+  border-left: 1px solid var(--color-border);
+}
+
+.qf-right > .qf-section-hdr {
+  flex-shrink: 0;
+  padding: 16px var(--space-10) var(--space-6) var(--space-10);
+}
+
+/* Section headers */
+.qf-section-hdr h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  margin: 0 0 var(--space-2);
+}
+.qf-section-hdr p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   FORM ROWS
+   24px between independent rows
+   8px between related rows (.qf-row-related)
+   ========================================================================== */
+
+.qf-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.qf-row {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  gap: var(--space-8);
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+.qf-row.qf-row-related {
+  margin-bottom: 4px;
+}
+
+.qf-label {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+  padding-top: 5px;
+}
+
+/* Default ctrl: 4px gap between items and their descriptions */
+.qf-ctrl {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Tighter gap for radio groups where desc belongs right under the option */
+.qf-ctrl-tight {
+  gap: 4px;
+}
+
+.qf-ctrl-row {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.qf-helper {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ==========================================================================
+   AUTH LINE — toggle + vendor dropdown stable on one line
+   ========================================================================== */
+
+.qf-auth-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 33px;
+}
+
+.qf-auth-vendor {
+  flex: 1;
+}
+
+/* ==========================================================================
+   SEGMENTED CONTROL
+   ========================================================================== */
+
+.qf-segmented {
+  display: inline-flex;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 33px;
+}
+
+.qf-seg {
+  padding: 0 var(--space-8);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: none;
+  border-right: 1px solid var(--field-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  line-height: 31px;
+}
+.qf-seg:last-child { border-right: none; }
+.qf-seg:hover { background: var(--surface-50); }
+.qf-seg.active {
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   NUMBER INPUTS
+   ========================================================================== */
+
+.qf-device-label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.qf-num {
+  width: 65px !important;
+  text-align: center;
+}
+
+.qf-reader-controls {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+/* ==========================================================================
+   CUSTOM DROPDOWN — Reader type with description tags
+   ========================================================================== */
+
+.qf-custom-dd {
+  position: relative;
+}
+
+.qf-dd-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 33px;
+  padding: 0 var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  background: var(--field-bg);
+  color: var(--field-color);
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+.qf-dd-trigger:hover { border-color: var(--field-border-hover); }
+.qf-dd-trigger .pi { font-size: 10px; color: var(--surface-400); }
+
+.qf-dd-panel {
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  background: var(--overlay-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-overlay);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.qf-dd-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+.qf-dd-option:hover { background: var(--surface-50); }
+
+.qf-dd-opt-name {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.qf-dd-opt-tag {
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  background: var(--primary-50);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   STEPPER (+5 / -5)
+   ========================================================================== */
+
+.qf-stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 33px;
+}
+
+.qf-stepper-input {
+  width: 40px !important;
+  text-align: center;
+  border: none !important;
+  border-radius: 0 !important;
+  height: 100% !important;
+  box-shadow: none !important;
+  font-size: var(--text-base);
+  padding: 0 !important;
+}
+
+.qf-stepper-btns {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--field-border);
+}
+
+.qf-stepper-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 16px;
+  font-size: 9px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  background: var(--surface-50);
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  line-height: 1;
+  padding: 0;
+}
+.qf-stepper-btn:first-child {
+  border-bottom: 1px solid var(--field-border);
+}
+.qf-stepper-btn:hover {
+  background: var(--surface-100);
+  color: var(--color-text);
+}
+
+/* ==========================================================================
+   ADVANCED LINK
+   ========================================================================== */
+
+.qf-advanced-link {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.qf-link {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-transform: uppercase;
+}
+.qf-link:hover { color: var(--color-primary-hover); }
+.qf-link .pi { font-size: 10px; }
+
+/* ==========================================================================
+   PRICING TABLE
+   ========================================================================== */
+
+.qf-pricing-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-10);
+}
+
+.qf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.qf-table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.qf-table .r { text-align: right; }
+
+.qf-table td {
+  padding: var(--space-5) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: top;
+  font-size: var(--text-sm);
+}
+
+.qf-table td.r { text-align: right; white-space: nowrap; }
+
+.qf-pricelist-row td {
+  padding: var(--space-3) var(--space-4) !important;
+}
+
+.qf-mini-select {
+  width: 130px;
+  font-size: var(--text-xs) !important;
+  height: 28px !important;
+  padding: var(--space-2) var(--space-4) !important;
+}
+
+.qf-item-meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  display: block;
+  line-height: 1.4;
+}
+
+.qf-sell-input {
+  width: 55px;
+  text-align: right;
+  font-size: var(--text-sm);
+  display: inline-block;
+  height: 28px;
+  padding: var(--space-2) var(--space-3);
+}
+
+/* ==========================================================================
+   PRICING TOTAL
+   ========================================================================== */
+
+.qf-total {
+  flex-shrink: 0;
+  margin-top: auto;
+  border-top: 1px solid var(--surface-400);
+  padding: var(--space-4) var(--space-10) 16px;
+}
+
+.qf-total-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-12);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.qf-total-values {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--space-12);
+  font-size: var(--text-base);
+}
+
+.qf-total-label { font-weight: 700; }
+.qf-total-bold { font-weight: 700; }
+
+/* ==========================================================================
+   SHIPPING
+   ========================================================================== */
+
+#stepShipping {
+  flex-direction: column;
+}
+
+#stepShipping > .qf-section-hdr {
+  flex-shrink: 0;
+  padding: 16px var(--space-12) var(--space-6) var(--space-12);
+}
+
+.qf-shipping-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--space-12) var(--space-10) var(--space-12);
+  position: relative;
+}
+
+.qf-warn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6) var(--space-8);
+  background: var(--orange-50);
+  border: 1px solid var(--orange-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--orange-700);
+  margin-bottom: var(--space-10);
+}
+.qf-warn .pi { color: var(--color-warning); }
+
+.qf-ship-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6) var(--space-10);
+}
+
+.qf-ship-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.qf-ship-label {
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.qf-ship-helper {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.qf-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  font-size: 72px;
+  font-weight: 700;
+  color: rgba(232, 70, 69, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+}
+
+/* ==========================================================================
+   RESPONSIVE — under 1024px
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .qf-dialog {
+    width: 95vw;
+    height: 92vh;
+  }
+  .qf-columns {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .qf-left {
+    overflow-y: visible;
+    flex: none;
+    padding-right: 0;
+  }
+  .qf-left-scroll {
+    overflow-y: visible;
+  }
+  .qf-right {
+    flex: none;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+  }
+  .qf-right .qf-pricing-scroll {
+    overflow-y: visible;
+  }
+}

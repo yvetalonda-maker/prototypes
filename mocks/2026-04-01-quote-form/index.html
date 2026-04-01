@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prototype — Quote Form in PrimeVue UI</title>
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="../../_shared/css/utilities.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Landing page -->
+  <div class="landing" id="landing">
+    <h1>Prototype of quote form in PrimeVue UI</h1>
+    <button class="btn btn-primary btn-lg" onclick="openDialog()">
+      <i class="pi pi-plus"></i> Create new quote (v1)
+    </button>
+    <a href="v2.html" class="btn btn-outlined btn-primary btn-lg">
+      <i class="pi pi-plus"></i> Create new quote (v2 — from screenshots)
+    </a>
+  </div>
+
+  <!-- Dialog mask -->
+  <div class="dialog-mask" id="dialogMask" style="display: none;">
+    <div class="dialog quote-dialog">
+
+      <!-- Title row -->
+      <div class="dialog-title-row">
+        <h2 class="dialog-title" id="dialogTitle">Create Quote</h2>
+        <button class="dialog-close" onclick="closeDialog()"><i class="pi pi-times"></i></button>
+      </div>
+
+      <!-- Scrollable content area -->
+      <div class="dialog-scroll" id="dialogScroll">
+
+        <!-- Step 1+2: Form -->
+        <div id="stepForm">
+          <div class="quote-layout">
+
+            <!-- LEFT: 1. CONFIGURATION -->
+            <div class="quote-config" id="quoteConfig">
+              <div class="section-header">
+                <h4>1. CONFIGURATION (Acme Corporation, Germany /MA1234:5/)</h4>
+                <p class="section-subtitle">Choose the product, contract terms, and options for this quote or order.</p>
+              </div>
+
+              <!-- Form rows: label left, control right -->
+              <div class="config-form">
+
+                <!-- Product type -->
+                <div class="form-row">
+                  <label class="form-row-label">Product type</label>
+                  <div class="form-row-control">
+                    <div class="radio-group-vertical">
+                      <label class="radio-wrapper">
+                        <input type="radio" name="productType" value="pro" checked onchange="updatePricing()">
+                        <span>SAFEQ Cloud Pro</span>
+                      </label>
+                      <label class="radio-wrapper">
+                        <input type="radio" name="productType" value="breeze" onchange="updatePricing()">
+                        <span>SAFEQ Cloud Breeze</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Contract -->
+                <div class="form-row">
+                  <label class="form-row-label">Contract</label>
+                  <div class="form-row-control">
+                    <div class="contract-controls">
+                      <div class="select-button-group">
+                        <button class="select-btn active" data-value="subscription" onclick="selectContract(this)">Subscription</button>
+                        <button class="select-btn" data-value="fixed" onclick="selectContract(this)">Fixed term</button>
+                      </div>
+                      <select class="select contract-period-select" id="contractPeriod">
+                        <option>monthly</option>
+                        <option>yearly</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Devices -->
+                <div class="form-row">
+                  <label class="form-row-label">Devices</label>
+                  <div class="form-row-control">
+                    <div class="devices-row">
+                      <span class="device-label">PRINT</span>
+                      <input type="number" class="input device-count" value="20" min="0" onchange="updatePricing()">
+                      <span class="device-label">MFP</span>
+                      <input type="number" class="input device-count" value="20" min="0" onchange="updatePricing()">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Authentication (Card Readers etc.) -->
+                <div class="form-row">
+                  <label class="form-row-label">Authentication (Card<br>Readers etc.)</label>
+                  <div class="form-row-control">
+                    <label class="toggle">
+                      <input type="checkbox" id="authToggle" onchange="toggleAuth()">
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Auth: Vendor (hidden) -->
+                <div class="form-row auth-detail" id="authVendorRow" style="display: none;">
+                  <label class="form-row-label"></label>
+                  <div class="form-row-control">
+                    <select class="select" id="vendorSelect">
+                      <option value="konica">Konica Minolta</option>
+                      <option value="ricoh">Ricoh</option>
+                      <option value="xerox">Xerox</option>
+                      <option value="hp">HP</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Auth: Reader type (hidden) -->
+                <div class="form-row auth-detail" id="authReaderRow" style="display: none;">
+                  <label class="form-row-label">Reader type</label>
+                  <div class="form-row-control">
+                    <div class="reader-row">
+                      <input type="number" class="input device-count" id="readerCount" value="20" min="1" onchange="updatePricing()">
+                      <select class="select reader-select" id="readerType" onchange="updateReaderDescription()">
+                        <option value="ultimate" data-desc="Most universal reader on the market with future proof technology. Supporting majority of technologies incl. mobile, HID and Legic authentication." data-price="10">MFX4 Ultimate</option>
+                        <option value="mobile" data-desc="Mobile and Legic focused reader for modern authentication workflows." data-price="8">MFX4 Mobile</option>
+                        <option value="reader" data-desc="HID focused reader for standard card authentication." data-price="7">MFX4 Reader</option>
+                        <option value="lite" data-desc="Affordable reader for basic authentication needs." data-price="5">MFX4 Lite</option>
+                      </select>
+                    </div>
+                    <p class="reader-description" id="readerDescription">Most <strong>universal</strong> reader on the market with future proof technology. Supporting majority of technologies incl. mobile, HID and Legic authentication.</p>
+                  </div>
+                </div>
+
+                <!-- SHOW ADVANCED — aligned with labels -->
+                <div class="form-row-advanced" id="advancedToggleRow">
+                  <button class="btn-link-advanced" id="advancedToggle" onclick="toggleAdvanced()">
+                    SHOW ADVANCED <i class="pi pi-chevron-down"></i>
+                  </button>
+                </div>
+
+                <!-- === ADVANCED OPTIONS === -->
+                <div id="advancedSection" style="display: none;">
+
+                  <!-- Desired start -->
+                  <div class="form-row">
+                    <label class="form-row-label">Desired start</label>
+                    <div class="form-row-control">
+                      <div class="radio-group-vertical">
+                        <label class="radio-wrapper">
+                          <input type="radio" name="startDate" value="order" checked onchange="toggleCustomDate()">
+                          <span>Order date</span>
+                        </label>
+                        <p class="form-helper radio-helper">Ends in 13. 1. 2028 if order completed today.</p>
+                        <label class="radio-wrapper">
+                          <input type="radio" name="startDate" value="custom" onchange="toggleCustomDate()">
+                          <span>Custom</span>
+                        </label>
+                        <div id="customDateField" style="display: none;">
+                          <input type="date" class="input" style="width: 160px;" value="2039-12-31">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Auto-renewal -->
+                  <div class="form-row">
+                    <label class="form-row-label">Auto-renewal</label>
+                    <div class="form-row-control">
+                      <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Mobile authentication -->
+                  <div class="form-row">
+                    <label class="form-row-label">Mobile authentication</label>
+                    <div class="form-row-control">
+                      <div class="toggle-with-input">
+                        <label class="toggle">
+                          <input type="checkbox" id="mobileAuthToggle" onchange="toggleMobileAuth()">
+                          <span class="toggle-slider"></span>
+                        </label>
+                        <input type="number" class="input device-count" id="mobileAuthCount" value="20" min="1" style="display: none;" onchange="updatePricing()">
+                      </div>
+                      <p class="form-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Reserved infrastructure -->
+                  <div class="form-row">
+                    <label class="form-row-label">Reserved infrastructure</label>
+                    <div class="form-row-control">
+                      <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                      </label>
+                      <p class="form-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Direct support -->
+                  <div class="form-row">
+                    <label class="form-row-label">Direct support</label>
+                    <div class="form-row-control">
+                      <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                      </label>
+                      <p class="form-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Upgrade to 24/7 Premium -->
+                  <div class="form-row">
+                    <label class="form-row-label">Upgrade to 24/7 Premium</label>
+                    <div class="form-row-control">
+                      <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                      </label>
+                      <p class="form-helper">Description related to the switch.</p>
+                    </div>
+                  </div>
+
+                  <!-- Package of professional services -->
+                  <div class="form-row">
+                    <label class="form-row-label">Package of professional<br>services</label>
+                    <div class="form-row-control">
+                      <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                      </label>
+                      <p class="form-helper">Description explains what it means. Logic needs to be defined.</p>
+                    </div>
+                  </div>
+
+                  <!-- HIDE ADVANCED — aligned with labels -->
+                  <div class="form-row-advanced">
+                    <button class="btn-link-advanced" onclick="toggleAdvanced()">
+                      HIDE ADVANCED <i class="pi pi-chevron-up"></i>
+                    </button>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <!-- RIGHT: 2. PRICING -->
+            <div class="quote-pricing" id="quotePricing">
+              <div class="section-header">
+                <h4>2. PRICING</h4>
+                <p class="section-subtitle">Select a price list and review cost, margin, and customer price.</p>
+              </div>
+
+              <div class="pricing-table-wrapper">
+                <table class="pricing-table" id="pricingTable">
+                  <thead>
+                    <tr>
+                      <th class="col-item">Price list item</th>
+                      <th class="col-qty">Quantity</th>
+                      <th class="col-purchase">Purchase price</th>
+                      <th class="col-selling">Selling price</th>
+                    </tr>
+                    <tr class="price-list-row">
+                      <td></td>
+                      <td></td>
+                      <td>
+                        <select class="select select-sm price-list-select">
+                          <option>Default pri...</option>
+                        </select>
+                      </td>
+                      <td>
+                        <select class="select select-sm price-list-select">
+                          <option>Default pri...</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody id="pricingBody">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pricing-total">
+                <div class="total-labels">
+                  <span></span>
+                  <span></span>
+                  <span>Purchase price</span>
+                  <span>Selling price</span>
+                </div>
+                <div class="total-values">
+                  <span class="total-label">TOTAL price</span>
+                  <span></span>
+                  <span class="total-purchase" id="totalPurchase">1200 EUR</span>
+                  <span class="total-selling" id="totalSelling">2800 EUR</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Step 3: Shipping details (hidden by default) -->
+        <div id="stepShipping" style="display: none;">
+          <div class="message message-warn" style="margin-bottom: var(--space-8);">
+            <i class="pi pi-exclamation-triangle"></i>
+            Card readers in order requires shipping address
+          </div>
+
+          <h4 style="margin-bottom: var(--space-8);">Step 3: Shipping Details</h4>
+
+          <div class="shipping-grid">
+            <div class="form-group">
+              <label class="form-label">First name</label>
+              <input class="input" placeholder="First name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last name</label>
+              <input class="input" placeholder="Last name">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">Company name</label>
+              <input class="input" placeholder="Company name">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">Address line 1</label>
+              <input class="input" placeholder="Street address">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label class="form-label">Address line 2</label>
+              <input class="input" placeholder="Apt, suite, etc. (optional)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input class="input" placeholder="City">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Region</label>
+              <input class="input" placeholder="Region / State">
+            </div>
+          </div>
+
+          <p class="watermark">NOT FINAL FORM</p>
+        </div>
+
+      </div>
+
+      <!-- Dialog footer -->
+      <div class="dialog-footer" id="dialogFooter">
+        <button class="btn btn-outlined btn-primary" id="btnSecondary" onclick="handleSecondary()">CREATE ORDER</button>
+        <button class="btn btn-primary" id="btnPrimary" onclick="handlePrimary()">SAVE QUOTE</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
