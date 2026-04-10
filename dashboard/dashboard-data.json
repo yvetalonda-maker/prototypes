@@ -1,0 +1,298 @@
+{
+  "generated": "2026-04-10T09:25",
+  "totalProjects": 14,
+  "projects": [
+    {
+      "name": "Custom slash příkazy",
+      "status": "probíhá",
+      "added": "2026-03-28",
+      "lastWork": "2026-03-28",
+      "location": "~/.claude/commands/",
+      "estimate": "2–3 h",
+      "spent": "~0.5 h",
+      "longGoal": "mít sadu vlastních /příkazů pro opakující se workflow (reporting, analýzy, šablony)",
+      "shortGoal": "identifikovat 2–3 workflow které dělám opakovaně a vytvořit první příkaz",
+      "notes": "První příkaz vytvořen: `/sync-review` — spustí Process Spotter agenta nad transkripty z pondělních synců a retro. Automaticky najde neanalyzované transkripty + screenshoty Miro boardu, zeptá se co zpracovat, provede analýzu a aktualizuje dlouhodobý kontext.",
+      "daysSinceWork": 13,
+      "category": "ai-learning",
+      "priority": false,
+      "extraStat": {
+        "label": "souborů",
+        "value": 1
+      }
+    },
+    {
+      "name": "TTS / auto-speech",
+      "status": "nezačato",
+      "added": "2026-03-28",
+      "lastWork": "—",
+      "location": "—",
+      "estimate": "30 min",
+      "spent": "0 h",
+      "longGoal": "Claude Code automaticky čte své odpovědi nahlas, bez manuálního spouštění",
+      "shortGoal": "otestovat Mac Spoken Content nebo jinou metodu na jednoduché session",
+      "notes": "na Macu existuje Option+Esc a System Settings → Accessibility → Spoken Content",
+      "daysSinceWork": null,
+      "category": "ai-learning",
+      "priority": false
+    },
+    {
+      "name": "Notion workspace analýza",
+      "status": "hotovo",
+      "added": "2026-03-28",
+      "lastWork": "2026-04-10",
+      "location": "—",
+      "estimate": "1 h",
+      "spent": "~3 h",
+      "longGoal": "umět prohledávat a shrnovat celý Notion workspace podle tématu, tvořit cross-page přehledy",
+      "shortGoal": "otestovat Notion MCP na jedné konkrétní sekci workspace",
+      "notes": "Hotovo. Notion MCP funguje, otestováno na reálných sekcích workspace. Čas navíc kvůli experimentování s různými query přístupy.",
+      "daysSinceWork": 0,
+      "category": "ai-learning",
+      "priority": false
+    },
+    {
+      "name": "Figma MCP → Prototypes",
+      "status": "probíhá",
+      "added": "2026-03-28",
+      "lastWork": "2026-03-31",
+      "location": "~/prototypes/",
+      "estimate": "2–3 h",
+      "spent": "~3 h",
+      "longGoal": "systém pro rychlé skládání interaktivních HTML prototypů z PrimeOne kitu — dva režimy: live (zrcadlí produkci) a mocks (jednorázové)",
+      "shortGoal": "doladit split workflow prototyp",
+      "notes": "Setup kompletní. První reálný prototyp hotový: scan-workflow-builder (funkční, na GH Pages). Druhý: scan-workflow-split (WIP — základní UI ok, ale UX splitu potřebuje iteraci). Tabler Icons CDN jako alternativa k FA Pro. Notion research stránka aktualizovaná. Detaily v memory: project_scan_workflow.md.",
+      "daysSinceWork": 10,
+      "category": "work",
+      "priority": false,
+      "subProjects": [
+        {
+          "name": "ne-hub",
+          "kind": "live",
+          "lastDate": "2026-03-29",
+          "daysSince": 12,
+          "status": "ongoing",
+          "url": "https://yvetalonda-maker.github.io/prototypes/live/ne-hub/"
+        },
+        {
+          "name": "safeq-cloud-admin",
+          "kind": "live",
+          "lastDate": null,
+          "daysSince": null,
+          "status": "placeholder",
+          "url": null
+        },
+        {
+          "name": "terminal-app",
+          "kind": "live",
+          "lastDate": null,
+          "daysSince": null,
+          "status": "placeholder",
+          "url": null
+        },
+        {
+          "name": "2026-03-29-component-showcase",
+          "kind": "mocks",
+          "lastDate": "2026-03-29",
+          "daysSince": 12,
+          "status": "hotovo",
+          "url": null
+        },
+        {
+          "name": "2026-03-29-printers-test",
+          "kind": "mocks",
+          "lastDate": "2026-03-29",
+          "daysSince": 12,
+          "status": "hotovo",
+          "url": null
+        },
+        {
+          "name": "2026-03-31-scan-workflow-builder",
+          "kind": "mocks",
+          "lastDate": "2026-03-31",
+          "daysSince": 10,
+          "status": "hotovo",
+          "url": null
+        },
+        {
+          "name": "2026-03-31-scan-workflow-split",
+          "kind": "mocks",
+          "lastDate": "2026-03-31",
+          "daysSince": 10,
+          "status": "hotovo",
+          "url": null
+        },
+        {
+          "name": "2026-04-01-quote-form",
+          "kind": "mocks",
+          "lastDate": "2026-04-01",
+          "daysSince": 9,
+          "status": "hotovo",
+          "url": null
+        }
+      ]
+    },
+    {
+      "name": "Image folder analýza",
+      "status": "nezačato",
+      "added": "2026-03-28",
+      "lastWork": "—",
+      "location": "—",
+      "estimate": "1–2 h",
+      "spent": "0 h",
+      "longGoal": "mít způsob jak rychle analyzovat, popsat a zorganizovat libovolnou složku s fotkami",
+      "shortGoal": "vybrat reálnou složku a projít celý workflow poprvé",
+      "notes": "Claude umí analyzovat každý obrázek, kategorizovat, přejmenovat",
+      "daysSinceWork": null,
+      "category": "ai-learning",
+      "priority": false
+    },
+    {
+      "name": "CLAUDE.md pojistka",
+      "status": "částečně hotovo",
+      "added": "2026-03-28",
+      "lastWork": "2026-03-28",
+      "location": "/Users/yvetalonda/Downloads/cc4e-course/CLAUDE.md",
+      "estimate": "1–2 h",
+      "spent": "~0.5 h",
+      "longGoal": "mít propracovanou pojistku pro každý projekt, včetně konkrétního znění pro různé typy akcí",
+      "shortGoal": "dopracovat znění pojistky, které bylo ukázáno v lekci 1.4, a aplikovat ho na nový projekt",
+      "notes": "základní verze již v globálním CLAUDE.md i project CLAUDE.md",
+      "daysSinceWork": 13,
+      "category": "ai-learning",
+      "priority": false
+    },
+    {
+      "name": "Global sub-agenti brainstorming",
+      "status": "probíhá",
+      "added": "2026-03-28",
+      "lastWork": "2026-03-29",
+      "location": "~/.claude/agents/",
+      "estimate": "3–4 h",
+      "spent": "~2 h",
+      "longGoal": "mít sadu personal agentů dostupných napříč všemi projekty — role které mi ve práci chybí",
+      "shortGoal": "otestovat Process Spottera na reálném transkriptu (pondělní sync)",
+      "notes": "Vytvořeni 3 agenti: Challenger, Enablement Stratég, Process Spotter. Process Spotter má kompletní setup: kontextová složka (~/.claude/process-spotter-context/), summary.md jako průběžná paměť, archiv reviews, roadmapa s epicy (předvyplněná), slash příkaz /sync-review. Hlídá ownership, yesman momenty, delegaci, údržbu roadmapy (navrhuje změny statusů, ptá se na neaktivní epicy). Agenti 4-6 (Partner Lens, Scope Guard, Dev Team Proxy) navrženi ale zatím nevytvořeni.",
+      "daysSinceWork": 12,
+      "category": "work",
+      "priority": false,
+      "extraStat": {
+        "label": "souborů",
+        "value": 3
+      }
+    },
+    {
+      "name": "AI Adoption Agent (pro mě)",
+      "status": "nezačato",
+      "added": "2026-03-29",
+      "lastWork": "—",
+      "location": "—",
+      "estimate": "3–5 h",
+      "spent": "0 h",
+      "longGoal": "osobní AI analytik mých procesů — vidí příležitosti k automatizaci, mapuje patterny v mé práci, sleduje AI maturitu a progress napříč časem",
+      "shortGoal": "navrhnout strukturu agenta a otestovat na 1 reálném procesu (např. týdenní sync workflow)",
+      "notes": "viz podrobnosti v `~/.claude/ideas-detail/ai-adoption-agent.md`",
+      "daysSinceWork": null,
+      "category": "ai-learning",
+      "priority": false
+    },
+    {
+      "name": "UX Enablement Agent (pro dev týmy)",
+      "status": "nezačato",
+      "added": "2026-03-29",
+      "lastWork": "—",
+      "location": "—",
+      "estimate": "8–15 h (komplexní, vyžaduje iterace)",
+      "spent": "0 h",
+      "longGoal": "AI enablement nástroj pro dev týmy — personalizovaný coaching UX kompetencí, měření UX maturity, gamification (achievementy, progress), adaptabilní na tým/jednotlivce",
+      "shortGoal": "promyslet architekturu — univerzální základ vs. per-tým konfigurace, jaká data potřebuje, co měří",
+      "notes": "viz podrobnosti v `~/.claude/ideas-detail/ux-enablement-agent.md`",
+      "daysSinceWork": null,
+      "category": "work",
+      "priority": false
+    },
+    {
+      "name": "Mentoring Dušan (T2G program)",
+      "status": "nezačato",
+      "added": "2026-03-31",
+      "lastWork": "—",
+      "location": "—",
+      "estimate": "průběžné",
+      "spent": "0 h",
+      "longGoal": "kompletní mentoring Dušana v rámci programu Trainee to Grade — strukturovaný plán, pravidelné check-iny, měření progressu",
+      "shortGoal": "znovu nastavit projekt, navázat na předchozí kontext z ChatGPT",
+      "notes": "Obsah a kontext je uložený v Notion pod složkou \"Dušan\". Konverzace z ChatGPT se budou přenášet ručně.",
+      "daysSinceWork": null,
+      "category": "work",
+      "priority": false
+    },
+    {
+      "name": "Knihovna - osobní knižní tracker",
+      "status": "probíhá",
+      "added": "2026-04-09",
+      "lastWork": "2026-04-10",
+      "location": "~/.claude/books/",
+      "estimate": "průběžné",
+      "spent": "~2 h",
+      "longGoal": "kompletní osobní knižní databáze s možností dotazů - statistiky, doporučení, audioknihy, filmové adaptace, žánrové analýzy",
+      "shortGoal": "další dotazy — žánrové statistiky, audioknihy, doporučení",
+      "notes": "431 knih v CSV (s ratingu, stránkami, rokem vydání). Kompletní seznam filmových/seriálových adaptací v adaptations.md (39 adaptací, 17 viděných, sloupec Viděno). Dostupnost ověřena přes filmtoro.cz k 2026-04-10.",
+      "daysSinceWork": 0,
+      "category": "personal",
+      "priority": false,
+      "extraStat": {
+        "label": "knih v databázi",
+        "value": 431
+      }
+    },
+    {
+      "name": "Dashboard - osobní přehled projektů",
+      "status": "probíhá",
+      "added": "2026-04-10",
+      "lastWork": "2026-04-10",
+      "location": "~/prototypes/dashboard/",
+      "estimate": "2–3 h",
+      "spent": "~1.5 h",
+      "longGoal": "vizuální přehled všech projektů s auto-updatem — karty, statusy, progress, sub-projekty",
+      "shortGoal": "pilot hotový, iterovat obsah a vizuál",
+      "notes": "Lokální HTML dashboard generovaný Pythonem z ideas.md. LaunchAgent: regenerace v 7:55, auto-open v 8:00. Sekce: Pracovní / AI & Learning / Osobní. Prototypy mají sub-chipy. Hotové projekty collapsed. Fáze 2: Übersicht widget na plochu nebo Scriptable na iPhone.",
+      "daysSinceWork": 0,
+      "category": "personal",
+      "priority": false
+    },
+    {
+      "name": "GH Pages - security",
+      "status": "nezačato",
+      "added": "2026-04-10",
+      "lastWork": "—",
+      "location": "—",
+      "estimate": "1–2 h",
+      "spent": "0 h",
+      "longGoal": "zabezpečit veřejné GH Pages prototypy — client-side šifrování, nebo alternativní hosting s auth",
+      "shortGoal": "zmapovat možnosti (client-side encryption, Cloudflare Access, Netlify password protect, private repo + GH Pages Pro)",
+      "notes": "GH Pages na free plánu jsou vždy veřejné i z private repa. Google indexuje. Aktuálně na GH Pages: prototypy (scan-workflow, quote-form, ne-hub). Dashboard přesunut na lokální soubor.",
+      "daysSinceWork": null,
+      "category": "ai-learning",
+      "priority": true
+    },
+    {
+      "name": "Personas projekt",
+      "status": "probíhá",
+      "added": "2026-03-28",
+      "lastWork": "2026-03-31",
+      "location": "~/personas/",
+      "estimate": "5–8 h",
+      "spent": "~0.5 h",
+      "longGoal": "sdílený projekt s personami dostupný pro mě i kolegy, s přednastavenými instrukcemi a obsahy",
+      "shortGoal": "naplánovat strukturu projektu v Plan mode před jakýmkoliv buildováním",
+      "notes": "Založena složka ~/personas/ se dvěma zdroji: miro-validated.md (validovaný přehled rolí z Miro — neměnit) a gpt-draft-prompts.md (vizuální instrukce z GPT — draft, bude se upravovat). 9 hlavních person + school persony. Image generation: trial Replicate (Flux) — pipeline funguje, ale kvalita pro komplexní stylizované scény nedosahuje GPT. 4 pokusy, spokojenost nízká. Hlavní blocker: počet iterací a čas, ne cena. Trial pokračuje, uživatelka skeptická ale nevzdává. Log: ~/personas/image-gen-log.md. Další krok: zvážit alternativy (DALL-E API? jiný model na Replicate?) nebo Plan mode pro architekturu persona systému.",
+      "daysSinceWork": 10,
+      "category": "work",
+      "priority": false,
+      "extraStat": {
+        "label": "souborů",
+        "value": 4
+      }
+    }
+  ]
+}
