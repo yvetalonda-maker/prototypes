@@ -1,0 +1,277 @@
+/* ==========================================================================
+   ne.Hub — Quote Form (1:1 match with JSX original)
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.view { /* view containers */ }
+
+/* ---- Form shell: fixed header + footer, scrollable body, sticky pricing ---- */
+.form-shell {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+  max-width: 1280px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.form-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 18px 18px;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  z-index: 10;
+}
+
+.form-body {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 16px;
+}
+
+.form-footer {
+  flex-shrink: 0;
+  display: flex;
+  gap: 7px;
+  justify-content: flex-end;
+  padding: 14px 17.5px;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  z-index: 10;
+}
+
+/* Pricing panel sticks to the top of the scroll area */
+.pricing-panel {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: calc(100vh - 220px); /* header + footer + breathing room */
+  overflow-y: auto;
+}
+
+/* ---- Select button (segmented control) ---- */
+.sb-opt {
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 3.5px 10.5px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.sb-opt.active {
+  background: #fff;
+  color: #0f172a;
+}
+
+/* ---- InputNumber ---- */
+.num-input {
+  display: inline-flex;
+  width: 100px;
+  align-items: stretch;
+}
+
+.num-input input {
+  flex: 1;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  color: #30394a;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(18,18,23,0.05);
+  width: 0;
+  outline: none;
+}
+
+.num-input input:focus {
+  border-color: #1a7282;
+}
+
+.num-spin {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.num-up,
+.num-down {
+  width: 22px;
+  flex: 1;
+  min-height: 0;
+  border: 1px solid #cbd5e1;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  padding: 0;
+}
+
+.num-up {
+  border-bottom: none;
+  border-radius: 0 6px 0 0;
+}
+
+.num-down {
+  border-radius: 0 0 6px 0;
+}
+
+/* Match button — plain text link style */
+.match-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a7282;
+  padding: 8px 0 8px 8px;
+  text-decoration: none;
+}
+
+.match-btn:hover {
+  text-decoration: underline;
+}
+
+/* ---- Pricing rows (rendered by JS) ---- */
+.pricing-row {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 10.5px 14px;
+  align-items: center;
+}
+
+.pricing-row .col-item { flex: 1; }
+.pricing-row .col-qty {
+  width: 100px;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  color: #30394a;
+}
+.pricing-row .col-num {
+  width: 100px;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  color: #30394a;
+  text-align: right;
+}
+
+.pricing-sku {
+  margin: 0;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #36383b;
+}
+
+.pricing-name {
+  margin: 0;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  color: #36383b;
+}
+
+.pricing-term {
+  margin: 0;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  color: #36383b;
+}
+
+/* ---- Comparison rows ---- */
+.comparison-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  color: #30394a;
+}
+
+/* ---- Quote list items (detail view) ---- */
+.quote-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.quote-item-info { flex: 1; }
+
+.quote-item-name {
+  margin: 0;
+  font-size: 12px;
+  color: #30394a;
+}
+
+.quote-item-date {
+  margin: 0;
+  font-size: 10px;
+  color: #64748b;
+}
+
+/* Context menu */
+.ctx-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  min-width: 175px;
+  z-index: 100;
+}
+
+.ctx-menu-header {
+  padding: 7px 10.5px;
+  border-bottom: 1px solid #e2e8f0;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.ctx-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10.5px;
+  cursor: pointer;
+  font-family: 'Lab Grotesque', sans-serif;
+  font-size: 14px;
+  color: #30394a;
+}
+
+.ctx-menu-item:hover {
+  background: #f8fafc;
+}

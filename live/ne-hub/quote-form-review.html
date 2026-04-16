@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quote Form — Convention Review</title>
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
+  <style>
+    body { font-family: 'Lab Grotesque', sans-serif; padding: 32px; max-width: 1200px; margin: 0 auto; color: #30394a; }
+    h1 { font-family: 'Y Soft', sans-serif; margin-bottom: 32px; }
+    h2 { margin: 40px 0 16px; font-size: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
+    th { text-align: left; padding: 10px 12px; background: #f8fafc; border: 1px solid #e2e8f0; font-size: 13px; font-weight: 600; color: #64748b; }
+    td { padding: 10px 12px; border: 1px solid #e2e8f0; font-size: 14px; vertical-align: middle; }
+    .icon-cell { font-size: 18px; text-align: center; width: 60px; }
+    .icon-cell svg { vertical-align: middle; }
+    .icon-cell i { font-size: 16px; }
+    .match { color: #16a34a; font-weight: 600; }
+    .partial { color: #ca8a04; font-weight: 600; }
+    .none { color: #dc2626; font-weight: 600; }
+    .demo-row { display: flex; gap: 24px; align-items: center; margin-bottom: 12px; }
+    .demo-box { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; flex: 1; }
+    .demo-box h4 { margin: 0 0 12px; font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+    .note { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+    /* Custom components from quote-form for comparison */
+    .qf-tgl { position: relative; width: 35px; height: 21px; display: inline-block; cursor: pointer; }
+    .qf-tgl input { display: none; }
+    .qf-tgl-track { position: absolute; inset: 0; background: #cbd5e1; border-radius: 30px; transition: .2s; }
+    .qf-tgl input:checked + .qf-tgl-track { background: #1a7282; }
+    .qf-tgl-thumb { position: absolute; width: 14px; height: 14px; left: 3.5px; top: 3.5px; background: #fff; border-radius: 50%; transition: .2s; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+    .qf-tgl input:checked ~ .qf-tgl-thumb { left: 18px; }
+
+    .qf-num-input { display: inline-flex; width: 100px; align-items: stretch; }
+    .qf-num-input input { flex: 1; font-size: 14px; padding: 8px 10px; border: 1px solid #cbd5e1; border-right: none; border-radius: 6px 0 0 6px; color: #30394a; background: #fff; width: 0; outline: none; }
+    .qf-num-spin { display: flex; flex-direction: column; flex-shrink: 0; }
+    .qf-num-up, .qf-num-down { width: 22px; flex: 1; min-height: 0; border: 1px solid #cbd5e1; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #64748b; padding: 0; font-size: 10px; }
+    .qf-num-up { border-bottom: none; border-radius: 0 6px 0 0; }
+    .qf-num-down { border-radius: 0 0 6px 0; }
+
+    .qf-sb-opt { font-size: 14px; font-weight: 500; padding: 3.5px 10.5px; border: none; border-radius: 6px; background: transparent; color: #64748b; cursor: pointer; }
+    .qf-sb-opt.active { background: #fff; color: #0f172a; }
+  </style>
+</head>
+<body>
+
+<h1>QUOTE FORM — CONVENTION REVIEW</h1>
+
+<!-- ============ ICONS ============ -->
+<h2>Ikony — SVG vs PrimeIcons</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Funkce</th>
+      <th>Aktuální (inline SVG)</th>
+      <th>PrimeIcon ekvivalent</th>
+      <th>Shoda</th>
+      <th>Poznámka</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Close / X</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-times"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-times</code></td>
+    </tr>
+    <tr>
+      <td>Chevron dolů (select, toggle)</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4L7 9L12 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-chevron-down"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-chevron-down</code></td>
+    </tr>
+    <tr>
+      <td>Chevron nahoru (spinner up)</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 8L7 5L10 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-chevron-up"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-chevron-up</code></td>
+    </tr>
+    <tr>
+      <td>Chevron dolů (spinner down)</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 5L7 8L10 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-chevron-down"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-chevron-down</code></td>
+    </tr>
+    <tr>
+      <td>Download / Save</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2V9M7 9L4 6M7 9L10 6M2 11H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-download"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-download</code></td>
+    </tr>
+    <tr>
+      <td>Play (demo video)</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M4 2.5L11.5 7L4 11.5V2.5Z" fill="currentColor"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-play"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-play</code></td>
+    </tr>
+    <tr>
+      <td>More / Three dots</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="2" cy="7" r="1.5" fill="currentColor"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/><circle cx="12" cy="7" r="1.5" fill="currentColor"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-ellipsis-h"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-ellipsis-h</code></td>
+    </tr>
+    <tr>
+      <td>Info (circle-i)</td>
+      <td class="icon-cell"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="#9ca3af" stroke-width="1.5"/><path d="M10 9V14M10 6V7" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-info-circle"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-info-circle</code></td>
+    </tr>
+    <tr>
+      <td>Edit / Pencil</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L3 8L10 1L13 4L6 11L2 12Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-pencil"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-pencil</code></td>
+    </tr>
+    <tr>
+      <td>Duplicate / Copy</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="4" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M2 10V3C2 2.5 2.5 2 3 2H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-copy"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-copy</code></td>
+    </tr>
+    <tr>
+      <td>Delete / Trash</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 4H11M5 4V3C5 2.5 5.5 2 6 2H8C8.5 2 9 2.5 9 3V4M4 4L5 12H9L10 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-trash"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-trash</code></td>
+    </tr>
+    <tr>
+      <td>Table / Convert to order</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="1" stroke="currentColor" stroke-width="1.2"/><path d="M1 5H13M5 5V12M9 5V12" stroke="currentColor" stroke-width="1.2"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-table"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-table</code></td>
+    </tr>
+    <tr>
+      <td>Gear / Generate variation</td>
+      <td class="icon-cell"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2" stroke="currentColor" stroke-width="1.2"/><path d="M7 1V3M7 11V13M1 7H3M11 7H13M2.5 2.5L4 4M10 10L11.5 11.5M11.5 2.5L10 4M4 10L2.5 11.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-cog"></i></td>
+      <td class="match">Existuje</td>
+      <td><code>pi pi-cog</code></td>
+    </tr>
+    <tr>
+      <td>Warning (mismatch)</td>
+      <td class="icon-cell"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="12" height="14" rx="1" stroke="currentColor" stroke-width="1.2"/><rect x="4" y="3" width="8" height="3" fill="currentColor" opacity="0.3"/><circle cx="5" cy="9" r="0.8" fill="currentColor"/><circle cx="8" cy="9" r="0.8" fill="currentColor"/><circle cx="11" cy="9" r="0.8" fill="currentColor"/><circle cx="5" cy="12" r="0.8" fill="currentColor"/><circle cx="8" cy="12" r="0.8" fill="currentColor"/><circle cx="11" cy="12" r="0.8" fill="currentColor"/></svg></td>
+      <td class="icon-cell"><i class="pi pi-exclamation-triangle"></i></td>
+      <td class="partial">Jiná metafora</td>
+      <td>SVG je "calculator", PI je trojuhelnik. <code>pi pi-exclamation-triangle</code> nebo ponechat SVG</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Shrnutí:</strong> 13 z 14 ikon ma primo ekvivalent v PrimeIcons. Warning ikona (calculator) nema presny ekvivalent — nejblizsi je <code>pi pi-exclamation-triangle</code>.</p>
+
+<!-- ============ COMPONENTS ============ -->
+<h2>Komponenty — Custom vs Shared</h2>
+
+<!-- Toggle -->
+<h3 style="margin:24px 0 12px">Toggle switch</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (custom .tgl)</h4>
+    <label class="qf-tgl">
+      <input type="checkbox" checked>
+      <span class="qf-tgl-track"></span>
+      <span class="qf-tgl-thumb"></span>
+    </label>
+    <label class="qf-tgl" style="margin-left:16px">
+      <input type="checkbox">
+      <span class="qf-tgl-track"></span>
+      <span class="qf-tgl-thumb"></span>
+    </label>
+    <p class="note">35x21px, teal active (#1a7282), custom CSS</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared (.toggle)</h4>
+    <label class="toggle">
+      <input type="checkbox" checked>
+      <span class="toggle-slider"></span>
+    </label>
+    <label class="toggle" style="margin-left:16px">
+      <input type="checkbox">
+      <span class="toggle-slider"></span>
+    </label>
+    <p class="note">PrimeOne toggle z components.css</p>
+  </div>
+</div>
+
+<!-- Buttons -->
+<h3 style="margin:24px 0 12px">Buttons</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (inline styles)</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button style="font-size:14px;font-weight:500;padding:8px 12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;background:#1a7282;color:#fff;border:1px solid #1a7282">Save quote</button>
+      <button style="font-size:14px;font-weight:500;padding:8px 12px;border-radius:6px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;background:#f1f5f9;color:#475569;border:1px solid #f1f5f9">Save versions</button>
+      <button style="background:transparent;color:#30394a;border:none;font-size:14px;font-weight:500;padding:8px 12px;cursor:pointer">Cancel</button>
+    </div>
+    <p class="note">Inline styly, teal primary (#1a7282), slate secondary</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared (.btn)</h4>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <button class="btn btn-primary">Save quote</button>
+      <button class="btn btn-secondary">Save versions</button>
+      <button class="btn btn-text btn-secondary">Cancel</button>
+    </div>
+    <p class="note">.btn .btn-primary / .btn-secondary / .btn-text z components.css</p>
+  </div>
+</div>
+
+<!-- Select -->
+<h3 style="margin:24px 0 12px">Select dropdown</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (inline styles + SVG chevron)</h4>
+    <div style="position:relative;width:300px">
+      <select style="width:100%;font-size:14px;padding:7px 35px 7px 10.5px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;color:#64748b;appearance:none;cursor:pointer;box-shadow:0 1px 2px rgba(18,18,23,0.05)">
+        <option>12 months</option>
+        <option>36 months</option>
+      </select>
+      <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);pointer-events:none;color:#64748b">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4L7 9L12 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </span>
+    </div>
+    <p class="note">Custom select wrapper s SVG chevronem</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared (.select)</h4>
+    <select class="select" style="width:300px">
+      <option>12 months</option>
+      <option>36 months</option>
+    </select>
+    <p class="note">.select z components.css — nativni chevron</p>
+  </div>
+</div>
+
+<!-- Number input -->
+<h3 style="margin:24px 0 12px">Number input (spinner)</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (custom .num-input)</h4>
+    <div class="qf-num-input">
+      <input type="text" value="20">
+      <div class="qf-num-spin">
+        <button class="qf-num-up">&#9650;</button>
+        <button class="qf-num-down">&#9660;</button>
+      </div>
+    </div>
+    <p class="note">100px, custom spin buttons, inline SVG arrows</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared (.input)</h4>
+    <input class="input" type="number" value="20" style="width:100px">
+    <p class="note">.input z components.css — nativni number stepper</p>
+  </div>
+</div>
+
+<!-- Segmented control -->
+<h3 style="margin:24px 0 12px">Segmented control (product selector)</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (custom .sb-opt)</h4>
+    <div style="display:inline-flex;background:#f1f5f9;border-radius:6px;padding:4.5px">
+      <button class="qf-sb-opt active">SAFEQ Cloud Pro</button>
+      <button class="qf-sb-opt">SAFEQ Cloud Breeze</button>
+    </div>
+    <p class="note">Custom segmented control</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared (.tabs)</h4>
+    <div class="tabs">
+      <button class="tab active">SAFEQ Cloud Pro</button>
+      <button class="tab">SAFEQ Cloud Breeze</button>
+    </div>
+    <p class="note">.tabs .tab z components.css — vizualne odlisne (underline vs pill)</p>
+  </div>
+</div>
+
+<!-- Info message -->
+<h3 style="margin:24px 0 12px">Info message</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (custom inline)</h4>
+    <div style="display:flex;align-items:center;gap:7px;padding:5.25px 8.75px;background:rgba(239,246,255,0.95);border:1px solid #9fd5df;border-radius:6px;box-shadow:0 4px 8px rgba(2,5,10,0.04)">
+      <p style="flex:1;margin:0;font-size:12.25px;font-weight:500;color:#155e6b">Creating or editing a quote does not change the customer's current license.</p>
+      <button style="background:transparent;border:none;cursor:pointer;padding:4px;color:#155e6b;opacity:0.7">&times;</button>
+    </div>
+    <p class="note">Teal bg, teal border, dismissible</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared (.message)</h4>
+    <div class="message message-info">
+      <i class="pi pi-info-circle"></i> Creating or editing a quote does not change the customer's current license.
+    </div>
+    <p class="note">.message .message-info z components.css</p>
+  </div>
+</div>
+
+<!-- Context menu -->
+<h3 style="margin:24px 0 12px">Context menu</h3>
+<div class="demo-row">
+  <div class="demo-box">
+    <h4>Aktualni (custom .ctx-menu)</h4>
+    <div style="position:relative;display:inline-block">
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;box-shadow:0 4px 6px rgba(0,0,0,0.1);min-width:175px">
+        <div style="padding:7px 10.5px;border-bottom:1px solid #e2e8f0;font-size:14px;font-weight:600;color:#64748b">Actions</div>
+        <div style="display:flex;align-items:center;gap:7px;padding:7px 10.5px;cursor:pointer;font-size:14px;color:#30394a"><i class="pi pi-pencil" style="font-size:14px"></i> Edit</div>
+        <div style="display:flex;align-items:center;gap:7px;padding:7px 10.5px;cursor:pointer;font-size:14px;color:#30394a"><i class="pi pi-copy" style="font-size:14px"></i> Duplicate</div>
+        <div style="display:flex;align-items:center;gap:7px;padding:7px 10.5px;cursor:pointer;font-size:14px;color:#30394a"><i class="pi pi-trash" style="font-size:14px"></i> Delete</div>
+      </div>
+    </div>
+    <p class="note">Custom dropdown, custom CSS class</p>
+  </div>
+  <div class="demo-box">
+    <h4>Shared</h4>
+    <p style="font-size:14px;color:#64748b">Neni v components.css — context menu neni soucasti PrimeOne shared kitu. Ponechat custom.</p>
+  </div>
+</div>
+
+<h2>Shrnutí</h2>
+<table>
+  <thead>
+    <tr><th>Komponenta</th><th>Shared ekvivalent</th><th>Doporuceni</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Toggle (.tgl)</td><td>.toggle</td><td>Nahradit — minimalní zmena</td></tr>
+    <tr><td>Buttons (inline)</td><td>.btn .btn-primary/secondary/text</td><td>Nahradit — velky cleanup</td></tr>
+    <tr><td>Select (inline + SVG)</td><td>.select</td><td>Nahradit — jednodussi markup</td></tr>
+    <tr><td>Number input (.num-input)</td><td>.input type=number</td><td>Zvazit — nativni stepper vypada jinak</td></tr>
+    <tr><td>Segmented control (.sb-opt)</td><td>.tabs (underline)</td><td>Ponechat custom — vizualne jiny pattern (pill vs underline)</td></tr>
+    <tr><td>Info message (inline)</td><td>.message .message-info</td><td>Nahradit — temer shodne</td></tr>
+    <tr><td>Context menu (.ctx-menu)</td><td>—</td><td>Ponechat custom — neni ve shared</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

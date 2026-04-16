@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ne.Hub — Quote Form</title>
+  <link rel="stylesheet" href="../../_shared/css/base.css">
+  <link rel="stylesheet" href="../../_shared/css/components.css">
+  <link rel="stylesheet" href="https://unpkg.com/primeicons@7.0.0/primeicons.css">
+  <link rel="stylesheet" href="quote-form.css">
+</head>
+<body>
+
+  <!-- ===== VIEW: LANDING ===== -->
+  <div id="view-landing" class="view">
+    <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f8fafc;font-family:'Lab Grotesque',sans-serif">
+      <button onclick="showView('form')" class="btn btn-primary btn-lg">New Quote</button>
+      <p style="margin-top:16px;color:#64748b;font-size:12px">interactive prototype, primevue components, claude powered</p>
+    </div>
+  </div>
+
+  <!-- ===== VIEW: DETAIL ===== -->
+  <div id="view-detail" class="view" style="display:none">
+    <div style="min-height:100vh;background:#f8fafc;font-family:'Lab Grotesque',sans-serif">
+      <!-- Banner -->
+      <div style="background:#155e6b;padding:14px;display:flex;gap:14px">
+        <div style="flex:1">
+          <h2 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:700;color:#fff;line-height:1.25">Move this customer to cloud</h2>
+          <p style="margin:7px 0 0;font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#cdeaf0;line-height:1.5">Nice marketing way of telling the partner to move this customer to cloud and what's in it for them</p>
+        </div>
+        <button onclick="showView('landing')" class="btn btn-primary btn-icon btn-rounded">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+
+      <!-- Customer header -->
+      <div style="padding:24px;background:#fff">
+        <h1 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:17.5px;font-weight:500;color:#30394a">Acme corporation</h1>
+        <div style="margin-top:10px;display:flex;align-items:center;gap:10px">
+          <span style="font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#64748b">MA17129284</span>
+          <span style="display:inline-flex;align-items:center;gap:3.5px;padding:3.5px 7px;border-radius:6px;background:#ffe0cc;font-family:'Lab Grotesque',sans-serif;font-size:12.25px;font-weight:700;color:#a40;letter-spacing:0.12px">SAFEQ 6</span>
+          <button class="btn btn-text btn-secondary">
+            <i class="pi pi-chevron-down"></i>
+            Show more
+          </button>
+          <div style="margin-left:auto">
+            <button class="btn btn-secondary btn-icon">
+              <i class="pi pi-ellipsis-h"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div style="display:flex;border-bottom:2px solid #e2e8f0;background:#fff;padding:16px 24px 0">
+        <div style="flex:1;text-align:center;padding:10.5px 0;border-bottom:2px solid #1a7282;margin-bottom:-2px">
+          <span style="font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:500;color:#1a7282">Overview</span>
+        </div>
+        <div style="flex:1;text-align:center;padding:10.5px 0">
+          <span style="font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#71717a">Telemetry</span>
+        </div>
+        <div style="flex:1;text-align:center;padding:10.5px 0">
+          <span style="font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#71717a">License</span>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div style="padding:24px;display:flex;flex-direction:column;gap:16px">
+        <!-- Action cards -->
+        <div style="display:flex;gap:15px">
+          <!-- PDF card -->
+          <div style="flex:1;background:#fff;border:1px solid #e3e7eb;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:flex-start;gap:4px">
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:500;color:#111827;width:160px">send customized PDF offer to customer</p>
+              <i class="pi pi-info-circle" style="color:#9ca3af"></i>
+            </div>
+            <button class="btn btn-secondary">Download</button>
+          </div>
+
+          <!-- Create quote card -->
+          <div style="flex:1;background:#fff;border:1px solid #e3e7eb;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:37px">
+            <div style="display:flex;align-items:flex-start;gap:4px">
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:500;color:#111827">Generate quote easily</p>
+              <i class="pi pi-info-circle" style="color:#9ca3af"></i>
+            </div>
+            <button onclick="showView('form')" class="btn btn-primary">Create quote</button>
+          </div>
+
+          <!-- Quotes list card -->
+          <div style="flex:1;background:#fff;border:1px solid #e3e7eb;border-radius:10px;padding:16px;position:relative">
+            <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:500;color:#111827">Quotes</p>
+              <i class="pi pi-info-circle" style="color:#9ca3af"></i>
+            </div>
+            <div id="quotes-list">
+              <p style="margin:16px 0 0;font-size:12px;color:#64748b">No quotes yet</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:flex;gap:16px">
+          <div style="width:327px;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:9px;display:flex;gap:16px">
+            <div>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#64748b">SLA</p>
+              <div style="margin-top:12px;padding:4px 10px;border:1px solid #ffba00;border-radius:4px">
+                <span style="font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#30394a">Gold</span>
+              </div>
+            </div>
+            <div>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#64748b">expires</p>
+              <p style="margin:12px 0 0;font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#30394a">09/09/2032</p>
+            </div>
+          </div>
+          <div style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:9px">
+            <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#64748b">Devices/Licenses</p>
+            <p style="margin:12px 0 0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:600;color:#30394a">18/19</p>
+          </div>
+          <div style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:9px">
+            <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#64748b">Status</p>
+            <div style="margin-top:12px;display:flex;gap:12px">
+              <div style="width:20px;height:20px;border-radius:50%;background:#00b677"></div>
+              <div style="width:20px;height:20px;border-radius:50%;background:#e84645"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VIEW: FORM ===== -->
+  <div id="view-form" class="view" style="display:none">
+    <div style="height:100vh;background:#f8fafc;font-family:'Lab Grotesque',sans-serif">
+      <div class="form-shell">
+
+        <!-- Header (fixed) -->
+        <div class="form-header">
+          <h1 style="flex:1;margin:0;font-family:'Y Soft','Lab Grotesque',sans-serif;font-size:48px;font-weight:700;color:#30394a;text-align:center">CREATE QUOTE</h1>
+          <button onclick="closeForm()" class="btn btn-text btn-secondary btn-icon">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+
+        <!-- Scrollable body -->
+        <div class="form-body">
+
+        <!-- Top cards -->
+        <div style="display:flex;gap:16px;padding:0 17.5px 16px">
+          <!-- Marketing card -->
+          <div style="flex:1;background:#fff;border:1px solid #e3e7eb;border-radius:10px;padding:16px;position:relative;overflow:hidden">
+            <div style="position:absolute;right:-50px;top:-70px;width:331px;height:331px;border-radius:50%;background:#F8FAFC;opacity:0.8"></div>
+            <img src="ilustrace.png" style="position:absolute;right:44px;top:50%;transform:translateY(-50%);z-index:1;width:88px" alt="">
+            <div style="position:relative;z-index:1;max-width:70%">
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:500;color:#111827">
+                Send customer
+                <span style="color:#1a7282;display:inline-flex;align-items:center;gap:4px">
+                  PDF two pager pitch
+                  <span style="display:inline-flex;color:#1a7282"><i class="pi pi-download"></i></span>
+                </span>
+                with customised content and your contacts.
+              </p>
+              <p style="margin:12px 0 0;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:500;color:#111827">
+                <span style="color:#1a7282;display:inline-flex;align-items:center;gap:4px">
+                  <span style="display:inline-flex;color:#1a7282"><i class="pi pi-play"></i></span>
+                  Watch short demo
+                </span>
+                to see how easy onboarding into SAFEQ Cloud Pro is.
+              </p>
+              <div style="margin-top:24px">
+                <span style="display:inline-flex;align-items:center;gap:3.5px;padding:3.5px 7px;border-radius:6px;background:#020617;font-family:'Lab Grotesque',sans-serif;font-size:12.25px;font-weight:700;color:#fff;letter-spacing:0.12px">GREAT OPPORTUNITY TO MOVE TO CLOUD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Customer info card -->
+          <div style="width:580px;flex-shrink:0;background:#ecfeff;border:1px solid #e3e7eb;border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:8px">
+            <div>
+              <h2 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:20px;font-weight:500;color:#000">Camberwell Grammar School</h2>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#000">Konica Minolta Business Solutions Australia</p>
+            </div>
+            <div>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:700;color:#000">Already existing licenses</p>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#000">SafeQ 6 (<a href="#" style="color:#1a7282">MA2541793</a>)</p>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12px;color:#000">SafeQ Cloud (UUID: 41e9f546-865b-40cc-b4cd-a75b215bbf99) <span style="display:inline-flex;align-items:center;gap:3.5px;padding:3.5px 7px;border-radius:12px;background:#f1f5f9;font-family:'Lab Grotesque',sans-serif;font-size:12.25px;font-weight:700;color:#475569;letter-spacing:0.12px">Trial</span></p>
+            </div>
+            <div id="info-message-top" style="display:flex;align-items:center;gap:7px;padding:5.25px 8.75px;background:rgba(239,246,255,0.95);border:1px solid #9fd5df;border-radius:6px;box-shadow:0 4px 8px rgba(2,5,10,0.04)">
+              <p style="flex:1;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12.25px;font-weight:500;color:#155e6b">Creating or editing a quote does not change the customer's current license.</p>
+              <button onclick="this.parentElement.style.display='none'" class="btn btn-text btn-icon" style="color:#155e6b;opacity:0.7;height:auto;padding:4px">
+                <i class="pi pi-times"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div style="display:flex;gap:16px;padding:0 17.5px 17.5px">
+          <!-- Left: Configuration -->
+          <div style="flex:1;min-width:0">
+            <div style="padding:16px 8px;display:flex;flex-direction:column;gap:16px">
+              <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Product & Term</h3>
+              <p style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#757678">Choose the product, contract terms, and options for this quote or order.</p>
+
+              <!-- Product -->
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Product</p>
+                <div id="product-selector" style="display:inline-flex;background:#f1f5f9;border-radius:6px;padding:4.5px">
+                  <button class="sb-opt active" data-value="pro">SAFEQ Cloud Pro</button>
+                  <button class="sb-opt" data-value="breeze">SAFEQ Cloud Breeze</button>
+                  <button class="sb-opt" data-value="sq6">SAFEQ 6</button>
+                </div>
+              </div>
+
+              <!-- Term -->
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Term length</p>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <select id="term-select" onchange="updateForm()" class="select" style="width:300px">
+                    <option value="12">12 months</option>
+                    <option value="36">36 months</option>
+                    <option value="60">60 months</option>
+                  </select>
+                  <p id="term-hint" style="font-size:12px;color:#30394a;margin:0"></p>
+                </div>
+              </div>
+
+              <!-- Auto-renewal -->
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Auto-renewal</p>
+                <label class="toggle">
+                  <input type="checkbox" id="auto-renewal" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div style="height:2px;background:#e2e8f0;width:100%"></div>
+
+              <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Devices</h3>
+
+              <!-- PRINT -->
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">PRINT</p>
+                <div class="num-input">
+                  <input type="text" inputmode="numeric" id="print-qty" value="20" oninput="onNumInput('print-qty')">
+                  <div class="num-spin">
+                    <button class="num-up" onclick="spinValue('print-qty',1)">
+                      <i class="pi pi-chevron-up" style="font-size:10px"></i>
+                    </button>
+                    <button class="num-down" onclick="spinValue('print-qty',-1)">
+                      <i class="pi pi-chevron-down" style="font-size:10px"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- MFP -->
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">MFP</p>
+                <div class="num-input">
+                  <input type="text" inputmode="numeric" id="mfp-qty" value="20" oninput="onNumInput('mfp-qty')">
+                  <div class="num-spin">
+                    <button class="num-up" onclick="spinValue('mfp-qty',1)">
+                      <i class="pi pi-chevron-up" style="font-size:10px"></i>
+                    </button>
+                    <button class="num-down" onclick="spinValue('mfp-qty',-1)">
+                      <i class="pi pi-chevron-down" style="font-size:10px"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:2px;background:#e2e8f0;width:100%"></div>
+
+              <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Authentication Hardware</h3>
+              <div id="hw-info-msg" style="display:flex;align-items:center;gap:7px;padding:5.25px 8.75px;background:rgba(239,246,255,0.95);border:1px solid #9fd5df;border-radius:6px;box-shadow:0 4px 8px rgba(2,5,10,0.04)">
+                <p style="flex:1;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:12.25px;font-weight:500;color:#155e6b">Secure print release at every MFP. Card readers ensure only the right person picks up documents. Supports contactless, mobile, HID & LEGIC.</p>
+                <button onclick="this.parentElement.style.display='none'" class="btn btn-text btn-icon" style="color:#155e6b;opacity:0.7;height:auto;padding:4px">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+
+              <!-- Card readers toggle -->
+              <div style="display:flex;gap:16px;align-items:flex-start">
+                <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Add card readers</p>
+                <label class="toggle">
+                  <input type="checkbox" id="card-readers-toggle" onchange="toggleCardReaders()">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- Card reader options -->
+              <div id="card-reader-options" style="display:none">
+                <!-- Vendor -->
+                <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:16px">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Vendor</p>
+                  <select id="vendor-select" class="select" style="width:300px">
+                    <option value="canon">Canon</option>
+                    <option value="km">Konica Minolta</option>
+                    <option value="ricoh">Ricoh</option>
+                  </select>
+                </div>
+
+                <!-- Reader type -->
+                <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:16px">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Reader type</p>
+                  <div style="display:flex;flex-direction:column;gap:7px">
+                    <select id="reader-type-select" class="select" style="width:300px">
+                      <option value="mfx4">MFX4 Ultimate</option>
+                      <option value="mfx3">MFX3 Standard</option>
+                    </select>
+                    <p style="margin:0;font-size:12px;color:#30394a">Most universal — supports mobile, HID & LEGIC</p>
+                  </div>
+                </div>
+
+                <!-- Quantity -->
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Quantity</p>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">
+                      <div class="num-input">
+                        <input type="text" inputmode="numeric" id="card-reader-qty" value="20" oninput="onNumInput('card-reader-qty')">
+                        <div class="num-spin">
+                          <button class="num-up" onclick="spinValue('card-reader-qty',1)">
+                            <i class="pi pi-chevron-up" style="font-size:10px"></i>
+                          </button>
+                          <button class="num-down" onclick="spinValue('card-reader-qty',-1)">
+                            <i class="pi pi-chevron-down" style="font-size:10px"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <button id="match-btn" onclick="matchCardReaders()" class="match-btn" style="display:none">Match</button>
+                      <div id="mismatch-warning" style="display:none;align-items:center;gap:7px;padding:4px 8px;background:#fefce8;border:1px solid #fef08a;border-radius:6px">
+                        <span style="color:#ca8a04;display:inline-flex"><i class="pi pi-exclamation-triangle"></i></span>
+                        <span id="mismatch-text" style="font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:500;color:#ca8a04"></span>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Advanced toggle -->
+            <div id="advanced-toggle" onclick="toggleAdvanced()" style="padding:16px 8px;display:flex;align-items:center;gap:8px;cursor:pointer">
+              <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Advanced options</h3>
+              <span id="advanced-chevron" style="color:#30394a;transition:transform .2s">
+                <i class="pi pi-chevron-down"></i>
+              </span>
+            </div>
+
+            <!-- Advanced options -->
+            <div id="advanced-options" style="display:none;padding:0 8px 16px">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">License start</h3>
+
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Start date</p>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <label style="display:flex;align-items:center;gap:7px;cursor:pointer">
+                      <input type="radio" name="start-date" value="order" checked onchange="toggleCustomDate()" style="width:17.5px;height:17.5px;accent-color:#1a7282">
+                      <span style="font-size:14px;color:#30394a">Order date</span>
+                    </label>
+                    <p id="order-date-hint" style="margin:0;padding-left:25px;font-size:12px;color:#30394a"></p>
+                    <label style="display:flex;align-items:center;gap:7px;cursor:pointer">
+                      <input type="radio" name="start-date" value="custom" onchange="toggleCustomDate()" style="width:17.5px;height:17.5px;accent-color:#1a7282">
+                      <span style="font-size:14px;color:#30394a">Custom</span>
+                    </label>
+                    <div id="custom-date-picker" style="display:none;padding-left:25px">
+                      <input type="date" id="custom-start-date" onchange="updateForm()" style="font-family:'Lab Grotesque',sans-serif;font-size:14px;padding:7px 10.5px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;color:#30394a;box-shadow:0 1px 2px rgba(18,18,23,0.05)">
+                    </div>
+                  </div>
+                </div>
+
+                <div style="height:2px;background:#e2e8f0;width:100%"></div>
+
+                <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Support Additions</h3>
+
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Direct support</p>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <label class="toggle"><input type="checkbox" id="direct-support"><span class="toggle-slider"></span></label>
+                    <p style="margin:0;font-size:12px;color:#30394a;width:300px">Dedicated support channel for this customer</p>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">24/7 Premium</p>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <label class="toggle"><input type="checkbox" id="premium-247"><span class="toggle-slider"></span></label>
+                    <p style="margin:0;font-size:12px;color:#30394a;width:300px">Applies to all devices — cannot be partial</p>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Reserved infra</p>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <label class="toggle"><input type="checkbox" id="reserved-infra"><span class="toggle-slider"></span></label>
+                    <p style="margin:0;font-size:12px;color:#30394a;width:300px">Dedicated cloud resources (per customer, new only)</p>
+                  </div>
+                </div>
+
+                <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Additional services</h3>
+
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Mobile connect</p>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <label class="toggle"><input type="checkbox" id="mobile-connect"><span class="toggle-slider"></span></label>
+                    <p style="margin:0;font-size:12px;color:#30394a">Smartphone-based authentication at MFPs. Replace or complement card readers with phone-based secure print release. Sold in batches of 5.</p>
+                  </div>
+                </div>
+
+                <div style="display:flex;gap:16px;align-items:flex-start">
+                  <p style="width:126px;flex-shrink:0;margin:0;font-family:'Lab Grotesque',sans-serif;font-size:14px;line-height:21px;color:#30394a">Professional services</p>
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <label class="toggle"><input type="checkbox" id="professional-services"><span class="toggle-slider"></span></label>
+                    <p style="margin:0;font-size:12px;color:#30394a">Migration assistance & deployment support</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <!-- Right: Pricing (sticky) -->
+          <div class="pricing-panel" style="width:580px;flex-shrink:0;background:#F8FAFC;border:1px solid #e3e7eb;border-radius:10px;padding:16px">
+            <h3 style="margin:0;font-family:'Lab Grotesque',sans-serif;font-size:18px;font-weight:500;color:#000">Pricing</h3>
+            <p style="margin:8px 0 16px;font-family:'Lab Grotesque',sans-serif;font-size:14px;color:#666">Select a price list and review cost, margin, and customer price.</p>
+
+            <!-- Table -->
+            <div style="display:flex;flex-direction:column">
+              <!-- Header -->
+              <div style="display:flex;border-bottom:1px solid #e2e8f0;padding:10.5px 14px">
+                <div style="flex:1;font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:600;color:#30394a">Item</div>
+                <div style="width:100px;font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:600;color:#30394a">Quantity</div>
+                <div style="width:100px;font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:600;color:#30394a;text-align:right">Purchase</div>
+                <div style="width:100px;font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:600;color:#30394a;text-align:right">Selling</div>
+              </div>
+              <!-- Rows -->
+              <div id="pricing-rows"></div>
+              <!-- Total -->
+              <div style="display:flex;padding:10.5px 14px;align-items:flex-end">
+                <div style="flex:1;font-family:'Lab Grotesque',sans-serif;font-size:14px;font-weight:600;color:#30394a">TOTAL price</div>
+                <div style="width:100px"></div>
+                <div id="total-purchase" style="width:122px;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:700;color:#30394a;text-align:right"></div>
+                <div id="total-selling" style="width:98px;font-family:'Lab Grotesque',sans-serif;font-size:16px;font-weight:700;color:#30394a;text-align:right"></div>
+              </div>
+            </div>
+
+            <!-- Comparison toggle -->
+            <div style="margin-top:16px">
+              <button id="comparison-btn" onclick="toggleComparison()" class="btn btn-secondary">
+                <span id="comparison-chevron" style="display:flex;transition:transform .2s">
+                  <i class="pi pi-chevron-down"></i>
+                </span>
+                Show alternatives
+              </button>
+            </div>
+
+            <!-- Comparison -->
+            <div id="comparison-section" style="display:none;margin-top:8px">
+              <div id="comparison-rows"></div>
+              <div id="alt-tags" style="display:flex;flex-wrap:wrap;gap:7px;margin-top:12px"></div>
+            </div>
+          </div>
+        </div>
+
+        </div><!-- /form-body -->
+
+        <!-- Footer (fixed) -->
+        <div class="form-footer">
+          <button onclick="closeForm()" class="btn btn-text btn-secondary">Cancel</button>
+          <button onclick="saveAllVersions()" class="btn btn-secondary">Save 1, 3 and 5 year versions</button>
+          <button onclick="saveQuote()" class="btn btn-primary">Save quote</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="quote-form.js"></script>
+</body>
+</html>
