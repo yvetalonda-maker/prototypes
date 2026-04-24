@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAFEQ Cloud — Impersonation Prototype</title>
+<style>
+@font-face{font-family:'YSoft';src:url('../../_shared/fonts/YSoft Bold 1.4.otf') format('opentype');font-weight:700;font-style:normal}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sb:#1a2535;--sb-text:rgba(255,255,255,.6);--sb-act:rgba(255,255,255,.12);
+  --brand:#e85d00;--accent:#0891b2;--accent-h:#0e7490;
+  --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
+  --g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g900:#111827;
+  --red:#dc2626;--sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.05);
+  --sh-lg:0 10px 25px rgba(0,0,0,.12),0 4px 6px rgba(0,0,0,.06);
+}
+html{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;color:var(--g700);background:var(--g100)}
+button{cursor:pointer;font:inherit;border:none;outline:none}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input{font:inherit;border:none;outline:none}
+
+/* ── Variant nav ─────────────────────────────────────────── */
+#vnav{position:fixed;top:0;left:0;right:0;z-index:3000;background:#0f172a;display:flex;align-items:center;gap:2px;padding:7px 12px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+#vnav .nl{color:#94a3b8;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-right:8px;white-space:nowrap}
+#vnav button{padding:5px 12px;border-radius:4px;font-size:12px;font-weight:500;color:#94a3b8;background:transparent;transition:.15s;white-space:nowrap}
+#vnav button:hover{background:#1e293b;color:#e2e8f0}
+#vnav button.on{background:#3b82f6;color:#fff}
+#vnav .sp{flex:1}
+#vnav .rst{font-size:11px;color:#64748b;padding:4px 10px;border:1px solid #334155;border-radius:4px}
+#vnav .rst:hover{background:#1e293b;color:#94a3b8}
+
+/* ── Variant panels ──────────────────────────────────────── */
+.vp{display:none;height:100vh;padding-top:40px;flex-direction:column}
+.vp.on{display:flex}
+
+/* ── Legend ──────────────────────────────────────────────── */
+.legend{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:10px 16px;margin:10px 16px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--g500);flex-shrink:0}
+.legend strong{color:var(--g700)}
+.lsep{width:1px;background:var(--g200);align-self:stretch}
+.refs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px;padding-top:6px;border-top:1px solid var(--g100);width:100%}
+.refs-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);flex-shrink:0}
+.ref-link{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;background:var(--g50);border:1px solid var(--g200);font-size:11px;color:var(--accent);text-decoration:none;transition:.12s;white-space:nowrap}
+.ref-link:hover{background:#e0f2fe;border-color:#7dd3fc;color:var(--accent-h)}
+.ref-link .ext{font-size:10px;opacity:.6}
+.ref-novel{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;background:#fefce8;border:1px solid #fde68a;font-size:11px;color:#92400e;white-space:nowrap}
+
+/* ── Full-width header ───────────────────────────────────── */
+.fullheader{height:50px;background:#fff;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0;border-bottom:1px solid var(--g200);position:relative}
+.brand-logo{font-family:'YSoft',sans-serif;font-size:17px;color:var(--brand);letter-spacing:-.3px;white-space:nowrap;user-select:none}
+.fh-sp{flex:1}
+/* Header search */
+.fh-search{display:flex;align-items:center;gap:6px;background:var(--g50);border:1px solid var(--g200);border-radius:5px;padding:5px 10px;width:240px;flex-shrink:0}
+.fh-search input{flex:1;font-size:12px;color:var(--g700);background:transparent}
+.fh-search input::placeholder{color:var(--g400)}
+/* Account button */
+.fh-acc-btn{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:5px;background:transparent;border:1px solid transparent;transition:.12s;position:relative;flex-shrink:0;cursor:pointer}
+.fh-acc-btn:hover,.fh-acc-btn.open{background:var(--g100);border-color:var(--g200)}
+.fh-acc-info{text-align:right}
+.fh-acc-name{font-size:13px;font-weight:600;color:var(--accent);line-height:1.2}
+.fh-acc-role{font-size:11px;color:var(--g400);line-height:1.2}
+.fh-acc-caret{font-size:11px;color:var(--g400)}
+
+/* ── App shell ───────────────────────────────────────────── */
+.app{display:flex;flex:1;overflow:hidden}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sb{width:200px;flex-shrink:0;display:flex;flex-direction:column;background:var(--sb);overflow-y:auto}
+.sb-nav{flex:1;padding:8px 0}
+.ns{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:10px 14px 3px}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 14px;color:var(--sb-text);font-size:13px;cursor:pointer;transition:.12s;user-select:none}
+.ni:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9)}
+.ni.on{background:var(--sb-act);color:#fff;font-weight:500}
+.ni .ic{width:15px;text-align:center;flex-shrink:0;font-style:normal;opacity:.7}
+.ni.on .ic{opacity:1}
+.ni .nb{margin-left:auto;background:var(--accent);color:#fff;font-size:10px;font-weight:700;border-radius:9px;padding:1px 6px}
+.sb-ft{padding:10px 14px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+
+/* Sidebar B — bottom section */
+.sb-bot{flex-shrink:0}
+.sb-ctx{margin:8px 10px 2px;border-radius:6px;padding:9px 10px;display:none}
+.sb-ctx.show{display:block}
+.sb-ctx-lbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.sb-ctx-name{font-size:12px;font-weight:700;color:#fff;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-exit-lnk{font-size:11px;color:rgba(255,255,255,.65);text-decoration:underline;background:none;border:none;padding:0;cursor:pointer;margin-top:4px;display:block}
+.sb-exit-lnk:hover{color:#fff}
+.sb-bot-div{height:1px;background:rgba(255,255,255,.07);margin:4px 0}
+.ni.view-as{color:rgba(255,255,255,.5);font-size:12px}
+.ni.view-as:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
+.ni.view-as.ctx-on{color:#fff;background:rgba(255,255,255,.08)}
+
+/* ── Main ────────────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--g50)}
+
+/* ── Impersonation bar ───────────────────────────────────── */
+.imp-bar{display:none;padding:8px 20px;background:#fff7ed;border-bottom:2px solid #fb923c;align-items:center;gap:10px;flex-shrink:0}
+.imp-bar.show{display:flex}
+.imp-txt{flex:1;font-size:12px;color:#9a3412}
+.imp-txt strong{font-weight:700}
+.imp-exit{padding:4px 12px;border-radius:4px;font-size:11px;font-weight:600;background:#fb923c;color:#fff;transition:.15s;flex-shrink:0}
+.imp-exit:hover{background:#ea7518}
+
+/* ── Context selector (C) ───────────────────────────────── */
+.ctx-sel{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:5px;border:1px solid var(--g200);background:var(--g50);cursor:pointer;font-size:12px;font-weight:500;color:var(--g600);transition:.12s;position:relative;flex-shrink:0}
+.ctx-sel:hover{background:var(--g100)}
+.ctx-sel.pv{background:var(--g50);border-color:var(--accent);color:var(--g900)}
+.ctx-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--g300)}
+.ctx-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--g400);margin-right:1px}
+.ctx-name{font-weight:600;color:var(--g700)}
+.ctx-sel.pv .ctx-name{color:var(--g900)}
+.ctx-caret{font-size:10px;color:var(--g400);margin-left:1px}
+
+/* ── Dropdowns (shared) ─────────────────────────────────── */
+.drop{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--g200);border-radius:8px;box-shadow:var(--sh-lg);z-index:1000;min-width:220px;padding:5px 0}
+.drop.open{display:block}
+.drop-hd{padding:10px 14px 8px;border-bottom:1px solid var(--g100);margin-bottom:4px}
+.drop-hd-name{font-size:13px;font-weight:600;color:var(--g900)}
+.drop-hd-role{font-size:11px;color:var(--g400);margin-top:1px}
+.di{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;font-size:13px;color:var(--g700);transition:.1s}
+.di:hover{background:var(--g50)}
+.di.hi{color:var(--accent);font-weight:500}
+.di .dic{width:16px;text-align:center;font-size:13px;flex-shrink:0}
+.ddiv{height:1px;background:var(--g100);margin:4px 0}
+
+/* Partner picker (A) */
+.pp{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--g200);border-radius:10px;box-shadow:var(--sh-lg);width:320px;z-index:1000;flex-direction:column;max-height:480px}
+.pp.open{display:flex}
+.pp-hd{padding:12px 14px 8px;border-bottom:1px solid var(--g100);flex-shrink:0;display:flex;align-items:center;gap:8px}
+.pp-title{font-size:13px;font-weight:700;color:var(--g900);flex:1}
+.pp-close{color:var(--g400);font-size:16px;padding:0 3px}
+.pp-close:hover{color:var(--g700)}
+.pp-sw{padding:8px 12px;border-bottom:1px solid var(--g100);flex-shrink:0}
+.pp-si{display:flex;align-items:center;gap:6px;background:var(--g50);border:1px solid var(--g200);border-radius:5px;padding:6px 10px;width:100%}
+.pp-si input{flex:1;background:transparent;font-size:12px;color:var(--g700)}
+.pp-si input::placeholder{color:var(--g400)}
+.pp-list{overflow-y:auto;flex:1;padding:4px 0}
+.pp-item{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;transition:.1s}
+.pp-item:hover{background:var(--g50)}
+.pp-item.on{background:#eff6ff}
+.pp-logo{width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;flex-shrink:0}
+.pp-info{flex:1;min-width:0}
+.pp-n{font-size:12px;font-weight:600;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-m{font-size:11px;color:var(--g400)}
+.pp-ck{color:var(--accent);font-weight:700;font-size:12px}
+.pp-root{display:flex;align-items:center;gap:9px;padding:8px 14px;cursor:pointer;transition:.1s;border-top:1px solid var(--g100);flex-shrink:0}
+.pp-root:hover{background:var(--g50)}
+.pp-root.on{background:#f0fdf4}
+.pp-root-ic{width:26px;height:26px;border-radius:5px;background:var(--g200);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+
+/* Context selector dropdown (C) */
+.cs-drop{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1px solid var(--g200);border-radius:8px;box-shadow:var(--sh-lg);width:280px;z-index:1000;flex-direction:column;max-height:440px}
+.cs-drop.open{display:flex}
+.cs-sw{padding:8px 10px;border-bottom:1px solid var(--g100);flex-shrink:0}
+.cs-si{display:flex;align-items:center;gap:5px;background:var(--g50);border:1px solid var(--g200);border-radius:5px;padding:5px 9px;width:100%}
+.cs-si input{flex:1;background:transparent;font-size:12px;color:var(--g700)}
+.cs-si input::placeholder{color:var(--g400)}
+.cs-list{overflow-y:auto;flex:1;padding:4px 0}
+.cs-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;transition:.1s;font-size:12px}
+.cs-item:hover{background:var(--g50)}
+.cs-item.on{background:#eff6ff}
+.cs-item-logo{width:20px;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#fff;flex-shrink:0}
+.cs-item-name{flex:1;font-weight:500;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-item-ck{color:var(--accent);font-size:11px;font-weight:700}
+.cs-root{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;transition:.1s;font-size:12px;border-top:1px solid var(--g100);flex-shrink:0}
+.cs-root:hover{background:var(--g50)}
+.cs-root.on{background:#f0fdf4}
+.cs-root-ic{width:20px;height:20px;border-radius:3px;background:var(--g200);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0}
+
+/* Variant B: modal */
+.modal-over{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);z-index:2000;align-items:center;justify-content:center}
+.modal-over.open{display:flex}
+.modal{background:#fff;border-radius:12px;width:500px;max-width:95vw;max-height:80vh;display:flex;flex-direction:column;box-shadow:var(--sh-lg);animation:min .18s ease}
+@keyframes min{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:none}}
+.modal-hd{padding:18px 20px 12px;border-bottom:1px solid var(--g100);flex-shrink:0;display:flex;align-items:center;gap:10px}
+.modal-title{font-size:15px;font-weight:700;color:var(--g900);flex:1}
+.modal-close{color:var(--g400);font-size:18px;padding:0 4px}
+.modal-close:hover{color:var(--g700)}
+.modal-sw{padding:12px 20px;border-bottom:1px solid var(--g100);flex-shrink:0}
+.modal-si{display:flex;align-items:center;gap:7px;background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:8px 12px;width:100%}
+.modal-si input{flex:1;background:transparent;font-size:13px;color:var(--g700);width:100%}
+.modal-si input::placeholder{color:var(--g400)}
+.modal-list{overflow-y:auto;flex:1;padding:6px 0}
+.modal-item{display:flex;align-items:center;gap:11px;padding:10px 20px;cursor:pointer;transition:.1s}
+.modal-item:hover{background:var(--g50)}
+.modal-item.on{background:#eff6ff}
+.modal-logo{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+.modal-info{flex:1}
+.modal-pn{font-size:13px;font-weight:600;color:var(--g900)}
+.modal-pm{font-size:11px;color:var(--g400);margin-top:1px}
+.modal-ck{color:var(--accent);font-size:14px;font-weight:700}
+.modal-root{display:flex;align-items:center;gap:11px;padding:10px 20px;cursor:pointer;transition:.1s;border-top:1px solid var(--g100);flex-shrink:0}
+.modal-root:hover{background:var(--g50)}
+.modal-root.on{background:#f0fdf4}
+.modal-root-ic{width:32px;height:32px;border-radius:7px;background:var(--g200);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.modal-empty{padding:24px;text-align:center;color:var(--g400);font-size:13px}
+
+/* ── Content ─────────────────────────────────────────────── */
+.content{flex:1;overflow-y:auto;padding:20px}
+.pg-title{font-family:'YSoft',sans-serif;font-size:22px;font-weight:700;color:var(--g900);letter-spacing:-.3px;margin-bottom:14px}
+
+/* Insight cards */
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr 240px;gap:10px;margin-bottom:16px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:8px;padding:14px 16px;box-shadow:var(--sh)}
+.card-badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.04em;margin-bottom:6px}
+.card-ttl{font-size:12px;font-weight:600;color:var(--g900);margin-bottom:2px}
+.card-sub{font-size:11px;color:var(--g500);margin-bottom:8px;line-height:1.4}
+.card-meta{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--g500);margin-bottom:4px}
+.card-val{font-family:'YSoft',sans-serif;font-size:20px;font-weight:700;color:var(--g900)}
+
+/* Filter bar */
+.filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.search-inp{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--g200);border-radius:5px;padding:6px 11px;flex:1;max-width:300px;box-shadow:var(--sh)}
+.search-inp input{flex:1;font-size:12px;color:var(--g700);background:transparent}
+.search-inp input::placeholder{color:var(--g400)}
+.filter-chip{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:5px;background:#eff6ff;border:1px solid #bfdbfe;font-size:11px;font-weight:500;color:#1e40af}
+.fsel{display:flex;align-items:center;gap:4px;background:#fff;border:1px solid var(--g200);border-radius:5px;padding:5px 10px;font-size:12px;color:var(--g600);cursor:pointer;box-shadow:var(--sh)}
+.show-more{font-size:12px;color:var(--accent);font-weight:500;background:none;border:none;cursor:pointer}
+
+/* Table */
+.tbl-wrap{background:#fff;border:1px solid var(--g200);border-radius:8px;overflow:hidden;box-shadow:var(--sh)}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:8px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--g400);background:var(--g50);border-bottom:1px solid var(--g200)}
+td{padding:10px 14px;font-size:12px;color:var(--g700);border-bottom:1px solid var(--g100);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.tr-group td{background:var(--g50);font-weight:700;font-size:12px;color:var(--g900);padding:8px 14px;border-bottom:1px solid var(--g200)}
+.tr-ma:hover td{background:#f8fafc}
+.ma-cell{display:flex;flex-direction:column;gap:1px}
+.ma-id{font-size:11px;color:var(--g400)}
+.ma-partner{font-size:11px;font-weight:500;color:var(--g600)}
+.prod-tag{display:inline-flex;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:600}
+.prod-cloud-pro{background:#dbeafe;color:#1e40af}
+.prod-cloud-breeze{background:#ede9fe;color:#4c1d95}
+.prod-sq6{background:#fef3c7;color:#92400e}
+.prod-air{background:#dcfce7;color:#166534}
+.exp-cell{display:flex;flex-direction:column;gap:2px}
+.exp-date{font-size:12px;font-weight:500}
+.exp-bar{height:3px;border-radius:2px;width:60px}
+.exp-bar.red{background:#ef4444}.exp-bar.yellow{background:#f59e0b}.exp-bar.green{background:#22c55e}
+.state-tag{display:inline-flex;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:500;white-space:nowrap}
+.s-renew{background:#dbeafe;color:#1e40af}.s-cloud{background:#fef3c7;color:#92400e}
+.s-quoted{background:#f0fdf4;color:#166534}.s-active{background:#dcfce7;color:#166534}
+.s-risk{background:#fee2e2;color:#991b1b}
+.row-acts{opacity:0;display:flex;gap:3px;transition:.15s}
+tr:hover .row-acts{opacity:1}
+.rb{padding:2px 7px;border-radius:3px;font-size:11px;background:#fff;border:1px solid var(--g200);color:var(--g600)}
+.rb:hover{background:var(--g100)}
+</style>
+</head>
+<body>
+
+<nav id="vnav">
+  <span class="nl">Varianta:</span>
+  <button class="on" onclick="sv('a',this)">A — User menu</button>
+  <button onclick="sv('b',this)">B — Sidebar bottom</button>
+  <button onclick="sv('c',this)">C — Topbar selector</button>
+  <div class="sp"></div>
+  <button class="rst" onclick="resetAll()">← Reset</button>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════════
+  VARIANT A — User menu dropdown
+══════════════════════════════════════════════════════════ -->
+<div class="vp on" id="vp-a">
+  <div class="legend">
+    <strong>A — User menu:</strong> Klikni na <strong>User Name ▾</strong> vpravo nahoře → <em>View as partner…</em> → partner picker se searchem.
+    <span class="lsep"></span>Trigger je tam kde sales čeká nastavení účtu — žádný extra prvek na stránce.
+    <div class="refs">
+      <span class="refs-lbl">Vzory z:</span>
+      <a class="ref-link" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-console.html" target="_blank">AWS IAM — Switch Role <span class="ext">↗</span></a>
+      <a class="ref-link" href="https://help.salesforce.com/s/articleView?id=xcloud.logging_in_as_another_user.htm&language=en_US&type=5" target="_blank">Salesforce — Log In As <span class="ext">↗</span></a>
+      <a class="ref-link" href="https://support.freshdesk.com/support/solutions/articles/224634-assuming-identities" target="_blank">Freshdesk — Assume Identity <span class="ext">↗</span></a>
+      <span class="ref-novel">⚠ Search v pickeru — vlastní kompozice pro 36+ partnerů</span>
+    </div>
+  </div>
+  <!-- Full-width header -->
+  <div class="fullheader">
+    <span class="brand-logo">SAFEQ Cloud</span>
+    <div class="fh-sp"></div>
+    <div class="fh-search"><span style="color:var(--g400);font-size:13px">🔍</span><input type="text" placeholder="Search…"></div>
+    <div style="position:relative">
+      <button class="fh-acc-btn" id="a-acc" onclick="aTogUM()">
+        <div class="fh-acc-info"><div class="fh-acc-name">User Name</div><div class="fh-acc-role">Account</div></div>
+        <span class="fh-acc-caret">▾</span>
+      </button>
+      <div class="drop" id="a-um-drop">
+        <div class="drop-hd"><div class="drop-hd-name">Tomáš Novák</div><div class="drop-hd-role">Internal Sales · root access</div></div>
+        <div class="di hi" onclick="aOpenPP()"><span class="dic">👁</span> View as partner…</div>
+        <div class="ddiv"></div>
+        <div class="di"><span class="dic">⚙</span> Profile settings</div>
+        <div class="di"><span class="dic">↩</span> Sign out</div>
+      </div>
+      <div class="pp" id="a-pp">
+        <div class="pp-hd"><span class="pp-title">View as partner</span><button class="pp-close" onclick="aClosePP()">✕</button></div>
+        <div class="pp-sw"><div class="pp-si"><span style="color:var(--g400)">🔍</span><input type="text" placeholder="Search partners…" id="a-search" oninput="aFilter(this.value)"></div></div>
+        <div class="pp-list" id="a-pp-list"></div>
+        <div class="pp-root" id="a-pp-root" onclick="aExit()">
+          <div class="pp-root-ic">⊞</div>
+          <div><div style="font-size:12px;font-weight:600;color:var(--g700)">Root view</div><div style="font-size:11px;color:var(--g400)">All partners &amp; customers</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app">
+    <nav class="sb">
+      <div class="sb-nav">
+        <div class="ni"><i class="ic">⊞</i> Dashboard</div>
+        <div class="ni on"><i class="ic">◈</i> Customers <span class="nb" id="a-nb">248</span></div>
+        <div class="ni"><i class="ic">⊕</i> Business Tools</div>
+        <div class="ni"><i class="ic">◉</i> Cloud status</div>
+      </div>
+    </nav>
+    <main class="main">
+      <div class="imp-bar" id="a-bar">
+        <span>⚠</span>
+        <span class="imp-txt">Viewing as <strong id="a-bar-n">–</strong> — showing only customers and data visible to this partner.</span>
+        <button class="imp-exit" onclick="aExit()">← Back to root view</button>
+      </div>
+      <div class="content">
+        <div class="pg-title">CUSTOMERS</div>
+        <div id="a-cards"></div>
+        <div class="filter-bar">
+          <div class="search-inp"><span style="color:var(--g400)">🔍</span><input type="text" placeholder="Search Customer, MA, Partner…"></div>
+          <div class="filter-chip">SQ6 <span style="font-size:13px;color:#93c5fd;margin-left:2px">×</span></div>
+          <div class="fsel">License type ▾</div>
+          <div class="fsel">Expiration ▾</div>
+          <button class="show-more">Show more ▾</button>
+        </div>
+        <div class="tbl-wrap"><table id="a-tbl"></table></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+  VARIANT B — Sidebar bottom trigger + modal
+══════════════════════════════════════════════════════════ -->
+<div class="vp" id="vp-b">
+  <div class="legend">
+    <strong>B — Sidebar bottom:</strong> Klikni na <strong>View as partner</strong> úplně dole v navigaci → modal se searchem a listem partnerů.
+    <span class="lsep"></span>Trigger je v nav ale mimo pracovní prostor. Aktivní kontext viditelný jako barevný rámeček v sidebaru.
+    <div class="refs">
+      <span class="refs-lbl">Vzory z:</span>
+      <a class="ref-link" href="https://wordpress.org/plugins/user-switching/" target="_blank">WordPress — User Switching <span class="ext">↗</span></a>
+      <a class="ref-link" href="https://support.zendesk.com/hc/en-us/articles/4408894200474-Assuming-end-users" target="_blank">Zendesk — Assume Identity <span class="ext">↗</span></a>
+      <span class="ref-novel">⚠ Umístění dole + modal — vlastní kompozice bez přímé předlohy</span>
+    </div>
+  </div>
+  <div class="modal-over" id="b-modal">
+    <div class="modal">
+      <div class="modal-hd"><span class="modal-title">View as partner</span><button class="modal-close" onclick="bCloseModal()">✕</button></div>
+      <div class="modal-sw"><div class="modal-si"><span style="color:var(--g400)">🔍</span><input type="text" placeholder="Search partners…" id="b-search" oninput="bFilter(this.value)" style="width:100%"></div></div>
+      <div class="modal-list" id="b-modal-list"></div>
+      <div class="modal-root" id="b-root" onclick="bExit()">
+        <div class="modal-root-ic">⊞</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--g700)">Root view</div><div style="font-size:11px;color:var(--g400)">All partners &amp; customers</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- Full-width header -->
+  <div class="fullheader">
+    <span class="brand-logo">SAFEQ Cloud</span>
+    <div class="fh-sp"></div>
+    <div class="fh-search"><span style="color:var(--g400);font-size:13px">🔍</span><input type="text" placeholder="Search…"></div>
+    <button class="fh-acc-btn">
+      <div class="fh-acc-info"><div class="fh-acc-name">User Name</div><div class="fh-acc-role">Account</div></div>
+      <span class="fh-acc-caret">▾</span>
+    </button>
+  </div>
+  <div class="app">
+    <nav class="sb">
+      <div class="sb-nav">
+        <div class="ni"><i class="ic">⊞</i> Dashboard</div>
+        <div class="ni on"><i class="ic">◈</i> Customers <span class="nb" id="b-nb">248</span></div>
+        <div class="ni"><i class="ic">⊕</i> Business Tools</div>
+        <div class="ni"><i class="ic">◉</i> Cloud status</div>
+      </div>
+      <div class="sb-bot" style="margin-top:auto">
+        <div class="sb-ctx" id="b-ctx">
+          <div class="sb-ctx-lbl">Partner view</div>
+          <div class="sb-ctx-name" id="b-ctx-n">–</div>
+          <button class="sb-exit-lnk" onclick="bExit()">← Back to root</button>
+        </div>
+        <div class="sb-bot-div"></div>
+        <div class="ni view-as" id="b-trig" onclick="bOpenModal()"><i class="ic">👁</i> View as partner</div>
+      </div>
+    </nav>
+    <main class="main">
+      <div class="content">
+        <div class="pg-title">CUSTOMERS</div>
+        <div id="b-cards"></div>
+        <div class="filter-bar">
+          <div class="search-inp"><span style="color:var(--g400)">🔍</span><input type="text" placeholder="Search Customer, MA, Partner…"></div>
+          <div class="filter-chip">SQ6 <span style="font-size:13px;color:#93c5fd;margin-left:2px">×</span></div>
+          <div class="fsel">License type ▾</div>
+          <div class="fsel">Expiration ▾</div>
+          <button class="show-more">Show more ▾</button>
+        </div>
+        <div class="tbl-wrap"><table id="b-tbl"></table></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+  VARIANT C — Topbar compact selector
+══════════════════════════════════════════════════════════ -->
+<div class="vp" id="vp-c">
+  <div class="legend">
+    <strong>C — Topbar selector:</strong> Klikni na <strong>All partners ▾</strong> v hlavičce → dropdown se searchem. Vždy viditelné, nulový footprint v obsahu.
+    <span class="lsep"></span>Funguje jako "breadcrumb context" — říká kde jsi a je to vstupní bod ke změně.
+    <div class="refs">
+      <span class="refs-lbl">Vzory z:</span>
+      <a class="ref-link" href="https://stripe.com/docs/connect/stripe-dashboard" target="_blank">Stripe Connect — account switcher <span class="ext">↗</span></a>
+      <a class="ref-link" href="https://knowledge.hubspot.com/account-management/manage-multiple-hubspot-accounts" target="_blank">HubSpot — multi-account <span class="ext">↗</span></a>
+      <a class="ref-link" href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-console.html" target="_blank">AWS — role label v headeru <span class="ext">↗</span></a>
+      <span class="ref-novel">⚠ Inline "breadcrumb" styl — vlastní kompozice</span>
+    </div>
+  </div>
+  <!-- Full-width header -->
+  <div class="fullheader">
+    <span class="brand-logo">SAFEQ Cloud</span>
+    <div class="fh-sp"></div>
+    <div class="fh-search"><span style="color:var(--g400);font-size:13px">🔍</span><input type="text" placeholder="Search…"></div>
+    <div class="ctx-sel" id="c-sel" onclick="cTogDD()">
+      <span class="ctx-dot" id="c-dot"></span>
+      <span class="ctx-lbl">Context:</span>
+      <span class="ctx-name" id="c-name">All partners</span>
+      <span class="ctx-caret">▾</span>
+      <div class="cs-drop" id="c-dd" onclick="event.stopPropagation()">
+        <div class="cs-sw"><div class="cs-si"><span style="color:var(--g400)">🔍</span><input type="text" placeholder="Search partners…" id="c-search" oninput="cFilter(this.value)" onclick="event.stopPropagation()"></div></div>
+        <div class="cs-list" id="c-list"></div>
+        <div class="cs-root" id="c-root" onclick="cExit()">
+          <div class="cs-root-ic">⊞</div>
+          <span style="font-size:12px;font-weight:500;color:var(--g700)">All partners</span>
+          <span id="c-root-ck" style="color:var(--accent);font-size:11px;font-weight:700;margin-left:auto">✓</span>
+        </div>
+      </div>
+    </div>
+    <button class="fh-acc-btn">
+      <div class="fh-acc-info"><div class="fh-acc-name">User Name</div><div class="fh-acc-role">Account</div></div>
+      <span class="fh-acc-caret">▾</span>
+    </button>
+  </div>
+  <div class="app">
+    <nav class="sb">
+      <div class="sb-nav">
+        <div class="ni"><i class="ic">⊞</i> Dashboard</div>
+        <div class="ni on"><i class="ic">◈</i> Customers <span class="nb" id="c-nb">248</span></div>
+        <div class="ni"><i class="ic">⊕</i> Business Tools</div>
+        <div class="ni"><i class="ic">◉</i> Cloud status</div>
+      </div>
+    </nav>
+    <main class="main">
+      <div class="content">
+        <div class="pg-title">CUSTOMERS</div>
+        <div id="c-cards"></div>
+        <div class="filter-bar">
+          <div class="search-inp"><span style="color:var(--g400)">🔍</span><input type="text" placeholder="Search Customer, MA, Partner…"></div>
+          <div class="filter-chip">SQ6 <span style="font-size:13px;color:#93c5fd;margin-left:2px">×</span></div>
+          <div class="fsel">License type ▾</div>
+          <div class="fsel">Expiration ▾</div>
+          <button class="show-more">Show more ▾</button>
+        </div>
+        <div class="tbl-wrap"><table id="c-tbl"></table></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════════════════════════
+const PARTNERS = [
+  {id:'kmbeu',   n:'KM BEU',              s:'KB', c:'#2563eb', cust:87,  deals:31, lic:1840},
+  {id:'kmnala',  n:'KM NALA',             s:'KN', c:'#7c3aed', cust:62,  deals:22, lic:1230},
+  {id:'kmdach',  n:'KM DACH',             s:'KD', c:'#0891b2', cust:71,  deals:28, lic:1560},
+  {id:'kmfr',    n:'KM France',           s:'KF', c:'#0284c7', cust:55,  deals:19, lic:980},
+  {id:'kmuk',    n:'KM UK',               s:'KU', c:'#1d4ed8', cust:48,  deals:16, lic:870},
+  {id:'kmbnl',   n:'KM Benelux',          s:'KBL',c:'#4338ca', cust:39,  deals:13, lic:720},
+  {id:'kmit',    n:'KM Italy',            s:'KIT',c:'#be123c', cust:44,  deals:15, lic:810},
+  {id:'kmes',    n:'KM Spain',            s:'KES',c:'#b45309', cust:33,  deals:11, lic:610},
+  {id:'kmnord',  n:'KM Nordic',           s:'KNO',c:'#0f766e', cust:29,  deals:9,  lic:540},
+  {id:'kmpl',    n:'KM Poland',           s:'KPL',c:'#7e22ce', cust:26,  deals:8,  lic:490},
+  {id:'kmcee',   n:'KM CEE',              s:'KC', c:'#1e40af', cust:41,  deals:14, lic:760},
+  {id:'kmapac',  n:'KM APAC',             s:'KA', c:'#047857', cust:58,  deals:21, lic:1100},
+  {id:'kmjp',    n:'KM Japan',            s:'KJ', c:'#9f1239', cust:35,  deals:12, lic:640},
+  {id:'ricoh',   n:'Ricoh',              s:'RI', c:'#dc2626', cust:54,  deals:18, lic:1020},
+  {id:'canon',   n:'Canon',              s:'CA', c:'#b91c1c', cust:28,  deals:9,  lic:520},
+  {id:'hp',      n:'HP',                 s:'HP', c:'#0369a1', cust:34,  deals:11, lic:630},
+  {id:'dealerx', n:'Dealer X',           s:'DX', c:'#059669', cust:17,  deals:4,  lic:310},
+  {id:'xerox',   n:'Xerox Solutions',    s:'XE', c:'#92400e', cust:31,  deals:10, lic:580},
+  {id:'kyoc',    n:'Kyocera Doc Sol',    s:'KY', c:'#1a56db', cust:22,  deals:7,  lic:410},
+  {id:'bro',     n:'Brother Intl',       s:'BR', c:'#374151', cust:19,  deals:6,  lic:350},
+  {id:'sharp',   n:'Sharp Electronics', s:'SH', c:'#1e3a5f', cust:25,  deals:8,  lic:460},
+  {id:'lex',     n:'Lexmark Enterprise', s:'LE', c:'#0c4a6e', cust:18,  deals:5,  lic:330},
+  {id:'print',   n:'PrintSolve GmbH',   s:'PS', c:'#166534', cust:14,  deals:4,  lic:260},
+  {id:'docut',   n:'DocuTech AG',        s:'DT', c:'#3730a3', cust:12,  deals:4,  lic:220},
+  {id:'datap',   n:'DataPrint NV',       s:'DP', c:'#701a75', cust:16,  deals:5,  lic:290},
+  {id:'officew', n:'OfficeWorks BV',     s:'OW', c:'#065f46', cust:11,  deals:3,  lic:200},
+  {id:'netpr',   n:'NetPrint SAS',       s:'NP', c:'#7f1d1d', cust:9,   deals:3,  lic:170},
+  {id:'smart',   n:'SmartDoc Ltd',       s:'SD', c:'#312e81', cust:13,  deals:4,  lic:240},
+  {id:'techp',   n:'TechPrint Sp.',      s:'TP', c:'#1c1917', cust:8,   deals:2,  lic:150},
+  {id:'prntm',   n:'PrintMaster s.r.o.', s:'PM',c:'#064e3b', cust:7,   deals:2,  lic:130},
+  {id:'docfl',   n:'DocFlow a.s.',       s:'DF', c:'#1e3a5f', cust:10,  deals:3,  lic:185},
+  {id:'imagt',   n:'Imagetec LP',        s:'IM', c:'#4c1d95', cust:15,  deals:5,  lic:280},
+  {id:'prodo',   n:'ProDoc SA',          s:'PD', c:'#713f12', cust:9,   deals:3,  lic:165},
+  {id:'alpha',   n:'AlphaPrint GmbH',    s:'AP', c:'#0c4a6e', cust:11,  deals:3,  lic:200},
+  {id:'docuit',  n:'DocuBase Italia',    s:'DI', c:'#881337', cust:6,   deals:2,  lic:110},
+  {id:'printpt', n:'PrintNet Portugal',  s:'PP', c:'#14532d', cust:5,   deals:1,  lic:90},
+];
+const gp = id => PARTNERS.find(p=>p.id===id);
+
+const MA_DATA = [
+  {ec:'The Community & Public Sector Union', ma:'MA1500554', pid:'kmapac', prod:'SQ Cloud Pro',    lt:'Production', sla:'Enterprise', exp:'02/24/2027', ec_:'red',    lic:19, state:'ready to renew', sc:'s-renew'},
+  {ec:'The Community & Public Sector Union', ma:'MA1500556', pid:'kmapac', prod:'SQ Cloud Breeze', lt:'Trial',      sla:'Trial',      exp:'09/08/2028', ec_:'green',  lic:19, state:'',sc:''},
+  {ec:'Whitestar',                           ma:'MA15004738',pid:'kmcee',  prod:'SQ 6',            lt:'Production', sla:'Gold',       exp:'02/24/2025', ec_:'red',    lic:17, state:'movable to cloud',sc:'s-cloud'},
+  {ec:"Conseil Dépt. de l'Herault",         ma:'MA13439378',pid:'netpr',  prod:'SQ 6',            lt:'Production', sla:'Silver',     exp:'subscription',ec_:'green',lic:520,state:'quoted',sc:'s-quoted'},
+  {ec:'École de la Construction',            ma:'MA13028536',pid:'kmfr',   prod:'SQ Cloud Pro',    lt:'NFR',        sla:'–',          exp:'01/01/2030', ec_:'green',  lic:18, state:'',sc:''},
+  {ec:'École de la Construction',            ma:'MA13028381',pid:'kmfr',   prod:'AIR',             lt:'Trial',      sla:'Trial',      exp:'09/08/2026', ec_:'yellow', lic:18, state:'',sc:''},
+  {ec:'Nordic Industries AB',                ma:'MA20045678',pid:'kmnord', prod:'SQ 6',            lt:'Production', sla:'Gold',       exp:'12/31/2025', ec_:'yellow', lic:28, state:'movable to cloud',sc:'s-cloud'},
+  {ec:'Nordic Industries AB',                ma:'MA20045679',pid:'kmnord', prod:'SQ Cloud Pro',    lt:'Production', sla:'Silver',     exp:'03/15/2027', ec_:'green',  lic:12, state:'active',sc:'s-active'},
+  {ec:'Global Finance SA',                   ma:'MA20098765',pid:'kmfr',   prod:'SQ Cloud Pro',    lt:'Production', sla:'Enterprise', exp:'08/20/2026', ec_:'green',  lic:35, state:'ready to renew',sc:'s-renew'},
+  {ec:'Global Finance SA',                   ma:'MA20098766',pid:'docuit', prod:'SQ 6',            lt:'Production', sla:'Silver',     exp:'03/10/2025', ec_:'red',    lic:15, state:'at risk',sc:'s-risk'},
+  {ec:'Universität München',                 ma:'MA20111111',pid:'kmdach', prod:'AIR',             lt:'NFR',        sla:'–',          exp:'07/01/2028', ec_:'green',  lic:8,  state:'',sc:''},
+  {ec:'Universität München',                 ma:'MA20111112',pid:'print',  prod:'SQ Cloud Breeze', lt:'Trial',      sla:'Trial',      exp:'11/15/2026', ec_:'yellow', lic:12, state:'',sc:''},
+  {ec:'TechCorp Asia',                       ma:'MA20011234',pid:'kmapac', prod:'SQ Cloud Pro',    lt:'Production', sla:'Enterprise', exp:'05/15/2026', ec_:'yellow', lic:42, state:'active',sc:'s-active'},
+  {ec:'TechCorp Asia',                       ma:'MA20011235',pid:'kmjp',   prod:'SQ 6',            lt:'Production', sla:'Gold',       exp:'09/30/2025', ec_:'red',    lic:24, state:'movable to cloud',sc:'s-cloud'},
+  {ec:'Banco Meridional',                    ma:'MA20055001',pid:'kmes',   prod:'SQ Cloud Pro',    lt:'Production', sla:'Gold',       exp:'06/30/2026', ec_:'green',  lic:31, state:'active',sc:'s-active'},
+  {ec:'Banco Meridional',                    ma:'MA20055002',pid:'alpha',  prod:'SQ 6',            lt:'Production', sla:'Silver',     exp:'01/15/2025', ec_:'red',    lic:14, state:'movable to cloud',sc:'s-cloud'},
+];
+const PROD_CLASS={'SQ Cloud Pro':'prod-cloud-pro','SQ Cloud Breeze':'prod-cloud-breeze','SQ 6':'prod-sq6','AIR':'prod-air'};
+
+// ══════════════════════════════════════════════════════════
+//  TABLE + CARDS
+// ══════════════════════════════════════════════════════════
+function buildTable(tid, pid) {
+  const rows = pid ? MA_DATA.filter(r=>r.pid===pid) : MA_DATA;
+  const showP = !pid;
+  const groups={},order=[];
+  rows.forEach(r=>{if(!groups[r.ec]){groups[r.ec]=[];order.push(r.ec);}groups[r.ec].push(r);});
+  const pth=showP?'<th>Partner</th>':'';
+  let html=`<thead><tr><th>Customer / MA</th>${pth}<th>Product</th><th>License type</th><th>SLA</th><th>Expires</th><th>Lic.</th><th>State</th><th></th></tr></thead><tbody>`;
+  order.forEach(ec=>{
+    html+=`<tr class="tr-group"><td colspan="${showP?9:8}">${ec}</td></tr>`;
+    groups[ec].forEach(r=>{
+      const p=gp(r.pid);
+      const pcol=showP?`<td><div style="display:flex;align-items:center;gap:5px"><div style="width:7px;height:7px;border-radius:50%;background:${p.c};flex-shrink:0"></div><span style="font-size:11px;color:var(--g600)">${p.n}</span></div></td>`:'';
+      const stTag=r.state?`<span class="state-tag ${r.sc}">${r.state}</span>`:'';
+      html+=`<tr class="tr-ma"><td><div class="ma-cell"><span class="ma-id">${r.ma}</span><span class="ma-partner">• ${p.n}</span></div></td>${pcol}<td><span class="prod-tag ${PROD_CLASS[r.prod]}">${r.prod}</span></td><td>${r.lt}</td><td>${r.sla}</td><td><div class="exp-cell"><span class="exp-date">${r.exp}</span><div class="exp-bar ${r.ec_}"></div></div></td><td>${r.lic}</td><td>${stTag}</td><td><div class="row-acts"><button class="rb">Detail</button></div></td></tr>`;
+    });
+  });
+  document.getElementById(tid).innerHTML=html+'</tbody>';
+  return rows.length;
+}
+
+function buildCards(cid, pid) {
+  const p=pid?gp(pid):null;
+  const c1=p?p.cust:248, d=p?p.deals:84, v=p?p.lic:90000;
+  document.getElementById(cid).innerHTML=`
+  <div class="cards">
+    <div class="card">
+      <div class="card-badge" style="background:#111827;color:#fff">BIGGEST OPPORTUNITY</div>
+      <div class="card-ttl">Secure future revenue</div>
+      <div class="card-sub">Make sure active customers generate revenue again</div>
+      <div class="card-meta"><span>📊 ${c1}</span><span>🔑 ${Math.round(c1*186)}</span></div>
+      <div class="card-val">~${Math.round(d*28)}k EUR</div>
+    </div>
+    <div class="card">
+      <div class="card-badge" style="background:#fff7ed;color:#c2410c">COMPLIANCE RISK</div>
+      <div class="card-ttl">Turn the risk into a business</div>
+      <div class="card-sub">Move SQ6 customers to Cloud before EOL</div>
+      <div class="card-meta"><span>📊 ${Math.round(c1*.35)}</span><span>🔑 ${Math.round(c1*.35*2100)}</span></div>
+      <div class="card-val">~${Math.round(d*21)}k EUR</div>
+    </div>
+    <div class="card">
+      <div class="card-badge" style="background:#f0fdf4;color:#166534">RENEWALS</div>
+      <div class="card-ttl">Keep existing customers</div>
+      <div class="card-sub">Renew customers close to expiration</div>
+      <div class="card-meta"><span>📊 ${Math.max(1,Math.round(c1*.06))}</span><span>🔑 ${Math.round(c1*.06*1148)}</span></div>
+      <div class="card-val">~${Math.round(d*8)}k EUR</div>
+    </div>
+    <div class="card">
+      <div class="card-badge" style="background:#fee2e2;color:#991b1b">NEEDS ATTENTION</div>
+      <div class="card-ttl">Flagged customers</div>
+      <div style="margin:6px 0;font-size:11px;background:#fee2e2;color:#991b1b;display:inline-flex;padding:2px 8px;border-radius:3px;font-weight:600">SAFEQ Cloud</div>
+      <div class="card-meta" style="margin-top:6px"><span>📊 ${Math.max(1,Math.round(c1*.04))}</span><span>🔑 ${Math.round(c1*.04*4150)}</span></div>
+    </div>
+  </div>`;
+}
+
+function updateAll(prefix, pid) {
+  buildTable(prefix+'-tbl', pid);
+  buildCards(prefix+'-cards', pid);
+  const p=pid?gp(pid):null;
+  if(document.getElementById(prefix+'-nb')) document.getElementById(prefix+'-nb').textContent=p?p.cust:248;
+}
+
+// ══════════════════════════════════════════════════════════
+//  VARIANT A
+// ══════════════════════════════════════════════════════════
+const S={a:null,b:null,c:null};
+function aTogUM(){
+  const dd=document.getElementById('a-um-drop');
+  const open=dd.classList.contains('open');
+  closeAll();
+  if(!open){dd.classList.add('open');document.getElementById('a-acc').classList.add('open');}
+}
+function aOpenPP(){
+  closeAll();
+  document.getElementById('a-pp').classList.add('open');
+  document.getElementById('a-search').value='';
+  aFilter('');
+}
+function aClosePP(){document.getElementById('a-pp').classList.remove('open');}
+function aFilter(q){
+  const f=PARTNERS.filter(p=>p.n.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('a-pp-list').innerHTML=f.length
+    ?f.map(p=>`<div class="pp-item${S.a===p.id?' on':''}" onclick="aSelect('${p.id}')"><div class="pp-logo" style="background:${p.c}">${p.s}</div><div class="pp-info"><div class="pp-n">${p.n}</div><div class="pp-m">${p.cust} customers · ${p.deals} deals</div></div>${S.a===p.id?'<span class="pp-ck">✓</span>':''}</div>`).join('')
+    :'<div style="padding:16px;text-align:center;color:var(--g400);font-size:12px">No partners found</div>';
+  document.getElementById('a-pp-root').className='pp-root'+(S.a===null?' on':'');
+}
+function aSelect(id){S.a=id;aClosePP();aRender();}
+function aExit(){S.a=null;aClosePP();aRender();}
+function aRender(){
+  const p=S.a?gp(S.a):null;
+  document.getElementById('a-bar').classList.toggle('show',!!p);
+  if(p)document.getElementById('a-bar-n').textContent=p.n;
+  updateAll('a',S.a);
+}
+
+// ══════════════════════════════════════════════════════════
+//  VARIANT B
+// ══════════════════════════════════════════════════════════
+function bOpenModal(){
+  document.getElementById('b-modal').classList.add('open');
+  document.getElementById('b-search').value='';
+  bFilter('');
+  setTimeout(()=>document.getElementById('b-search').focus(),80);
+}
+function bCloseModal(){document.getElementById('b-modal').classList.remove('open');}
+function bFilter(q){
+  const f=PARTNERS.filter(p=>p.n.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('b-modal-list').innerHTML=f.length
+    ?f.map(p=>`<div class="modal-item${S.b===p.id?' on':''}" onclick="bSelect('${p.id}')"><div class="modal-logo" style="background:${p.c}">${p.s}</div><div class="modal-info"><div class="modal-pn">${p.n}</div><div class="modal-pm">${p.cust} customers · ${p.deals} deals</div></div>${S.b===p.id?'<span class="modal-ck">✓</span>':''}</div>`).join('')
+    :'<div class="modal-empty">No partners found</div>';
+  document.getElementById('b-root').className='modal-root'+(S.b===null?' on':'');
+}
+function bSelect(id){S.b=id;bCloseModal();bRender();}
+function bExit(){S.b=null;bCloseModal();bRender();}
+function bRender(){
+  const p=S.b?gp(S.b):null;
+  const ctx=document.getElementById('b-ctx');
+  ctx.classList.toggle('show',!!p);
+  if(p){document.getElementById('b-ctx-n').textContent=p.n;ctx.style.background=p.c;}
+  document.getElementById('b-trig').classList.toggle('ctx-on',!!p);
+  updateAll('b',S.b);
+}
+
+// ══════════════════════════════════════════════════════════
+//  VARIANT C
+// ══════════════════════════════════════════════════════════
+function cTogDD(){
+  const dd=document.getElementById('c-dd'),open=dd.classList.contains('open');
+  closeAll();
+  if(!open){dd.classList.add('open');document.getElementById('c-search').value='';cFilter('');setTimeout(()=>document.getElementById('c-search').focus(),50);}
+}
+function cFilter(q){
+  const f=PARTNERS.filter(p=>p.n.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('c-list').innerHTML=f.length
+    ?f.map(p=>`<div class="cs-item${S.c===p.id?' on':''}" onclick="cSelect('${p.id}')"><div class="cs-item-logo" style="background:${p.c}">${p.s}</div><span class="cs-item-name">${p.n}</span><span style="font-size:11px;color:var(--g400)">${p.cust}</span>${S.c===p.id?'<span class="cs-item-ck">✓</span>':''}</div>`).join('')
+    :'<div style="padding:12px;text-align:center;color:var(--g400);font-size:12px">No results</div>';
+  document.getElementById('c-root').className='cs-root'+(S.c===null?' on':'');
+  document.getElementById('c-root-ck').style.visibility=S.c?'hidden':'visible';
+}
+function cSelect(id){S.c=id;document.getElementById('c-dd').classList.remove('open');cRender();}
+function cExit(){S.c=null;document.getElementById('c-dd').classList.remove('open');cRender();}
+function cRender(){
+  const p=S.c?gp(S.c):null;
+  document.getElementById('c-sel').classList.toggle('pv',!!p);
+  document.getElementById('c-name').textContent=p?p.n:'All partners';
+  document.getElementById('c-dot').style.background=p?p.c:'rgba(255,255,255,.3)';
+  updateAll('c',S.c);
+}
+
+// ══════════════════════════════════════════════════════════
+//  GLOBAL
+// ══════════════════════════════════════════════════════════
+function closeAll(){
+  document.querySelectorAll('.drop,.pp,.cs-drop').forEach(el=>el.classList.remove('open'));
+  document.querySelectorAll('.fh-acc-btn').forEach(el=>el.classList.remove('open'));
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.fh-acc-btn')&&!e.target.closest('.drop')&&!e.target.closest('.pp')&&!e.target.closest('.ctx-sel'))closeAll();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeAll();document.getElementById('b-modal').classList.remove('open');}
+});
+function sv(id,btn){
+  document.querySelectorAll('.vp').forEach(v=>v.classList.remove('on'));
+  document.getElementById('vp-'+id).classList.add('on');
+  document.querySelectorAll('#vnav button').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+function resetAll(){
+  Object.assign(S,{a:null,b:null,c:null});
+  closeAll();
+  document.getElementById('b-modal').classList.remove('open');
+  aRender();bRender();cRender();
+}
+aRender();bRender();cRender();
+</script>
+</body>
+</html>
