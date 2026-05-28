@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Process Explorer — 3 Variants</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #F3F4F6; color: #1E293B; }
+
+  /* Variant switcher */
+  .variant-switcher {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; gap: 0; background: #fff; border-bottom: 1px solid #E2E8F0;
+    padding: 0 32px;
+  }
+  .variant-tab {
+    padding: 16px 24px; cursor: pointer; font-size: 14px; font-weight: 500;
+    color: #64748B; border-bottom: 2px solid transparent; transition: all 0.2s;
+  }
+  .variant-tab:hover { color: #1E293B; }
+  .variant-tab.active { color: #2D8E9E; border-bottom-color: #2D8E9E; font-weight: 600; }
+  .variant-label {
+    font-size: 11px; color: #94A3B8; display: block; margin-top: 2px;
+  }
+
+  .variant-panel { display: none; padding: 32px; max-width: 1200px; margin: 0 auto; }
+  .variant-panel.active { display: block; }
+
+  /* Shared styles */
+  .card {
+    background: #fff; border: 1px solid #E2E8F0; border-radius: 12px;
+    padding: 24px; margin-bottom: 16px;
+  }
+  .card-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .card-subtitle { font-size: 13px; color: #94A3B8; margin-bottom: 20px; }
+
+  .process-tag {
+    display: inline-block; padding: 4px 10px; border-radius: 6px;
+    font-size: 12px; font-weight: 600; margin-right: 6px; margin-bottom: 6px;
+  }
+
+  .bar-row { display: flex; align-items: center; margin-bottom: 12px; }
+  .bar-label { width: 180px; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 14px; background: #F1F5F9; border-radius: 4px; overflow: hidden; margin: 0 12px; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+  .bar-value { font-size: 13px; font-weight: 600; width: 60px; text-align: right; flex-shrink: 0; }
+
+  .summary-box {
+    background: #F9F9F9; border: 1px solid #D2D6DA; border-radius: 4px;
+    padding: 16px 16px 16px 44px; margin-bottom: 12px; position: relative;
+  }
+  .summary-box::before {
+    content: ''; position: absolute; left: 16px; top: 16px;
+    width: 14px; height: 14px; border-radius: 50%; background: #FFD04A;
+  }
+  .summary-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #36383B; }
+  .summary-text { font-size: 13px; color: #36383B; line-height: 1.6; }
+  .summary-text strong { color: #36383B; }
+
+  .also-known { font-size: 12px; color: #64748B; margin-top: 6px; }
+
+  @font-face {
+    font-family: 'YSoft';
+    src: url('YSoft-Bold.otf') format('opentype');
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: 'YSoft';
+    src: url('YSoft-Regular.otf') format('opentype');
+    font-weight: 400;
+  }
+  .doc-count { font-size: 28px; font-weight: 700; font-family: 'YSoft', 'Inter', system-ui, sans-serif; color: #1E293B; }
+  .doc-count-label { font-size: 12px; color: #94A3B8; }
+
+  .fade-in { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ========== VARIANT A: Accordion ========== */
+  .accordion-item {
+    border: 1px solid #E2E8F0; border-radius: 12px; margin-bottom: 8px;
+    background: #fff; overflow: hidden; transition: all 0.2s;
+  }
+  .accordion-item:hover { border-color: #CBD5E1; }
+  .accordion-item.open { border-color: #265467; box-shadow: 0 0 0 1px #26546720; }
+  .accordion-header {
+    display: flex; align-items: center; padding: 16px 20px; cursor: pointer;
+    user-select: none;
+  }
+  .accordion-color { display: none; }
+  .accordion-name { font-size: 15px; font-weight: 600; flex: 1; }
+  .accordion-pct { font-size: 14px; font-weight: 600; color: #64748B; margin-right: 8px; }
+  .accordion-mini-bar { width: 120px; height: 8px; background: #F1F5F9; border-radius: 4px; overflow: hidden; margin-right: 16px; }
+  .accordion-mini-fill { height: 100%; border-radius: 4px; }
+  .accordion-arrow {
+    width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+    color: #94A3B8; transition: transform 0.2s; margin-right: 12px; order: -1;
+  }
+  .accordion-item.open .accordion-arrow { transform: rotate(180deg); color: #265467; }
+  .accordion-body { padding: 0 20px 20px 42px; display: none; }
+  .accordion-item.open .accordion-body { display: block; }
+
+  /* ========== VARIANT B: Sidebar + Detail ========== */
+  .split-layout {
+    display: flex; gap: 0; min-height: 600px;
+    border: 1px solid #E2E8F0; border-radius: 12px; overflow: hidden; background: #fff;
+  }
+  .split-sidebar {
+    width: 280px; flex-shrink: 0; background: #F8FAFC;
+    border-right: 1px solid #E2E8F0; padding: 20px 0;
+  }
+  .split-detail { flex: 1; padding: 24px 28px; }
+
+  .sidebar-item {
+    display: flex; align-items: center; padding: 12px 20px; cursor: pointer;
+    transition: all 0.15s; border-left: 3px solid transparent; position: relative;
+  }
+  .sidebar-item:hover { background: #F1F5F9; }
+  .sidebar-item.active {
+    background: #fff; border-left-color: #265467;
+    margin-right: -1px; border-right: 1px solid #fff;
+  }
+  .sidebar-item .dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 10px; flex-shrink: 0; }
+  .sidebar-item .name {
+    font-size: 13px; font-weight: 500; flex: 1; color: #475569;
+    max-width: 200px; line-height: 1.4;
+  }
+  .sidebar-item .pct { font-size: 12px; font-weight: 600; color: #94A3B8; margin-left: 8px; flex-shrink: 0; }
+  .sidebar-item.active .name { font-weight: 700; color: #1E293B; font-family: 'YSoft', 'Inter', system-ui, sans-serif; }
+  .sidebar-item.active .pct { color: #64748B; }
+
+  .detail-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+  .detail-process-name { font-size: 20px; font-weight: 700; color: #1E293B; font-family: 'YSoft', 'Inter', system-ui, sans-serif; }
+  .detail-stats { display: flex; gap: 32px; margin-bottom: 20px; }
+  .detail-stat-value { font-size: 24px; font-weight: 700; color: #1E293B; font-family: 'YSoft', 'Inter', system-ui, sans-serif; }
+  .detail-stat-label { font-size: 12px; color: #94A3B8; }
+
+  /* ========== VARIANT C: Cards grid ========== */
+  .process-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .process-card {
+    background: #fff; border: 1px solid #E2E8F0; border-radius: 12px;
+    padding: 20px; cursor: pointer; transition: all 0.2s; position: relative;
+  }
+  .process-card:hover { border-color: #CBD5E1; transform: translateY(-2px); box-shadow: 0 4px 12px #0001; }
+  .process-card.expanded {
+    grid-column: 1 / -1; cursor: default; border-color: #2D8E9E;
+    box-shadow: 0 0 0 1px #2D8E9E20;
+  }
+  .process-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .process-card-color { width: 4px; height: 32px; border-radius: 2px; }
+  .process-card-name { font-size: 16px; font-weight: 700; }
+  .process-card-pct { font-size: 14px; font-weight: 600; color: #64748B; margin-left: auto; }
+  .process-card-bar { height: 6px; background: #F1F5F9; border-radius: 3px; margin-bottom: 12px; }
+  .process-card-bar-fill { height: 100%; border-radius: 3px; }
+  .process-card-preview { font-size: 12px; color: #94A3B8; }
+  .process-card-detail { margin-top: 20px; border-top: 1px solid #E2E8F0; padding-top: 20px; }
+  .process-card .close-btn {
+    position: absolute; top: 16px; right: 16px; width: 28px; height: 28px;
+    border-radius: 6px; border: 1px solid #E2E8F0; background: #fff;
+    cursor: pointer; display: none; align-items: center; justify-content: center;
+    font-size: 16px; color: #94A3B8;
+  }
+  .process-card .close-btn:hover { background: #F1F5F9; color: #1E293B; }
+  .process-card.expanded .close-btn { display: flex; }
+
+  .footnote { font-size: 11px; color: #94A3B8; margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="variant-switcher">
+  <div class="variant-tab active" onclick="showVariant('a')">
+    Variant A
+    <span class="variant-label">Accordion drill-down</span>
+  </div>
+  <div class="variant-tab" onclick="showVariant('b')">
+    Variant B
+    <span class="variant-label">Sidebar + detail panel</span>
+  </div>
+  <div class="variant-tab" onclick="showVariant('c')">
+    Variant C
+    <span class="variant-label">Expanding cards</span>
+  </div>
+</div>
+
+<!-- ==================== VARIANT A: Accordion ==================== -->
+<div id="variant-a" class="variant-panel active">
+  <div class="card">
+    <div class="card-title">Business processes</div>
+    <div class="card-subtitle">Click any process to see its document breakdown and summary</div>
+
+    <div id="accordion-container"></div>
+
+    <div class="footnote">Each document belongs to one business process. A document can carry more than one type — type counts within a process may overlap.</div>
+  </div>
+</div>
+
+<!-- ==================== VARIANT B: Sidebar + Detail ==================== -->
+<div id="variant-b" class="variant-panel">
+  <div class="split-layout">
+    <div class="split-sidebar">
+      <div style="padding: 0 20px 8px; font-size: 13px; font-weight: 700; color: #1E293B;">Business processes</div>
+      <div id="sidebar-list"></div>
+      <div class="footnote" style="padding: 12px 20px 0;">Each document belongs to one business process.</div>
+    </div>
+    <div class="split-detail" id="detail-panel"></div>
+  </div>
+</div>
+
+<!-- ==================== VARIANT C: Cards Grid ==================== -->
+<div id="variant-c" class="variant-panel">
+  <div class="card-title" style="margin-bottom: 4px;">Business processes</div>
+  <div class="card-subtitle" style="margin-bottom: 20px;">Click a process card to expand its details</div>
+  <div class="process-grid" id="cards-grid"></div>
+  <div class="footnote" style="margin-top: 16px;">Each document belongs to one business process. Type counts within a process may overlap.</div>
+</div>
+
+<script>
+const COLORS = {
+  'Accounts payable & receivable': '#8338EC',
+  'Audit & compliance': '#2563EB',
+  'Project delivery': '#E5366A',
+  'Client engagement & contracts': '#E5A000',
+  'Quality assurance': '#A0A0A0',
+  'Other processes': '#C8C6B8',
+};
+
+const PROCESSES = [
+  {
+    name: 'Accounts payable & receivable',
+    pct: 38.4,
+    docs: 18_523,
+    summary: 'Covers the full cycle of money flowing in and out of the organization. Incoming invoices from vendors are matched against purchase orders, approved, and paid. Outgoing invoices are generated, sent to clients, and tracked until payment is received.',
+    alsoKnown: ['AP/AR', 'Billing & payments', 'Invoice processing', 'Creditors & debtors'],
+    typical: 'Purchase orders, vendor invoices, credit notes, payment remittances, client invoices, statements of account, dunning letters.',
+    types: [
+      { name: 'Invoices', count: 9_840, pct: 53.1 },
+      { name: 'Audit reports', count: 3_420, pct: 18.5 },
+      { name: 'Expense reports', count: 2_100, pct: 11.3 },
+      { name: 'Budget reports', count: 1_680, pct: 9.1 },
+      { name: 'Regulatory filings', count: 890, pct: 4.8 },
+      { name: 'Other', count: 593, pct: 3.2 },
+    ]
+  },
+  {
+    name: 'Audit & compliance',
+    pct: 19.7,
+    docs: 9_504,
+    summary: 'Encompasses internal and external audits, regulatory reporting, and compliance documentation. Ensures the organization meets legal obligations and industry standards through systematic review and record-keeping.',
+    alsoKnown: ['Risk & compliance', 'Internal audit', 'Regulatory affairs', 'GRC'],
+    typical: 'Audit findings, compliance checklists, regulatory submissions, risk assessments, corrective action plans, certification records.',
+    types: [
+      { name: 'Audit reports', count: 5_200, pct: 54.7 },
+      { name: 'Regulatory filings', count: 2_100, pct: 22.1 },
+      { name: 'Technical reports', count: 1_420, pct: 14.9 },
+      { name: 'Invoices', count: 784, pct: 8.2 },
+    ]
+  },
+  {
+    name: 'Project delivery',
+    pct: 9.2,
+    docs: 4_436,
+    summary: 'Tracks documentation tied to project execution — from planning and specifications through delivery and handover. Common in organizations running client projects, internal initiatives, or engineering work.',
+    alsoKnown: ['Project management', 'Engagement delivery', 'Service delivery', 'PMO'],
+    typical: 'Project plans, status reports, specifications, change requests, timesheets, milestone sign-offs, deliverable acceptance forms.',
+    types: [
+      { name: 'Technical reports', count: 1_890, pct: 42.6 },
+      { name: 'Invoices', count: 1_200, pct: 27.1 },
+      { name: 'Expense reports', count: 780, pct: 17.6 },
+      { name: 'Other', count: 566, pct: 12.8 },
+    ]
+  },
+  {
+    name: 'Client engagement & contracts',
+    pct: 6.8,
+    docs: 3_279,
+    summary: 'Covers client-facing documentation from initial proposals through signed contracts and ongoing relationship management. Includes everything produced during sales cycles and contract negotiations.',
+    alsoKnown: ['Sales ops', 'Contract management', 'Client relations', 'Legal & contracts'],
+    typical: 'Proposals, contracts, NDAs, SLAs, engagement letters, renewal notices, client correspondence.',
+    types: [
+      { name: 'Invoices', count: 1_400, pct: 42.7 },
+      { name: 'Regulatory filings', count: 860, pct: 26.2 },
+      { name: 'Technical reports', count: 620, pct: 18.9 },
+      { name: 'Other', count: 399, pct: 12.2 },
+    ]
+  },
+  {
+    name: 'Quality assurance',
+    pct: 6.2,
+    docs: 2_990,
+    summary: 'Documentation supporting quality management systems, testing, inspections, and continuous improvement. Typically driven by ISO or industry-specific quality standards.',
+    alsoKnown: ['QA/QC', 'Quality management', 'Testing & validation', 'Process improvement'],
+    typical: 'Test protocols, inspection reports, non-conformance records, CAPA documents, calibration certificates, quality manuals.',
+    types: [
+      { name: 'Technical reports', count: 1_500, pct: 50.2 },
+      { name: 'Audit reports', count: 890, pct: 29.8 },
+      { name: 'Regulatory filings', count: 600, pct: 20.1 },
+    ]
+  },
+];
+
+const TYPE_COLORS = {
+  'Invoices': '#5C6BC0',
+  'Audit reports': '#4DB6AC',
+  'Expense reports': '#C27085',
+  'Regulatory filings': '#81A784',
+  'Technical reports': '#8D8D8D',
+  'Budget reports': '#7096B8',
+  'Other': '#C0BFB4',
+};
+
+function renderBars(types, maxCount) {
+  const max = maxCount || Math.max(...types.map(t => t.count));
+  return types.map(t => `
+    <div class="bar-row">
+      <div class="bar-label">${t.name}</div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width: ${(t.count / max) * 100}%; background: ${TYPE_COLORS[t.name] || '#94A3B8'}"></div>
+      </div>
+      <div class="bar-value">${t.count.toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+function renderSummary(p) {
+  return `
+    <div class="summary-box">
+      <div class="summary-title">What is this process?</div>
+      <div class="summary-text">${p.summary}</div>
+      <div class="also-known">
+        Also known as: ${p.alsoKnown.join('; ')}
+      </div>
+    </div>
+    <div class="summary-box">
+      <div class="summary-title">What typically falls into this category</div>
+      <div class="summary-text">${p.typical}</div>
+    </div>
+  `;
+}
+
+// ==================== VARIANT A: Accordion ====================
+function buildAccordion() {
+  const container = document.getElementById('accordion-container');
+  container.innerHTML = PROCESSES.map((p, i) => `
+    <div class="accordion-item ${i === 0 ? 'open' : ''}" onclick="toggleAccordion(this)">
+      <div class="accordion-header">
+        <div class="accordion-color" style="background: ${COLORS[p.name]}"></div>
+        <div class="accordion-name">${p.name}</div>
+        <div class="accordion-pct">${p.pct}%</div>
+        <div class="accordion-mini-bar">
+          <div class="accordion-mini-fill" style="width: ${(p.pct / 38.4) * 100}%; background: ${COLORS[p.name]}"></div>
+        </div>
+        <div class="accordion-arrow"><svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="accordion-body fade-in">
+        <div style="display: flex; gap: 24px; margin-bottom: 16px;">
+          <div>
+            <div class="doc-count">${p.docs.toLocaleString()}</div>
+            <div class="doc-count-label">documents in this process</div>
+          </div>
+        </div>
+        ${renderSummary(p)}
+        <div style="margin-top: 16px;">
+          <div class="summary-title">Document types in this process</div>
+          <div style="margin-top: 12px;">
+            ${renderBars(p.types)}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleAccordion(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach(a => a.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+// ==================== VARIANT B: Sidebar + Detail ====================
+function buildSidebar() {
+  const list = document.getElementById('sidebar-list');
+  list.innerHTML = PROCESSES.map((p, i) => `
+    <div class="sidebar-item ${i === 0 ? 'active' : ''}" onclick="selectProcess(${i}, this)">
+      <div class="dot" style="background: ${COLORS[p.name]}"></div>
+      <div class="name">${p.name}</div>
+      <div class="pct">${p.pct}%</div>
+    </div>
+  `).join('');
+  showDetail(0);
+}
+
+function selectProcess(idx, el) {
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  showDetail(idx);
+}
+
+function showDetail(idx) {
+  const p = PROCESSES[idx];
+  const panel = document.getElementById('detail-panel');
+  panel.innerHTML = `
+    <div class="fade-in">
+      <div class="detail-header">
+        <div>
+          <div class="detail-process-name">${p.name}</div>
+          <div style="font-size: 13px; color: #94A3B8; margin-top: 4px;">${p.pct}% of all printed documents</div>
+        </div>
+        <div style="text-align: right;">
+          <div class="detail-stat-value">${p.docs.toLocaleString()}</div>
+          <div class="detail-stat-label">documents</div>
+        </div>
+      </div>
+
+      ${renderSummary(p)}
+
+      <div style="margin-top: 20px;">
+        <div class="summary-title">Document types in this process</div>
+        <div style="margin-top: 12px;">
+          ${renderBars(p.types)}
+        </div>
+        <div class="footnote">A document can carry more than one type — counts may overlap.</div>
+      </div>
+    </div>
+  `;
+}
+
+// ==================== VARIANT C: Cards Grid ====================
+function buildCards() {
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = PROCESSES.map((p, i) => `
+    <div class="process-card" id="card-${i}" onclick="expandCard(${i})">
+      <button class="close-btn" onclick="event.stopPropagation(); collapseCard(${i})">✕</button>
+      <div class="process-card-header">
+        <div class="process-card-color" style="background: ${COLORS[p.name]}"></div>
+        <div class="process-card-name">${p.name}</div>
+        <div class="process-card-pct">${p.pct}%</div>
+      </div>
+      <div class="process-card-bar">
+        <div class="process-card-bar-fill" style="width: ${(p.pct / 38.4) * 100}%; background: ${COLORS[p.name]}"></div>
+      </div>
+      <div class="process-card-preview">
+        ${p.docs.toLocaleString()} documents · Top type: ${p.types[0].name}
+      </div>
+      <div class="process-card-detail" id="card-detail-${i}" style="display: none;">
+        <div class="fade-in">
+          <div style="margin-bottom: 16px;">
+            <div class="doc-count">${p.docs.toLocaleString()}</div>
+            <div class="doc-count-label">documents in this process</div>
+          </div>
+          ${renderSummary(p)}
+          <div style="margin-top: 16px;">
+            <div class="summary-title">Document types in this process</div>
+            <div style="margin-top: 12px;">
+              ${renderBars(p.types)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function expandCard(idx) {
+  const card = document.getElementById(`card-${idx}`);
+  if (card.classList.contains('expanded')) return;
+  document.querySelectorAll('.process-card').forEach(c => {
+    c.classList.remove('expanded');
+    c.querySelector('.process-card-detail').style.display = 'none';
+  });
+  card.classList.add('expanded');
+  document.getElementById(`card-detail-${idx}`).style.display = 'block';
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function collapseCard(idx) {
+  const card = document.getElementById(`card-${idx}`);
+  card.classList.remove('expanded');
+  document.getElementById(`card-detail-${idx}`).style.display = 'none';
+}
+
+// ==================== Variant switching ====================
+function showVariant(v) {
+  document.querySelectorAll('.variant-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.variant-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(`variant-${v}`).classList.add('active');
+  document.querySelectorAll('.variant-tab')[{a:0,b:1,c:2}[v]].classList.add('active');
+}
+
+// Init
+buildAccordion();
+buildSidebar();
+buildCards();
+</script>
+
+</body>
+</html>
